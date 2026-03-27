@@ -1,0 +1,21 @@
+{
+  "name": "rise-ui-monorepo",
+  "private": true,
+  "license": "MIT",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "dev:docs": "npm run dev --workspace=@rise-ui/docs",
+    "generate:showcase": "cd example && dart run tool/generate_showcase_manifest.dart",
+    "build:docs": "npm run generate:showcase && bash scripts/build-flutter-docs-preview.sh && npm run build --workspace=@rise-ui/docs",
+    "refresh:docs": "bash scripts/refresh-docs-web.sh",
+    "refresh:docs:full": "bash scripts/refresh-docs-web.sh --full",
+    "lint:docs": "npm run lint --workspace=@rise-ui/docs"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.4"
+  }
+}

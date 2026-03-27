@@ -1,0 +1,42 @@
+---
+title: Introduction
+description: RiseUI is a Flutter UI library — opinionated defaults, composition, and native Material widgets.
+---
+
+RiseUI brings a **clean, minimal API** to Flutter: variants, sizes, and smooth interaction states out of the box.
+
+## Goals
+
+- Modern, minimal visuals with consistent spacing and typography
+- **Flutter-first** APIs (widgets and composition)
+- Theming via `RiseThemeData` and `ThemeExtension`
+- Documented components with copy-paste Dart examples
+
+## Install
+
+Add the package to your Flutter app (path or pub.dev once published):
+
+```yaml
+dependencies:
+  rise_ui: ^0.1.0
+```
+
+## Quick usage
+
+Register the theme extension, then use widgets such as `RiseButton`:
+
+```dart
+MaterialApp(
+  theme: ThemeData.light().copyWith(
+    extensions: const [RiseThemeData.light],
+  ),
+  home: RiseButton(
+    label: 'Continue',
+    onPressed: () {},
+  ),
+);
+```
+
+## Components
+
+Each widget has a page under **Components** with API notes and examples; see the sidebar for the full list.

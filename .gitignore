@@ -1,0 +1,5 @@
+node_modules/
+.turbo/
+apps/docs/.next/
+apps/docs/.source/
+.DS_Store

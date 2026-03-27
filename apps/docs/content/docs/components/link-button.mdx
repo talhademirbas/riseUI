@@ -1,0 +1,24 @@
+---
+title: LinkButton
+description: Inline link-style control — ghost appearance, no highlight or scale feedback.
+---
+
+`RiseLinkButton` is for inline actions such as “Terms” or “Privacy”. It wraps content in [`RiseButtonScope`](./button) with **`RiseButtonVariant.ghost`** and uses a transparent **`InkWell`** with **no splash** so it does not look like a filled button.
+
+## Example
+
+```dart
+RiseLinkButton(
+  label: 'Learn more',
+  onPressed: () {},
+)
+```
+
+Use [`RiseButtonLabel`](./button) as `child` for custom rich text, or pass a `label` string.
+
+## API
+
+| Concept | RiseUI |
+| ------- | ------ |
+| Ghost + no highlight | Transparent ink, no splash |
+| `LinkButton.Label` | Use [`RiseButtonLabel`](./button) as `child` |

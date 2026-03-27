@@ -1,0 +1,1525 @@
+{
+  "version": 1,
+  "generated": "2026-03-27T18:08:20.507050Z",
+  "components": [
+    {
+      "id": "accordion",
+      "title": "Accordion",
+      "description": "Collapsible panels with a compound API (trigger, indicator, content). Defaults align with HeroUI v3 — text-sm triggers, muted body, motion tokens, optional surface shell.",
+      "variants": [
+        {
+          "slug": "faq",
+          "sectionTitle": "Usage · Default",
+          "subtitle": "Full-width accordion with hairline separators and no outer chrome (HeroUI `variant=\"default\"`). Triggers use 14px / font-medium; body uses muted 14px text; chevron 250ms; panel 200ms.",
+          "minHeight": 420.0,
+          "embed": "accordion-faq"
+        },
+        {
+          "slug": "surface",
+          "sectionTitle": "Usage · Surface",
+          "subtitle": "Rounded 24px surface (`RiseAccordionDecorations.surface`), wider padding, inset separators — HeroUI `variant=\"surface\"`.",
+          "minHeight": 340.0,
+          "embed": "accordion-surface"
+        },
+        {
+          "slug": "multiple",
+          "sectionTitle": "Usage · Multiple expanded",
+          "subtitle": "Set `selectionMode: RiseAccordionSelectionMode.multiple`.",
+          "minHeight": 280.0,
+          "embed": "accordion-multiple"
+        },
+        {
+          "slug": "custom-indicator",
+          "sectionTitle": "Usage · Custom indicator",
+          "subtitle": "`RiseAccordionIndicator` with `child` and `expandedTurns` (e.g. 0.125 for a 45° plus).",
+          "minHeight": 200.0,
+          "embed": "accordion-custom-indicator"
+        },
+        {
+          "slug": "custom-indicator-variants",
+          "sectionTitle": "Usage · Custom indicator variants",
+          "subtitle": "Plus, caret, and arrow rows — each uses a custom indicator child.",
+          "minHeight": 280.0,
+          "embed": "accordion-custom-indicator-variants"
+        },
+        {
+          "slug": "disabled-root",
+          "sectionTitle": "Usage · Disabled (root)",
+          "subtitle": "`isDisabled: true` on `RiseAccordion`.",
+          "minHeight": 220.0,
+          "embed": "accordion-disabled-root"
+        },
+        {
+          "slug": "disabled-items",
+          "sectionTitle": "Usage · Disabled (items)",
+          "subtitle": "Per-item `isDisabled`.",
+          "minHeight": 220.0,
+          "embed": "accordion-disabled-items"
+        },
+        {
+          "slug": "without-separator",
+          "sectionTitle": "Usage · Without separator",
+          "subtitle": "`hideSeparator: true`.",
+          "minHeight": 220.0,
+          "embed": "accordion-without-separator"
+        },
+        {
+          "slug": "custom-render",
+          "sectionTitle": "Usage · Custom render",
+          "subtitle": "`RiseAccordionItem.render` exposes `isExpanded` / `value` to the builder.",
+          "minHeight": 220.0,
+          "embed": "accordion-custom-render"
+        },
+        {
+          "slug": "faq-layout",
+          "sectionTitle": "Usage · FAQ layout",
+          "subtitle": "Page title, subtitle, section labels (General, Licensing, …) and one `RiseAccordion` per section — HeroUI FAQ story.",
+          "minHeight": 560.0,
+          "embed": "accordion-faq-layout"
+        },
+        {
+          "slug": "custom-styles",
+          "sectionTitle": "Usage · Custom styles",
+          "subtitle": "Rich triggers: title + subtitle in the trigger row; body in `RiseAccordionContent`.",
+          "minHeight": 380.0,
+          "embed": "accordion-custom-styles"
+        }
+      ]
+    },
+    {
+      "id": "alert",
+      "title": "Alert",
+      "description": "Status messages with indicator, title, description, and optional actions — aligned with @heroui/react Alert, alert.tsx, and alert.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Default informational alert on a surface card.",
+          "minHeight": 140.0,
+          "embed": "alert-usage"
+        },
+        {
+          "slug": "accent",
+          "sectionTitle": "Accent",
+          "subtitle": "Accent-colored title and icon with an action.",
+          "minHeight": 160.0,
+          "embed": "alert-accent"
+        },
+        {
+          "slug": "success",
+          "sectionTitle": "Success",
+          "subtitle": "Positive confirmation message.",
+          "minHeight": 130.0,
+          "embed": "alert-success"
+        },
+        {
+          "slug": "warning",
+          "sectionTitle": "Warning",
+          "subtitle": "Maintenance or caution copy.",
+          "minHeight": 150.0,
+          "embed": "alert-warning"
+        },
+        {
+          "slug": "danger",
+          "sectionTitle": "Danger",
+          "subtitle": "Error state with bullet list and retry.",
+          "minHeight": 200.0,
+          "embed": "alert-danger"
+        },
+        {
+          "slug": "custom-indicator",
+          "sectionTitle": "Custom indicator",
+          "subtitle": "Replace the default status icon.",
+          "minHeight": 130.0,
+          "embed": "alert-custom-indicator"
+        },
+        {
+          "slug": "with-actions",
+          "sectionTitle": "With actions",
+          "subtitle": "Multiple buttons in the alert footer.",
+          "minHeight": 150.0,
+          "embed": "alert-with-actions"
+        }
+      ]
+    },
+    {
+      "id": "avatar",
+      "title": "Avatar",
+      "description": "Circular profile image, initials, or custom child — sized like HeroUI size-8 · size-10 · size-12, with semantic colors and solid vs soft fallback surfaces (HeroUI avatar.css / @heroui/react Avatar).",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Network image, initials from `name`, or a custom `child`.",
+          "minHeight": 120.0,
+          "embed": "avatar-usage"
+        },
+        {
+          "slug": "sizes",
+          "sectionTitle": "Sizes",
+          "subtitle": "`sm` · `md` · `lg` — 32 / 40 / 48 px diameter (Tailwind `size-8` / `10` / `12`).",
+          "minHeight": 100.0,
+          "embed": "avatar-sizes"
+        },
+        {
+          "slug": "colors",
+          "sectionTitle": "Colors",
+          "subtitle": "Solid fallbacks: default, accent, success, warning, danger.",
+          "minHeight": 100.0,
+          "embed": "avatar-colors"
+        },
+        {
+          "slug": "variants",
+          "sectionTitle": "Variants",
+          "subtitle": "`solid` vs `soft` letter fallbacks for each color.",
+          "minHeight": 200.0,
+          "embed": "avatar-variants"
+        },
+        {
+          "slug": "fallback",
+          "sectionTitle": "Fallback",
+          "subtitle": "Broken image shows initials from `name`.",
+          "minHeight": 100.0,
+          "embed": "avatar-fallback"
+        },
+        {
+          "slug": "group",
+          "sectionTitle": "Avatar group",
+          "subtitle": "Overlapping stack with ring separator (`RiseAvatarGroup`).",
+          "minHeight": 120.0,
+          "embed": "avatar-group"
+        },
+        {
+          "slug": "custom-styles",
+          "sectionTitle": "Custom content",
+          "subtitle": "Any widget as `child` (clipped to the circle).",
+          "minHeight": 100.0,
+          "embed": "avatar-custom-styles"
+        }
+      ]
+    },
+    {
+      "id": "button",
+      "title": "Button",
+      "description": "Clickable button with HeroUI v3 variants, sizes, icons, loading, and full width — aligned with @heroui/react and `button.css` (rounded-3xl, gap-2, press scale 0.97).",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Basic `onPress` / `onPressed` handler.",
+          "minHeight": 120.0,
+          "embed": "button-usage"
+        },
+        {
+          "slug": "variants",
+          "sectionTitle": "Variants",
+          "subtitle": "Primary, secondary, tertiary, outline, ghost, danger, danger soft.",
+          "minHeight": 200.0,
+          "embed": "button-variants"
+        },
+        {
+          "slug": "with-icons",
+          "sectionTitle": "With icons",
+          "subtitle": "Leading icon + label in a row.",
+          "minHeight": 160.0,
+          "embed": "button-with-icons"
+        },
+        {
+          "slug": "icon-only",
+          "sectionTitle": "Icon only",
+          "subtitle": "`isIconOnly: true` — square hit target.",
+          "minHeight": 120.0,
+          "embed": "button-icon-only"
+        },
+        {
+          "slug": "loading",
+          "sectionTitle": "Loading",
+          "subtitle": "Spinner + label while pending (disabled tap).",
+          "minHeight": 120.0,
+          "embed": "button-loading"
+        },
+        {
+          "slug": "loading-state",
+          "sectionTitle": "Loading state",
+          "subtitle": "Outline button with leading icon (upload).",
+          "minHeight": 120.0,
+          "embed": "button-loading-state"
+        },
+        {
+          "slug": "sizes",
+          "sectionTitle": "Sizes",
+          "subtitle": "`sm` · `md` · `lg` — heights 32 / 40 / 44.",
+          "minHeight": 140.0,
+          "embed": "button-sizes"
+        },
+        {
+          "slug": "full-width",
+          "sectionTitle": "Full width",
+          "subtitle": "`fullWidth: true`.",
+          "minHeight": 160.0,
+          "embed": "button-full-width"
+        },
+        {
+          "slug": "disabled",
+          "sectionTitle": "Disabled",
+          "subtitle": "`isDisabled: true` across variants.",
+          "minHeight": 200.0,
+          "embed": "button-disabled"
+        },
+        {
+          "slug": "social-buttons",
+          "sectionTitle": "Social buttons",
+          "subtitle": "Outline + `fullWidth` stacked rows (swap icons for brand assets — no separate social primitive).",
+          "minHeight": 220.0,
+          "embed": "button-social-buttons"
+        },
+        {
+          "slug": "compound-label",
+          "sectionTitle": "Compound label",
+          "subtitle": "Compose `child` with `RiseButtonLabel` for variant-colored text (e.g. icon + label + muted suffix).",
+          "minHeight": 140.0,
+          "embed": "button-compound-label"
+        }
+      ]
+    },
+    {
+      "id": "close-button",
+      "title": "CloseButton",
+      "description": "Compact control for closing dialogs, modals, or dismissing content — aligned with @heroui/react CloseButton (heroui.com/docs/react/components/close-button) and close-button.css (inline-flex, rounded-xl, press scale).",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Default dismiss control; wraps RiseButton with tertiary · sm · icon-only defaults.",
+          "minHeight": 120.0,
+          "embed": "close-button-usage"
+        },
+        {
+          "slug": "with-custom-icon",
+          "sectionTitle": "With custom icon",
+          "subtitle": "Replace the default Icons.close via child, or tune iconProps for size/color.",
+          "minHeight": 140.0,
+          "embed": "close-button-with-custom-icon"
+        },
+        {
+          "slug": "interactive",
+          "sectionTitle": "Interactive",
+          "subtitle": "Same component wired to local state.",
+          "minHeight": 160.0,
+          "embed": "close-button-interactive"
+        }
+      ]
+    },
+    {
+      "id": "chip",
+      "title": "Chip",
+      "description": "Small informational badges for labels, statuses, and categories — aligned with @heroui/react Chip (heroui.com/docs/react/components/chip) and chip.css (rounded-2xl, compound colors × variants).",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Semantic colors with the default soft style (HeroUI Usage row).",
+          "minHeight": 140.0,
+          "embed": "chip-usage"
+        },
+        {
+          "slug": "variants",
+          "sectionTitle": "Variants",
+          "subtitle": "Variant × color matrix at md size — primary, secondary, tertiary, soft.",
+          "minHeight": 520.0,
+          "embed": "chip-variants"
+        },
+        {
+          "slug": "with-icons",
+          "sectionTitle": "With icons",
+          "subtitle": "Leading icon + label via leading.",
+          "minHeight": 180.0,
+          "embed": "chip-with-icons"
+        },
+        {
+          "slug": "statuses",
+          "sectionTitle": "Statuses",
+          "subtitle": "Typical status and release labels using semantic colors.",
+          "minHeight": 220.0,
+          "embed": "chip-statuses"
+        }
+      ]
+    },
+    {
+      "id": "card",
+      "title": "Card",
+      "description": "Rounded container with HeroUI variants (transparent, default, secondary, tertiary) and compound slots for header, title, description, content, and footer — see [Card](https://heroui.com/docs/react/components/card), [card.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/card/card.tsx), and [card.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/card.css).",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Header, title, description, content, and footer with a primary action.",
+          "minHeight": 280.0,
+          "embed": "card-usage"
+        },
+        {
+          "slug": "variants",
+          "sectionTitle": "Variants",
+          "subtitle": "transparent, standard (default surface), secondary, tertiary.",
+          "minHeight": 360.0,
+          "embed": "card-variants"
+        },
+        {
+          "slug": "horizontal",
+          "sectionTitle": "Horizontal layout",
+          "subtitle": "Row with media placeholder and stacked copy (responsive pattern).",
+          "minHeight": 200.0,
+          "embed": "card-horizontal"
+        },
+        {
+          "slug": "with-form",
+          "sectionTitle": "With form",
+          "subtitle": "Stacked fields and actions inside the card.",
+          "minHeight": 320.0,
+          "embed": "card-with-form"
+        }
+      ]
+    },
+    {
+      "id": "button-group",
+      "title": "ButtonGroup",
+      "description": "Group related buttons with shared styling, joined corners, optional separators — aligned with HeroUI ButtonGroup (heroui.com/docs/react/components/button-group) and button-group.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Merged radii, zero gap; optional RiseButtonGroupSeparator inside 2nd+ buttons.",
+          "minHeight": 200.0,
+          "embed": "button-group-usage"
+        },
+        {
+          "slug": "variants",
+          "sectionTitle": "Variants",
+          "subtitle": "Shared variant on the group (primary, secondary, tertiary, outline, ghost, danger).",
+          "minHeight": 420.0,
+          "embed": "button-group-variants"
+        },
+        {
+          "slug": "sizes",
+          "sectionTitle": "Sizes",
+          "subtitle": "sm · md · lg on the group.",
+          "minHeight": 260.0,
+          "embed": "button-group-sizes"
+        },
+        {
+          "slug": "orientation",
+          "sectionTitle": "Orientation",
+          "subtitle": "horizontal vs vertical.",
+          "minHeight": 280.0,
+          "embed": "button-group-orientation"
+        },
+        {
+          "slug": "with-icons",
+          "sectionTitle": "With icons",
+          "subtitle": "Icon-only segments in a row.",
+          "minHeight": 120.0,
+          "embed": "button-group-with-icons"
+        },
+        {
+          "slug": "full-width",
+          "sectionTitle": "Full width",
+          "subtitle": "fullWidth: true — equal flex segments.",
+          "minHeight": 120.0,
+          "embed": "button-group-full-width"
+        },
+        {
+          "slug": "disabled",
+          "sectionTitle": "Disabled state",
+          "subtitle": "Group isDisabled; allowEnabledWhenGroupDisabled on one segment.",
+          "minHeight": 200.0,
+          "embed": "button-group-disabled"
+        },
+        {
+          "slug": "without-separator",
+          "sectionTitle": "Without separator",
+          "subtitle": "Omit RiseButtonGroupSeparator for a flush join.",
+          "minHeight": 120.0,
+          "embed": "button-group-without-separator"
+        }
+      ]
+    },
+    {
+      "id": "tag-group",
+      "title": "TagGroup",
+      "description": "Selectable tag list with sizes, variants, removal, and field chrome — aligned with HeroUI TagGroup (heroui.com/docs/react/components/tag-group) and tag-group.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Multi-select tags with accent selection styling.",
+          "minHeight": 160.0,
+          "embed": "tag-group-usage"
+        },
+        {
+          "slug": "sizes",
+          "sectionTitle": "Sizes",
+          "subtitle": "sm · md · lg.",
+          "minHeight": 260.0,
+          "embed": "tag-group-sizes"
+        },
+        {
+          "slug": "variants",
+          "sectionTitle": "Variants",
+          "subtitle": "default (outlined) vs surface (muted fill).",
+          "minHeight": 200.0,
+          "embed": "tag-group-variants"
+        },
+        {
+          "slug": "disabled",
+          "sectionTitle": "Disabled",
+          "subtitle": "Whole group disabled, or per-tag disabledKeys.",
+          "minHeight": 220.0,
+          "embed": "tag-group-disabled"
+        },
+        {
+          "slug": "selection-modes",
+          "sectionTitle": "Selection modes",
+          "subtitle": "single vs multiple.",
+          "minHeight": 240.0,
+          "embed": "tag-group-selection-modes"
+        },
+        {
+          "slug": "with-icons",
+          "sectionTitle": "With icons",
+          "subtitle": "Leading icon per tag via leadingBuilder.",
+          "minHeight": 140.0,
+          "embed": "tag-group-with-icons"
+        },
+        {
+          "slug": "with-remove",
+          "sectionTitle": "With remove button",
+          "subtitle": "onRemove removes items from the list.",
+          "minHeight": 160.0,
+          "embed": "tag-group-with-remove"
+        },
+        {
+          "slug": "with-error",
+          "sectionTitle": "With error message",
+          "subtitle": "Label, description, and validation line.",
+          "minHeight": 200.0,
+          "embed": "tag-group-with-error"
+        }
+      ]
+    },
+    {
+      "id": "slider",
+      "title": "Slider",
+      "description": "Single and range sliders with label/output row, vertical layout, and HeroUI-aligned track styling — see heroui.com/docs/react/components/slider and slider.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Label, value output, and accent track (default 0–100).",
+          "minHeight": 120.0,
+          "embed": "slider-usage"
+        },
+        {
+          "slug": "vertical",
+          "sectionTitle": "Vertical",
+          "subtitle": "Orientation vertical — output, track, label.",
+          "minHeight": 280.0,
+          "embed": "slider-vertical"
+        },
+        {
+          "slug": "range",
+          "sectionTitle": "Range",
+          "subtitle": "Two thumbs with combined output (e.g. price band).",
+          "minHeight": 120.0,
+          "embed": "slider-range"
+        },
+        {
+          "slug": "disabled",
+          "sectionTitle": "Disabled",
+          "subtitle": "Non-interactive slider.",
+          "minHeight": 100.0,
+          "embed": "slider-disabled"
+        },
+        {
+          "slug": "custom-format",
+          "sectionTitle": "Custom format",
+          "subtitle": "formatValue / formatRange for currency-style labels.",
+          "minHeight": 120.0,
+          "embed": "slider-custom-format"
+        }
+      ]
+    },
+    {
+      "id": "skeleton",
+      "title": "Skeleton",
+      "description": "Loading placeholders with shimmer (default), pulse, or static fill; optional synchronized shimmer host — aligned with HeroUI [Skeleton](https://heroui.com/docs/react/components/skeleton), [skeleton.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/skeleton/skeleton.tsx), and [skeleton.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/skeleton.css).",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Panel with stacked placeholder blocks (default shimmer).",
+          "minHeight": 200.0,
+          "embed": "skeleton-usage"
+        },
+        {
+          "slug": "text-content",
+          "sectionTitle": "Text content",
+          "subtitle": "Multiple lines via RiseSkeletonGroup.",
+          "minHeight": 160.0,
+          "embed": "skeleton-text-content"
+        },
+        {
+          "slug": "user-profile",
+          "sectionTitle": "User profile",
+          "subtitle": "Avatar circle + two text lines.",
+          "minHeight": 100.0,
+          "embed": "skeleton-user-profile"
+        },
+        {
+          "slug": "list-items",
+          "sectionTitle": "List items",
+          "subtitle": "Repeated row pattern (line + short pill).",
+          "minHeight": 220.0,
+          "embed": "skeleton-list-items"
+        },
+        {
+          "slug": "animation-types",
+          "sectionTitle": "Animation types",
+          "subtitle": "Shimmer, pulse, and none side by side.",
+          "minHeight": 200.0,
+          "embed": "skeleton-animation-types"
+        },
+        {
+          "slug": "grid",
+          "sectionTitle": "Grid",
+          "subtitle": "Dense grid of small blocks.",
+          "minHeight": 220.0,
+          "embed": "skeleton-grid"
+        },
+        {
+          "slug": "synchronized-shimmer",
+          "sectionTitle": "Synchronized shimmer",
+          "subtitle": "RiseSkeletonSyncShimmer — one phase shared across children.",
+          "minHeight": 120.0,
+          "embed": "skeleton-synchronized-shimmer"
+        }
+      ]
+    },
+    {
+      "id": "spinner",
+      "title": "Spinner",
+      "description": "Loading indicator with HeroUI-aligned sizes (sm–xl), semantic colors including current (inherits icon/text color), and continuous rotation — see [Spinner](https://heroui.com/docs/react/components/spinner), [spinner.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/spinner/spinner.tsx), and [spinner.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/spinner.css).",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Default spinner (md, current color).",
+          "minHeight": 100.0,
+          "embed": "spinner-usage"
+        },
+        {
+          "slug": "colors",
+          "sectionTitle": "Colors",
+          "subtitle": "current, accent, success, warning, danger.",
+          "minHeight": 140.0,
+          "embed": "spinner-colors"
+        },
+        {
+          "slug": "sizes",
+          "sectionTitle": "Sizes",
+          "subtitle": "sm, md, lg, xl — match HeroUI size tokens.",
+          "minHeight": 120.0,
+          "embed": "spinner-sizes"
+        },
+        {
+          "slug": "loading-flag",
+          "sectionTitle": "Loading flag",
+          "subtitle": "isLoading: false renders no space (optional).",
+          "minHeight": 80.0,
+          "embed": "spinner-loading-flag"
+        }
+      ]
+    },
+    {
+      "id": "surface",
+      "title": "Surface",
+      "description": "Semantic containers with default, secondary, tertiary, and transparent variants, plus RiseSurfaceScope for child context — aligned HeroUI [Surface](https://heroui.com/docs/react/components/surface), [surface.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/surface/surface.tsx), and [surface.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/surface.css).",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Variants",
+          "subtitle": "primary (default), secondary, tertiary, transparent — with on-surface copy.",
+          "minHeight": 420.0,
+          "embed": "surface-usage"
+        },
+        {
+          "slug": "with-form",
+          "sectionTitle": "With form fields",
+          "subtitle": "Nested inputs use secondary field variant on a default surface (Hero pattern).",
+          "minHeight": 220.0,
+          "embed": "surface-with-form"
+        }
+      ]
+    },
+    {
+      "id": "switch",
+      "title": "Switch",
+      "description": "Boolean toggle with sizes, label placement, optional description and thumb icons, plus SwitchGroup layouts — aligned with HeroUI Switch (heroui.com/docs/react/components/switch), switch.tsx, and switch.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Label with control (default: label after track).",
+          "minHeight": 100.0,
+          "embed": "switch-usage"
+        },
+        {
+          "slug": "disabled",
+          "sectionTitle": "Disabled",
+          "subtitle": "Non-interactive switch.",
+          "minHeight": 90.0,
+          "embed": "switch-disabled"
+        },
+        {
+          "slug": "sizes",
+          "sectionTitle": "Sizes",
+          "subtitle": "sm · md · lg.",
+          "minHeight": 200.0,
+          "embed": "switch-sizes"
+        },
+        {
+          "slug": "label-position",
+          "sectionTitle": "Label position",
+          "subtitle": "Label before vs after the control.",
+          "minHeight": 140.0,
+          "embed": "switch-label-position"
+        },
+        {
+          "slug": "with-description",
+          "sectionTitle": "With description",
+          "subtitle": "Secondary line under the label.",
+          "minHeight": 120.0,
+          "embed": "switch-with-description"
+        },
+        {
+          "slug": "with-icons",
+          "sectionTitle": "With icons",
+          "subtitle": "Optional thumb icons for on/off.",
+          "minHeight": 100.0,
+          "embed": "switch-with-icons"
+        },
+        {
+          "slug": "group",
+          "sectionTitle": "Group",
+          "subtitle": "Vertical SwitchGroup spacing.",
+          "minHeight": 200.0,
+          "embed": "switch-group"
+        },
+        {
+          "slug": "group-horizontal",
+          "sectionTitle": "Group horizontal",
+          "subtitle": "Horizontal SwitchGroup with scroll.",
+          "minHeight": 120.0,
+          "embed": "switch-group-horizontal"
+        }
+      ]
+    },
+    {
+      "id": "tabs",
+      "title": "Tabs",
+      "description": "Tab list + panels with primary/secondary variants and vertical layout — aligned with @heroui/react Tabs, tabs.tsx, and tabs.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Primary horizontal tabs with segment indicator.",
+          "minHeight": 200.0,
+          "embed": "tabs-usage"
+        },
+        {
+          "slug": "vertical",
+          "sectionTitle": "Vertical",
+          "subtitle": "Primary tabs along the leading edge.",
+          "minHeight": 220.0,
+          "embed": "tabs-vertical"
+        },
+        {
+          "slug": "disabled",
+          "sectionTitle": "Disabled tab",
+          "subtitle": "One tab cannot be selected.",
+          "minHeight": 200.0,
+          "embed": "tabs-disabled"
+        },
+        {
+          "slug": "with-separator",
+          "sectionTitle": "With separator",
+          "subtitle": "Hairline dividers between tab labels.",
+          "minHeight": 200.0,
+          "embed": "tabs-with-separator"
+        },
+        {
+          "slug": "custom-styles",
+          "sectionTitle": "Custom styles",
+          "subtitle": "Secondary tabs with centered alignment.",
+          "minHeight": 200.0,
+          "embed": "tabs-custom-styles"
+        },
+        {
+          "slug": "secondary",
+          "sectionTitle": "Secondary variant",
+          "subtitle": "Underline indicator on a transparent bar.",
+          "minHeight": 200.0,
+          "embed": "tabs-secondary"
+        },
+        {
+          "slug": "secondary-vertical",
+          "sectionTitle": "Secondary vertical",
+          "subtitle": "Leading border and accent stroke on the active tab.",
+          "minHeight": 220.0,
+          "embed": "tabs-secondary-vertical"
+        },
+        {
+          "slug": "scrollable",
+          "sectionTitle": "Scrollable",
+          "subtitle": "Many tabs in the secondary style.",
+          "minHeight": 200.0,
+          "embed": "tabs-scrollable"
+        }
+      ]
+    },
+    {
+      "id": "checkbox",
+      "title": "Checkbox",
+      "description": "Selection control with label/description slot, indeterminate, invalid, and variants (primary/secondary) — aligned with HeroUI Checkbox and checkbox.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Basic checkbox with label.",
+          "minHeight": 90.0,
+          "embed": "checkbox-usage"
+        },
+        {
+          "slug": "controlled",
+          "sectionTitle": "Controlled",
+          "subtitle": "External state + status text.",
+          "minHeight": 120.0,
+          "embed": "checkbox-controlled"
+        },
+        {
+          "slug": "indeterminate",
+          "sectionTitle": "Indeterminate",
+          "subtitle": "Tristate null value (dash).",
+          "minHeight": 120.0,
+          "embed": "checkbox-indeterminate"
+        },
+        {
+          "slug": "with-description",
+          "sectionTitle": "With description",
+          "subtitle": "Label and helper text block.",
+          "minHeight": 120.0,
+          "embed": "checkbox-with-description"
+        },
+        {
+          "slug": "invalid",
+          "sectionTitle": "Invalid",
+          "subtitle": "Danger styling for required agreement.",
+          "minHeight": 120.0,
+          "embed": "checkbox-invalid"
+        },
+        {
+          "slug": "variants",
+          "sectionTitle": "Variants",
+          "subtitle": "primary vs secondary visual style.",
+          "minHeight": 140.0,
+          "embed": "checkbox-variants"
+        },
+        {
+          "slug": "disabled",
+          "sectionTitle": "Disabled",
+          "subtitle": "Non-interactive checkbox.",
+          "minHeight": 100.0,
+          "embed": "checkbox-disabled"
+        }
+      ]
+    },
+    {
+      "id": "description",
+      "title": "Description",
+      "description": "Supplementary helper text for form fields and component chrome — aligned with HeroUI Description (heroui.com/docs/react/components/description) and description.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Muted helper text under a label.",
+          "minHeight": 100.0,
+          "embed": "description-usage"
+        },
+        {
+          "slug": "with-form-field",
+          "sectionTitle": "With form field",
+          "subtitle": "Label + input + helper text stack.",
+          "minHeight": 170.0,
+          "embed": "description-with-form-field"
+        },
+        {
+          "slug": "with-text-field",
+          "sectionTitle": "Integration with text field",
+          "subtitle": "Description used below RiseTextField.",
+          "minHeight": 140.0,
+          "embed": "description-with-text-field"
+        }
+      ]
+    },
+    {
+      "id": "field-error",
+      "title": "FieldError",
+      "description": "Validation error text for form fields with danger styling and accessibility semantics — aligned with HeroUI FieldError and field-error.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Simple error line under a field.",
+          "minHeight": 90.0,
+          "embed": "field-error-usage"
+        },
+        {
+          "slug": "basic-validation",
+          "sectionTitle": "Basic validation",
+          "subtitle": "Conditional invalid state with message.",
+          "minHeight": 180.0,
+          "embed": "field-error-basic-validation"
+        },
+        {
+          "slug": "dynamic-message",
+          "sectionTitle": "With dynamic message",
+          "subtitle": "Message content changes with input value.",
+          "minHeight": 190.0,
+          "embed": "field-error-dynamic-message"
+        },
+        {
+          "slug": "multiple-messages",
+          "sectionTitle": "Multiple messages",
+          "subtitle": "Render multiple validation errors.",
+          "minHeight": 220.0,
+          "embed": "field-error-multiple-messages"
+        }
+      ]
+    },
+    {
+      "id": "label",
+      "title": "Label",
+      "description": "Accessible form label with required, disabled, and invalid states — aligned with HeroUI Label and label.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Basic field label.",
+          "minHeight": 100.0,
+          "embed": "label-usage"
+        },
+        {
+          "slug": "required",
+          "sectionTitle": "Required indicator",
+          "subtitle": "Adds danger-colored asterisk.",
+          "minHeight": 100.0,
+          "embed": "label-required"
+        },
+        {
+          "slug": "disabled",
+          "sectionTitle": "Disabled state",
+          "subtitle": "Muted label for disabled inputs.",
+          "minHeight": 100.0,
+          "embed": "label-disabled"
+        },
+        {
+          "slug": "invalid",
+          "sectionTitle": "Invalid state",
+          "subtitle": "Danger-colored label for invalid controls.",
+          "minHeight": 100.0,
+          "embed": "label-invalid"
+        },
+        {
+          "slug": "with-input",
+          "sectionTitle": "With input",
+          "subtitle": "Common label + input composition.",
+          "minHeight": 150.0,
+          "embed": "label-with-input"
+        }
+      ]
+    },
+    {
+      "id": "popover",
+      "title": "Popover",
+      "description": "Anchored rich-content overlay with placement, arrow, and interactive content — aligned with @heroui/react Popover, popover.tsx, and popover.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Basic trigger + dialog content.",
+          "minHeight": 180.0,
+          "embed": "popover-usage"
+        },
+        {
+          "slug": "with-arrow",
+          "sectionTitle": "With arrow",
+          "subtitle": "Popover with directional arrow.",
+          "minHeight": 190.0,
+          "embed": "popover-with-arrow"
+        },
+        {
+          "slug": "placement",
+          "sectionTitle": "Placement",
+          "subtitle": "Top, right, bottom, and left anchors.",
+          "minHeight": 260.0,
+          "embed": "popover-placement"
+        },
+        {
+          "slug": "interactive-content",
+          "sectionTitle": "Interactive content",
+          "subtitle": "Focusable content with actions inside the popover.",
+          "minHeight": 220.0,
+          "embed": "popover-interactive-content"
+        },
+        {
+          "slug": "custom-trigger",
+          "sectionTitle": "Custom trigger",
+          "subtitle": "Use any custom widget as trigger.",
+          "minHeight": 180.0,
+          "embed": "popover-custom-trigger"
+        }
+      ]
+    },
+    {
+      "id": "radio",
+      "title": "RadioGroup",
+      "description": "Single-choice selection with orientation, variants, disabled and invalid states — aligned with HeroUI RadioGroup and radio-group.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Basic vertical radio group.",
+          "minHeight": 200.0,
+          "embed": "radio-usage"
+        },
+        {
+          "slug": "horizontal",
+          "sectionTitle": "Horizontal orientation",
+          "subtitle": "Options laid out in a row/wrap.",
+          "minHeight": 140.0,
+          "embed": "radio-horizontal"
+        },
+        {
+          "slug": "controlled",
+          "sectionTitle": "Controlled",
+          "subtitle": "Selection mirrored in UI state.",
+          "minHeight": 210.0,
+          "embed": "radio-controlled"
+        },
+        {
+          "slug": "disabled",
+          "sectionTitle": "Disabled",
+          "subtitle": "Whole group disabled.",
+          "minHeight": 180.0,
+          "embed": "radio-disabled"
+        },
+        {
+          "slug": "variants",
+          "sectionTitle": "Variants",
+          "subtitle": "primary and secondary styling.",
+          "minHeight": 260.0,
+          "embed": "radio-variants"
+        },
+        {
+          "slug": "invalid",
+          "sectionTitle": "Invalid",
+          "subtitle": "Danger styles and error message.",
+          "minHeight": 220.0,
+          "embed": "radio-invalid"
+        }
+      ]
+    },
+    {
+      "id": "search-field",
+      "title": "SearchField",
+      "description": "Search input with leading icon, clear button, validation, and variants — aligned with HeroUI SearchField and search-field.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Basic search input.",
+          "minHeight": 140.0,
+          "embed": "search-field-usage"
+        },
+        {
+          "slug": "with-description",
+          "sectionTitle": "With description",
+          "subtitle": "Label + helper text.",
+          "minHeight": 170.0,
+          "embed": "search-field-with-description"
+        },
+        {
+          "slug": "required",
+          "sectionTitle": "Required field",
+          "subtitle": "Required indicator with helper text.",
+          "minHeight": 170.0,
+          "embed": "search-field-required"
+        },
+        {
+          "slug": "validation",
+          "sectionTitle": "Validation",
+          "subtitle": "Invalid state with field error.",
+          "minHeight": 190.0,
+          "embed": "search-field-validation"
+        },
+        {
+          "slug": "disabled",
+          "sectionTitle": "Disabled",
+          "subtitle": "Non-interactive search field.",
+          "minHeight": 150.0,
+          "embed": "search-field-disabled"
+        },
+        {
+          "slug": "controlled",
+          "sectionTitle": "Controlled",
+          "subtitle": "External value and clear action.",
+          "minHeight": 190.0,
+          "embed": "search-field-controlled"
+        },
+        {
+          "slug": "full-width",
+          "sectionTitle": "Full width",
+          "subtitle": "Stretches to available width.",
+          "minHeight": 140.0,
+          "embed": "search-field-full-width"
+        },
+        {
+          "slug": "variants",
+          "sectionTitle": "Variants",
+          "subtitle": "primary and secondary styles.",
+          "minHeight": 180.0,
+          "embed": "search-field-variants"
+        }
+      ]
+    },
+    {
+      "id": "select",
+      "title": "Select",
+      "description": "Collapsible option selector with field chrome, validation states, and variants — aligned with HeroUI Select and select.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Basic controlled single select.",
+          "minHeight": 170.0,
+          "embed": "select-usage"
+        },
+        {
+          "slug": "with-description",
+          "sectionTitle": "With description",
+          "subtitle": "Label + helper text.",
+          "minHeight": 190.0,
+          "embed": "select-with-description"
+        },
+        {
+          "slug": "with-disabled-options",
+          "sectionTitle": "With disabled options",
+          "subtitle": "Some options are not selectable.",
+          "minHeight": 170.0,
+          "embed": "select-with-disabled-options"
+        },
+        {
+          "slug": "required",
+          "sectionTitle": "Required",
+          "subtitle": "Required indicator + validation.",
+          "minHeight": 210.0,
+          "embed": "select-required"
+        },
+        {
+          "slug": "full-width",
+          "sectionTitle": "Full width",
+          "subtitle": "Stretches to available width.",
+          "minHeight": 170.0,
+          "embed": "select-full-width"
+        },
+        {
+          "slug": "variants",
+          "sectionTitle": "Variants",
+          "subtitle": "primary and secondary trigger styles.",
+          "minHeight": 220.0,
+          "embed": "select-variants"
+        },
+        {
+          "slug": "disabled",
+          "sectionTitle": "Disabled",
+          "subtitle": "Non-interactive select.",
+          "minHeight": 170.0,
+          "embed": "select-disabled"
+        }
+      ]
+    },
+    {
+      "id": "scroll-shadow",
+      "title": "Scroll shadow",
+      "description": "Edge fade overlays when content overflows — aligned with HeroUI ScrollShadow, scroll-shadow.tsx, and scroll-shadow.css (vertical / horizontal, size, offset, hide scrollbar, visibility).",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Vertical list: fades at the top and/or bottom when there is more content.",
+          "minHeight": 260.0,
+          "embed": "scroll-shadow-usage"
+        },
+        {
+          "slug": "horizontal",
+          "sectionTitle": "Horizontal",
+          "subtitle": "Axis.horizontal with a horizontal ListView.",
+          "minHeight": 200.0,
+          "embed": "scroll-shadow-horizontal"
+        },
+        {
+          "slug": "hide-scrollbar",
+          "sectionTitle": "Hide scrollbar",
+          "subtitle": "Hero hideScrollBar — thumb and track hidden for Material scrollbars.",
+          "minHeight": 260.0,
+          "embed": "scroll-shadow-hide-scrollbar"
+        },
+        {
+          "slug": "custom-size",
+          "sectionTitle": "Custom shadow size",
+          "subtitle": "Hero size prop (fade extent in logical pixels, default 40).",
+          "minHeight": 260.0,
+          "embed": "scroll-shadow-custom-size"
+        },
+        {
+          "slug": "visibility-state",
+          "sectionTitle": "Visibility state",
+          "subtitle": "onVisibilityChange when visibility is auto (both · top · bottom · none for vertical).",
+          "minHeight": 280.0,
+          "embed": "scroll-shadow-visibility-state"
+        },
+        {
+          "slug": "with-card",
+          "sectionTitle": "Inside surface",
+          "subtitle": "ScrollShadow inside a padded RiseSurface shell.",
+          "minHeight": 360.0,
+          "embed": "scroll-shadow-with-card"
+        }
+      ]
+    },
+    {
+      "id": "separator",
+      "title": "Separator",
+      "description": "Dividers with HeroUI tones (standard, secondary, tertiary), horizontal and vertical orientation, optional centered label, and surface-aware contrast — see [Separator](https://heroui.com/docs/react/components/separator), [separator.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/separator/separator.tsx), and [separator.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/separator.css).",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Horizontal rule under intro copy; link row with vertical separators.",
+          "minHeight": 200.0,
+          "embed": "separator-usage"
+        },
+        {
+          "slug": "vertical",
+          "sectionTitle": "Vertical",
+          "subtitle": "1px vertical line between row items (bounded height).",
+          "minHeight": 100.0,
+          "embed": "separator-vertical"
+        },
+        {
+          "slug": "with-content",
+          "sectionTitle": "With content",
+          "subtitle": "RiseLabeledSeparator — muted label between growing lines.",
+          "minHeight": 220.0,
+          "embed": "separator-with-content"
+        },
+        {
+          "slug": "variants",
+          "sectionTitle": "Variants",
+          "subtitle": "standard, secondary, and tertiary line contrast.",
+          "minHeight": 140.0,
+          "embed": "separator-variants"
+        },
+        {
+          "slug": "with-surface",
+          "sectionTitle": "With surface",
+          "subtitle": "Separators on default / secondary / tertiary RiseSurface shells.",
+          "minHeight": 280.0,
+          "embed": "separator-with-surface"
+        }
+      ]
+    },
+    {
+      "id": "input",
+      "title": "Input",
+      "description": "Primitive single-line input with variants, input types, controlled state, and full width — aligned with HeroUI Input and input.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Basic input with placeholder.",
+          "minHeight": 110.0,
+          "embed": "input-usage"
+        },
+        {
+          "slug": "input-types",
+          "sectionTitle": "Input types",
+          "subtitle": "Email, age, and password.",
+          "minHeight": 220.0,
+          "embed": "input-input-types"
+        },
+        {
+          "slug": "controlled",
+          "sectionTitle": "Controlled",
+          "subtitle": "Value driven from state.",
+          "minHeight": 130.0,
+          "embed": "input-controlled"
+        },
+        {
+          "slug": "full-width",
+          "sectionTitle": "Full width",
+          "subtitle": "Input expands to container width.",
+          "minHeight": 120.0,
+          "embed": "input-full-width"
+        },
+        {
+          "slug": "variants",
+          "sectionTitle": "Variants",
+          "subtitle": "primary vs secondary.",
+          "minHeight": 130.0,
+          "embed": "input-variants"
+        }
+      ]
+    },
+    {
+      "id": "input-group",
+      "title": "InputGroup",
+      "description": "Grouped input controls with prefix/suffix slots for icons, text, and actions — aligned with HeroUI InputGroup and input-group.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Input with a prefix icon.",
+          "minHeight": 120.0,
+          "embed": "input-group-usage"
+        },
+        {
+          "slug": "with-suffix",
+          "sectionTitle": "With suffix icon",
+          "subtitle": "Input with trailing icon.",
+          "minHeight": 120.0,
+          "embed": "input-group-with-suffix"
+        },
+        {
+          "slug": "prefix-and-suffix",
+          "sectionTitle": "With prefix and suffix",
+          "subtitle": "Currency and unit styling around input.",
+          "minHeight": 130.0,
+          "embed": "input-group-prefix-and-suffix"
+        },
+        {
+          "slug": "password-toggle",
+          "sectionTitle": "Password toggle",
+          "subtitle": "Interactive suffix button.",
+          "minHeight": 130.0,
+          "embed": "input-group-password-toggle"
+        },
+        {
+          "slug": "variants",
+          "sectionTitle": "Variants",
+          "subtitle": "primary vs secondary.",
+          "minHeight": 140.0,
+          "embed": "input-group-variants"
+        },
+        {
+          "slug": "full-width",
+          "sectionTitle": "Full width",
+          "subtitle": "InputGroup expands to container width.",
+          "minHeight": 120.0,
+          "embed": "input-group-full-width"
+        }
+      ]
+    },
+    {
+      "id": "input-otp",
+      "title": "InputOTP",
+      "description": "One-time passcode input with grouped slots, validation states, and completion callbacks — aligned with HeroUI InputOTP and input-otp.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Basic 6-digit OTP.",
+          "minHeight": 130.0,
+          "embed": "input-otp-usage"
+        },
+        {
+          "slug": "four-digits",
+          "sectionTitle": "Four digits",
+          "subtitle": "PIN-style 4-slot input.",
+          "minHeight": 120.0,
+          "embed": "input-otp-four-digits"
+        },
+        {
+          "slug": "disabled",
+          "sectionTitle": "Disabled state",
+          "subtitle": "Non-interactive slots.",
+          "minHeight": 120.0,
+          "embed": "input-otp-disabled"
+        },
+        {
+          "slug": "with-pattern",
+          "sectionTitle": "With pattern",
+          "subtitle": "Letters-only input pattern.",
+          "minHeight": 120.0,
+          "embed": "input-otp-with-pattern"
+        },
+        {
+          "slug": "controlled",
+          "sectionTitle": "Controlled",
+          "subtitle": "Read OTP value through onChanged.",
+          "minHeight": 150.0,
+          "embed": "input-otp-controlled"
+        },
+        {
+          "slug": "variants",
+          "sectionTitle": "Variants",
+          "subtitle": "primary vs secondary slot styling.",
+          "minHeight": 160.0,
+          "embed": "input-otp-variants"
+        }
+      ]
+    },
+    {
+      "id": "text-field",
+      "title": "TextField",
+      "description": "Label, input, helper, and error in one field — aligned with @heroui/react TextField, textfield.tsx, and textfield.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Email-style field with label and placeholder.",
+          "minHeight": 150.0,
+          "embed": "text-field-usage"
+        },
+        {
+          "slug": "with-description",
+          "sectionTitle": "With description",
+          "subtitle": "Helper text under the input.",
+          "minHeight": 170.0,
+          "embed": "text-field-with-description"
+        },
+        {
+          "slug": "required",
+          "sectionTitle": "Required field",
+          "subtitle": "Required marker with helper text.",
+          "minHeight": 170.0,
+          "embed": "text-field-required"
+        },
+        {
+          "slug": "validation",
+          "sectionTitle": "Validation",
+          "subtitle": "Invalid state hides helper and shows error.",
+          "minHeight": 200.0,
+          "embed": "text-field-validation"
+        },
+        {
+          "slug": "controlled",
+          "sectionTitle": "Controlled",
+          "subtitle": "Synced values and character counts.",
+          "minHeight": 280.0,
+          "embed": "text-field-controlled"
+        },
+        {
+          "slug": "error-message",
+          "sectionTitle": "Error message",
+          "subtitle": "Static invalid state with FieldError-style copy.",
+          "minHeight": 160.0,
+          "embed": "text-field-error-message"
+        },
+        {
+          "slug": "disabled",
+          "sectionTitle": "Disabled",
+          "subtitle": "Non-editable field with helper text.",
+          "minHeight": 160.0,
+          "embed": "text-field-disabled"
+        },
+        {
+          "slug": "multiline",
+          "sectionTitle": "Multiline",
+          "subtitle": "Several rows inside the same TextField API.",
+          "minHeight": 220.0,
+          "embed": "text-field-multiline"
+        },
+        {
+          "slug": "input-types",
+          "sectionTitle": "Input types",
+          "subtitle": "Password, numeric, and email keyboards.",
+          "minHeight": 260.0,
+          "embed": "text-field-input-types"
+        },
+        {
+          "slug": "full-width",
+          "sectionTitle": "Full width",
+          "subtitle": "Stacked fields that stretch to the container.",
+          "minHeight": 220.0,
+          "embed": "text-field-full-width"
+        },
+        {
+          "slug": "in-surface",
+          "sectionTitle": "In surface",
+          "subtitle": "Secondary variant on a surface background.",
+          "minHeight": 260.0,
+          "embed": "text-field-in-surface"
+        },
+        {
+          "slug": "variants",
+          "sectionTitle": "Variants",
+          "subtitle": "Primary vs secondary field fill.",
+          "minHeight": 200.0,
+          "embed": "text-field-variants"
+        }
+      ]
+    },
+    {
+      "id": "text-area",
+      "title": "TextArea",
+      "description": "Multiline text input with HeroUI-style field tokens, rows, variants, and full width — aligned with @heroui/react TextArea and textarea.css.",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Usage",
+          "subtitle": "Basic multi-line input with placeholder.",
+          "minHeight": 160.0,
+          "embed": "text-area-usage"
+        },
+        {
+          "slug": "controlled",
+          "sectionTitle": "Controlled",
+          "subtitle": "Live character count with max length.",
+          "minHeight": 200.0,
+          "embed": "text-area-controlled"
+        },
+        {
+          "slug": "rows",
+          "sectionTitle": "Rows",
+          "subtitle": "Short vs taller default row counts.",
+          "minHeight": 260.0,
+          "embed": "text-area-rows"
+        },
+        {
+          "slug": "full-width",
+          "sectionTitle": "Full width",
+          "subtitle": "Stretches to container width.",
+          "minHeight": 160.0,
+          "embed": "text-area-full-width"
+        },
+        {
+          "slug": "variants",
+          "sectionTitle": "Variants",
+          "subtitle": "Primary and secondary surface styles.",
+          "minHeight": 220.0,
+          "embed": "text-area-variants"
+        }
+      ]
+    }
+  ]
+}
