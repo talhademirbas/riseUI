@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-27T18:08:20.507050Z",
+  "generated": "2026-03-27T18:36:46.771077Z",
   "components": [
     {
       "id": "accordion",
@@ -377,69 +377,6 @@
           "subtitle": "Stacked fields and actions inside the card.",
           "minHeight": 320.0,
           "embed": "card-with-form"
-        }
-      ]
-    },
-    {
-      "id": "button-group",
-      "title": "ButtonGroup",
-      "description": "Group related buttons with shared styling, joined corners, optional separators — aligned with HeroUI ButtonGroup (heroui.com/docs/react/components/button-group) and button-group.css.",
-      "variants": [
-        {
-          "slug": "usage",
-          "sectionTitle": "Usage",
-          "subtitle": "Merged radii, zero gap; optional RiseButtonGroupSeparator inside 2nd+ buttons.",
-          "minHeight": 200.0,
-          "embed": "button-group-usage"
-        },
-        {
-          "slug": "variants",
-          "sectionTitle": "Variants",
-          "subtitle": "Shared variant on the group (primary, secondary, tertiary, outline, ghost, danger).",
-          "minHeight": 420.0,
-          "embed": "button-group-variants"
-        },
-        {
-          "slug": "sizes",
-          "sectionTitle": "Sizes",
-          "subtitle": "sm · md · lg on the group.",
-          "minHeight": 260.0,
-          "embed": "button-group-sizes"
-        },
-        {
-          "slug": "orientation",
-          "sectionTitle": "Orientation",
-          "subtitle": "horizontal vs vertical.",
-          "minHeight": 280.0,
-          "embed": "button-group-orientation"
-        },
-        {
-          "slug": "with-icons",
-          "sectionTitle": "With icons",
-          "subtitle": "Icon-only segments in a row.",
-          "minHeight": 120.0,
-          "embed": "button-group-with-icons"
-        },
-        {
-          "slug": "full-width",
-          "sectionTitle": "Full width",
-          "subtitle": "fullWidth: true — equal flex segments.",
-          "minHeight": 120.0,
-          "embed": "button-group-full-width"
-        },
-        {
-          "slug": "disabled",
-          "sectionTitle": "Disabled state",
-          "subtitle": "Group isDisabled; allowEnabledWhenGroupDisabled on one segment.",
-          "minHeight": 200.0,
-          "embed": "button-group-disabled"
-        },
-        {
-          "slug": "without-separator",
-          "sectionTitle": "Without separator",
-          "subtitle": "Omit RiseButtonGroupSeparator for a flush join.",
-          "minHeight": 120.0,
-          "embed": "button-group-without-separator"
         }
       ]
     },
@@ -845,26 +782,26 @@
     {
       "id": "description",
       "title": "Description",
-      "description": "Supplementary helper text for form fields and component chrome — aligned with HeroUI Description (heroui.com/docs/react/components/description) and description.css.",
+      "description": "Supplementary helper text for form fields — aligned with HeroUI Description and description.css.",
       "variants": [
         {
           "slug": "usage",
           "sectionTitle": "Usage",
-          "subtitle": "Muted helper text under a label.",
+          "subtitle": "Muted helper copy.",
           "minHeight": 100.0,
           "embed": "description-usage"
         },
         {
           "slug": "with-form-field",
           "sectionTitle": "With form field",
-          "subtitle": "Label + input + helper text stack.",
-          "minHeight": 170.0,
+          "subtitle": "`RiseLabel` + `RiseDescription` + `RiseInput`.",
+          "minHeight": 200.0,
           "embed": "description-with-form-field"
         },
         {
           "slug": "with-text-field",
-          "sectionTitle": "Integration with text field",
-          "subtitle": "Description used below RiseTextField.",
+          "sectionTitle": "With text field",
+          "subtitle": "`RiseTextField` uses `helperText` for the same role.",
           "minHeight": 140.0,
           "embed": "description-with-text-field"
         }
@@ -913,36 +850,36 @@
         {
           "slug": "usage",
           "sectionTitle": "Usage",
-          "subtitle": "Basic field label.",
+          "subtitle": "Plain text label.",
           "minHeight": 100.0,
           "embed": "label-usage"
         },
         {
           "slug": "required",
-          "sectionTitle": "Required indicator",
-          "subtitle": "Adds danger-colored asterisk.",
+          "sectionTitle": "Required",
+          "subtitle": "Asterisk indicator (or custom [requiredIndicator]).",
           "minHeight": 100.0,
           "embed": "label-required"
         },
         {
           "slug": "disabled",
-          "sectionTitle": "Disabled state",
-          "subtitle": "Muted label for disabled inputs.",
+          "sectionTitle": "Disabled",
+          "subtitle": "Muted foreground when `isDisabled`.",
           "minHeight": 100.0,
           "embed": "label-disabled"
         },
         {
           "slug": "invalid",
-          "sectionTitle": "Invalid state",
-          "subtitle": "Danger-colored label for invalid controls.",
+          "sectionTitle": "Invalid",
+          "subtitle": "Danger color for error context.",
           "minHeight": 100.0,
           "embed": "label-invalid"
         },
         {
           "slug": "with-input",
           "sectionTitle": "With input",
-          "subtitle": "Common label + input composition.",
-          "minHeight": 150.0,
+          "subtitle": "Label stacked above `RiseInput`.",
+          "minHeight": 160.0,
           "embed": "label-with-input"
         }
       ]

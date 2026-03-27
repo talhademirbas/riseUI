@@ -2,17 +2,16 @@ import 'catalog/accordion_showcase.dart';
 import 'catalog/alert_showcase.dart';
 import 'catalog/avatar_showcase.dart';
 import 'catalog/button_showcase.dart';
-import 'catalog/button_group_showcase.dart';
 import 'catalog/chip_showcase.dart';
 import 'catalog/card_showcase.dart';
 import 'catalog/checkbox_showcase.dart';
-import 'catalog/close_button_showcase.dart';
 import 'catalog/description_showcase.dart';
+import 'catalog/close_button_showcase.dart';
 import 'catalog/field_error_showcase.dart';
+import 'catalog/label_showcase.dart';
 import 'catalog/input_showcase.dart';
 import 'catalog/input_group_showcase.dart';
 import 'catalog/input_otp_showcase.dart';
-import 'catalog/label_showcase.dart';
 import 'catalog/popover_showcase.dart';
 import 'catalog/radio_showcase.dart';
 import 'catalog/search_field_showcase.dart';
@@ -52,7 +51,6 @@ final List<RiseComponentShowcase> kRiseComponentShowcases = [
   riseInputShowcase,
   riseInputGroupShowcase,
   riseInputOtpShowcase,
-  riseButtonGroupShowcase,
   riseTagGroupShowcase,
   riseSliderShowcase,
   riseSkeletonShowcase,

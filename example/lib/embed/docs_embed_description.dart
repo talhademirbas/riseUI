@@ -26,15 +26,8 @@ class _DescriptionUsageEmbed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        RiseLabel(child: Text('Email')),
-        SizedBox(height: 4),
-        RiseDescription(
-          child: Text("We'll never share your email with anyone else."),
-        ),
-      ],
+    return const RiseDescription(
+      child: Text('Choose a username you will use across the product.'),
     );
   }
 }
@@ -44,21 +37,16 @@ class _DescriptionWithFormFieldEmbed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        RiseLabel(child: Text('Password')),
-        SizedBox(height: 6),
-        TextField(
-          decoration: InputDecoration(
-            hintText: 'Enter your password',
-            border: OutlineInputBorder(),
-          ),
+        RiseLabel.text('Nickname'),
+        const SizedBox(height: 4),
+        const RiseDescription(
+          child: Text('Visible to other users on your profile.'),
         ),
-        SizedBox(height: 6),
-        RiseDescription(
-          child: Text('Must be at least 8 characters with one uppercase letter.'),
-        ),
+        const SizedBox(height: 8),
+        const RiseInput(hintText: 'friendly-fox'),
       ],
     );
   }
@@ -69,18 +57,10 @@ class _DescriptionWithTextFieldEmbed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        RiseTextField(
-          labelText: 'Project name',
-          hintText: 'Rise UI kit',
-        ),
-        SizedBox(height: 6),
-        RiseDescription(
-          child: Text('Used in URLs and dashboard headers.'),
-        ),
-      ],
+    return const RiseTextField(
+      labelText: 'Bio',
+      placeholder: 'Tell us about yourself',
+      helperText: 'A short paragraph is enough.',
     );
   }
 }

@@ -5,7 +5,6 @@ import '../showcase/catalog/accordion_showcase.dart';
 import '../showcase/catalog/alert_showcase.dart';
 import '../showcase/catalog/avatar_showcase.dart';
 import '../showcase/catalog/button_showcase.dart';
-import '../showcase/catalog/button_group_showcase.dart';
 import '../showcase/catalog/checkbox_showcase.dart';
 import '../showcase/catalog/description_showcase.dart';
 import '../showcase/catalog/field_error_showcase.dart';
@@ -80,10 +79,6 @@ class DocsEmbedPage extends StatelessWidget {
     final cardEmbed = buildCardDocsEmbed(context, embedId);
     if (cardEmbed != null) {
       return cardEmbed;
-    }
-    final buttonGroup = buildButtonGroupDocsEmbed(context, embedId);
-    if (buttonGroup != null) {
-      return buttonGroup;
     }
     final tagGroup = buildTagGroupDocsEmbed(context, embedId);
     if (tagGroup != null) {

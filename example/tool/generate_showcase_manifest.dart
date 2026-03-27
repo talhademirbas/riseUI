@@ -5,7 +5,6 @@ import 'package:rise_ui_example/showcase/config/accordion_public_config.dart';
 import 'package:rise_ui_example/showcase/config/alert_public_config.dart';
 import 'package:rise_ui_example/showcase/config/avatar_public_config.dart';
 import 'package:rise_ui_example/showcase/config/button_public_config.dart';
-import 'package:rise_ui_example/showcase/config/button_group_public_config.dart';
 import 'package:rise_ui_example/showcase/config/tag_group_public_config.dart';
 import 'package:rise_ui_example/showcase/config/skeleton_public_config.dart';
 import 'package:rise_ui_example/showcase/config/slider_public_config.dart';
@@ -51,7 +50,6 @@ void main() {
       _closeButtonManifestMap(),
       _chipManifestMap(),
       _cardManifestMap(),
-      _buttonGroupManifestMap(),
       _tagGroupManifestMap(),
       _sliderManifestMap(),
       _skeletonManifestMap(),
@@ -189,22 +187,6 @@ Map<String, dynamic> _cardManifestMap() => {
             'subtitle': c.subtitle,
             'minHeight': c.minHeight,
             'embed': c.embedId(kCardComponentId),
-          },
-      ],
-    };
-
-Map<String, dynamic> _buttonGroupManifestMap() => {
-      'id': kButtonGroupComponentId,
-      'title': kButtonGroupTitle,
-      'description': kButtonGroupDescription,
-      'variants': [
-        for (final c in kButtonGroupUsagePublicConfigs)
-          {
-            'slug': c.slug,
-            'sectionTitle': c.sectionTitle,
-            'subtitle': c.subtitle,
-            'minHeight': c.minHeight,
-            'embed': c.embedId(kButtonGroupComponentId),
           },
       ],
     };

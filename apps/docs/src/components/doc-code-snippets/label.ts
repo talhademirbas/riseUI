@@ -1,29 +1,27 @@
 /** Dart snippets — keep in sync with `example/lib/embed/docs_embed_label.dart`. */
 
-export const labelUsageCode = `const RiseLabel(
-  child: Text('Email'),
-)`;
+export const labelUsageCode = `RiseLabel.text('Display name')`;
 
-export const labelRequiredCode = `const RiseLabel(
+export const labelRequiredCode = `RiseLabel.text(
+  'Email',
   isRequired: true,
-  child: Text('Password'),
 )`;
 
-export const labelDisabledCode = `const RiseLabel(
+export const labelDisabledCode = `RiseLabel.text(
+  'Account ID',
   isDisabled: true,
-  child: Text('Username'),
 )`;
 
-export const labelInvalidCode = `const RiseLabel(
+export const labelInvalidCode = `RiseLabel.text(
+  'Password',
   isInvalid: true,
-  child: Text('Email'),
 )`;
 
-export const labelWithInputCode = `const Column(
+export const labelWithInputCode = `Column(
   crossAxisAlignment: CrossAxisAlignment.start,
   children: [
-    RiseLabel(isRequired: true, child: Text('Email address')),
+    RiseLabel.text('Username'),
     SizedBox(height: 6),
-    RiseInput(hintText: 'name@example.com', fullWidth: true),
+    RiseInput(hintText: 'jane.doe'),
   ],
 )`;

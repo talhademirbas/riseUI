@@ -64,16 +64,6 @@ import {
   cardWithFormCode,
 } from "./doc-code-snippets/card";
 import {
-  buttonGroupDisabledCode,
-  buttonGroupFullWidthCode,
-  buttonGroupOrientationCode,
-  buttonGroupSizesCode,
-  buttonGroupUsageCode,
-  buttonGroupVariantsCode,
-  buttonGroupWithIconsCode,
-  buttonGroupWithoutSeparatorCode,
-} from "./doc-code-snippets/button-group";
-import {
   tagGroupDisabledCode,
   tagGroupSelectionModesCode,
   tagGroupSizesCode,
@@ -308,16 +298,6 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
     variants: cardVariantsCode,
     horizontal: cardHorizontalCode,
     "with-form": cardWithFormCode,
-  },
-  "button-group": {
-    usage: buttonGroupUsageCode,
-    variants: buttonGroupVariantsCode,
-    sizes: buttonGroupSizesCode,
-    orientation: buttonGroupOrientationCode,
-    "with-icons": buttonGroupWithIconsCode,
-    "full-width": buttonGroupFullWidthCode,
-    disabled: buttonGroupDisabledCode,
-    "without-separator": buttonGroupWithoutSeparatorCode,
   },
   "tag-group": {
     usage: tagGroupUsageCode,

@@ -28,7 +28,7 @@ class _LabelUsageEmbed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const RiseLabel(child: Text('Email'));
+    return RiseLabel.text('Display name');
   }
 }
 
@@ -37,9 +37,9 @@ class _LabelRequiredEmbed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const RiseLabel(
+    return RiseLabel.text(
+      'Email',
       isRequired: true,
-      child: Text('Password'),
     );
   }
 }
@@ -49,9 +49,9 @@ class _LabelDisabledEmbed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const RiseLabel(
+    return RiseLabel.text(
+      'Account ID',
       isDisabled: true,
-      child: Text('Username'),
     );
   }
 }
@@ -61,9 +61,9 @@ class _LabelInvalidEmbed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const RiseLabel(
+    return RiseLabel.text(
+      'Password',
       isInvalid: true,
-      child: Text('Email'),
     );
   }
 }
@@ -73,19 +73,12 @@ class _LabelWithInputEmbed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        RiseLabel(
-          isRequired: true,
-          child: Text('Email address'),
-        ),
-        SizedBox(height: 6),
-        RiseInput(
-          hintText: 'name@example.com',
-          keyboardType: TextInputType.emailAddress,
-          fullWidth: true,
-        ),
+        RiseLabel.text('Username'),
+        const SizedBox(height: 6),
+        const RiseInput(hintText: 'jane.doe'),
       ],
     );
   }
