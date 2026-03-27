@@ -91,7 +91,7 @@ class DocsEmbedAccordion {
     );
   }
 
-  /// Surface variant — gray zinc fill + border + shadow ([RiseThemeData.muted], HeroUI `variant="surface"`).
+  /// Surface variant — [RiseThemeData.surface] shell + light `--surface-shadow` (same stack as [RiseListGroup]).
   static Widget surface(BuildContext context) {
     return _wrap(
       _surfaceAccordion(

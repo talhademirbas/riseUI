@@ -44,11 +44,11 @@ class RiseSeparator extends StatelessWidget {
   static const double _radius = 4;
 
   static Color lineColor(BuildContext context, RiseSeparatorTone tone) {
-    final b = context.riseTheme.border;
+    final rise = context.riseTheme;
     return switch (tone) {
-      RiseSeparatorTone.standard => b,
-      RiseSeparatorTone.secondary => b.withValues(alpha: 0.72),
-      RiseSeparatorTone.tertiary => b.withValues(alpha: 0.45),
+      RiseSeparatorTone.standard => rise.separator,
+      RiseSeparatorTone.secondary => rise.separatorSecondary,
+      RiseSeparatorTone.tertiary => rise.separatorTertiary,
     };
   }
 

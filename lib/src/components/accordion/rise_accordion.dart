@@ -577,30 +577,28 @@ class RiseAccordionContent extends StatelessWidget {
   }
 }
 
-/// HeroUI v3 surface variant: `rounded-3xl` + `bg-surface`-style fill (muted zinc) + border + soft shadow.
+/// HeroUI v3 surface variant: `rounded-3xl` + [`RiseThemeData.surface`] + [`--surface-shadow`](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/themes/default/variables.css) in light mode.
 ///
 /// Matches [heroui-native accordion surface](https://github.com/heroui-inc/heroui-native/blob/rc/src/components/accordion/accordion.styles.ts)
-/// (`bg-surface`, `border-surface`, `shadow-surface`) using [RiseThemeData.muted] as the grayish fill.
+/// (`bg-surface`, `shadow-surface`) — same shell idea as [RiseSurface] / [RiseListGroup].
 abstract final class RiseAccordionDecorations {
   RiseAccordionDecorations._();
 
-  /// Surface shell: **24px** radius, **[RiseThemeData.muted]** fill, hairline border, light elevation.
+  static const List<BoxShadow> _surfaceShadowsLight = [
+    BoxShadow(color: Color(0x0A000000), offset: Offset(0, 2), blurRadius: 4),
+    BoxShadow(color: Color(0x0F000000), offset: Offset(0, 1), blurRadius: 2),
+    BoxShadow(color: Color(0x0F000000), offset: Offset(0, 0), blurRadius: 0, spreadRadius: 1),
+  ];
+
+  /// Surface shell: **24px** radius, **[RiseThemeData.surface]** fill, Hero `--surface-shadow` in light (matches [RiseSurface] / [RiseListGroup]).
   /// Pair with `horizontalPadding: 20` and `separatorMargin: EdgeInsets.symmetric(horizontal: 12)` for inset dividers.
   static BoxDecoration surface(BuildContext context) {
     final rise = context.riseTheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return BoxDecoration(
-      color: rise.muted,
+      color: rise.surface,
       borderRadius: BorderRadius.circular(24),
-      border: Border.all(
-        color: rise.border.withValues(alpha: 0.55),
-      ),
-      boxShadow: [
-        BoxShadow(
-          color: rise.defaultForeground.withValues(alpha: 0.04),
-          blurRadius: 10,
-          offset: const Offset(0, 2),
-        ),
-      ],
+      boxShadow: isDark ? null : _surfaceShadowsLight,
     );
   }
 }

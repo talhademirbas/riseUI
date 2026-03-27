@@ -40,7 +40,7 @@ const List<RiseUsagePublicConfig> kAccordionUsagePublicConfigs = [
     slug: 'surface',
     sectionTitle: 'Usage · Surface',
     subtitle:
-        'Rounded 24px surface (`RiseAccordionDecorations.surface`), wider padding, inset separators — HeroUI `variant="surface"`.',
+        'Rounded 24px `RiseThemeData.surface` shell (`RiseAccordionDecorations.surface`), wider padding, inset separators — HeroUI `variant="surface"`.',
     minHeight: 340,
   ),
   RiseUsagePublicConfig(

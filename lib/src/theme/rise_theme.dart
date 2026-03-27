@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 
-/// Semantic tokens aligned with [HeroUI v3](https://www.heroui.com) CSS variables:
-/// `--background`, `--foreground`, `--muted`, `--muted-foreground`, `--border`,
-/// `--primary`, `--danger`, etc. Components should read these instead of ad-hoc colors.
+/// Semantic tokens aligned with HeroUI v3 default theme
+/// ([variables.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/themes/default/variables.css)).
+///
+/// sRGB values approximate OKLCH primitives from that file. Components should read
+/// these via [BuildContext] ([riseTheme]) instead of ad-hoc colors.
 @immutable
 class RiseThemeData extends ThemeExtension<RiseThemeData> {
   const RiseThemeData({
     required this.background,
+    required this.surface,
+    required this.surfaceSecondary,
+    required this.surfaceTertiary,
+    required this.overlay,
     required this.muted,
     required this.mutedForegroundBase,
+    required this.separator,
     required this.accent,
     required this.accentForeground,
     required this.accentSoftForeground,
@@ -31,57 +38,71 @@ class RiseThemeData extends ThemeExtension<RiseThemeData> {
     this.warningHover,
   });
 
-  /// HeroUI `--background` — default page / canvas (app scaffold, sheets).
+  /// HeroUI `--background` — page / canvas.
   final Color background;
 
-  /// HeroUI `--muted` — subtle fills (secondary surfaces, chips, skeleton base).
+  /// HeroUI `--surface` — cards, accordions, non-overlay shells (`bg-surface`).
+  final Color surface;
+
+  /// HeroUI `--surface-secondary`.
+  final Color surfaceSecondary;
+
+  /// HeroUI `--surface-tertiary`.
+  final Color surfaceTertiary;
+
+  /// HeroUI `--overlay` — tooltips, popovers, menus.
+  final Color overlay;
+
+  /// HeroUI `--default` — neutral fills (default button, neutral chip), not the muted *text* token.
   final Color muted;
 
-  /// Base for HeroUI `--muted-foreground`; use [mutedForeground] with an opacity.
+  /// HeroUI `--muted` — secondary / placeholder text base; use [mutedForeground] with opacity.
   final Color mutedForegroundBase;
 
-  /// HeroUI `--primary` / brand — primary filled actions.
+  /// HeroUI `--separator` — hairlines (distinct from [--border] in light theme).
+  final Color separator;
+
+  /// HeroUI `--accent`.
   final Color accent;
 
-  /// Text/icons on [accent].
+  /// HeroUI `--accent-foreground` (typically `--snow` on brand fills).
   final Color accentForeground;
 
-  /// Secondary text on default surfaces (e.g. secondary variant label).
+  /// HeroUI `--color-accent-soft-foreground` → `var(--accent)` on soft tints.
   final Color accentSoftForeground;
 
-  /// HeroUI `--foreground` — primary text on [background] / [muted].
+  /// HeroUI `--foreground` / `--default-foreground` on canvas.
   final Color defaultForeground;
 
-  /// HeroUI `--border` — outlines, hairlines, separators.
+  /// HeroUI `--border`.
   final Color border;
 
-  /// Destructive filled background.
+  /// HeroUI `--danger`.
   final Color danger;
 
   final Color dangerForeground;
 
-  /// Soft danger surface.
   final Color dangerSoft;
 
   final Color dangerSoftForeground;
 
-  /// Success (alerts, chips, status).
+  /// HeroUI `--disabled-opacity` (0.5).
+  final double disabledOpacity;
+
+  /// HeroUI `--success`; light/dark blocks (foreground is `--eclipse` in default theme).
   final Color success;
 
   final Color successForeground;
 
-  /// Warning (alerts, chips, status).
+  /// HeroUI `--warning`.
   final Color warning;
 
   final Color warningForeground;
 
-  /// Multiplier for disabled state (HeroUI uses `opacity-disabled`).
-  final double disabledOpacity;
-
-  /// Press/hover highlight for primary (optional; falls back to darkened [accent]).
+  /// `--color-accent-hover` (oklab mix) — optional override.
   final Color? accentHover;
 
-  /// Hover state for neutral / muted surfaces (optional).
+  /// `--color-default-hover`.
   final Color? defaultHover;
 
   final Color? dangerHover;
@@ -92,56 +113,67 @@ class RiseThemeData extends ThemeExtension<RiseThemeData> {
 
   final Color? warningHover;
 
+  /// OKLCH-derived defaults — see repo comment block for source tokens.
   static const RiseThemeData light = RiseThemeData(
-    background: Color(0xFFFFFFFF),
-    muted: Color(0xFFF4F4F5),
+    background: Color(0xFFF5F5F5),
+    surface: Color(0xFFFFFFFF),
+    surfaceSecondary: Color(0xFFEFEFF0),
+    surfaceTertiary: Color(0xFFEAEAEB),
+    overlay: Color(0xFFFFFFFF),
+    muted: Color(0xFFEBEBEC),
     mutedForegroundBase: Color(0xFF71717A),
-    accent: Color(0xFF006FEE),
-    accentForeground: Color(0xFFFFFFFF),
-    accentSoftForeground: Color(0xFF006FEE),
+    separator: Color(0xFFE4E4E7),
+    accent: Color(0xFF0485F7),
+    accentForeground: Color(0xFFFCFCFC),
+    accentSoftForeground: Color(0xFF0485F7),
     defaultForeground: Color(0xFF18181B),
-    border: Color(0xFFE4E4E7),
-    danger: Color(0xFFE11D48),
-    dangerForeground: Color(0xFFFFFFFF),
-    dangerSoft: Color(0xFFFFE4E6),
-    dangerSoftForeground: Color(0xFFE11D48),
+    border: Color(0xFFDEDEE0),
+    danger: Color(0xFFFF383C),
+    dangerForeground: Color(0xFFFCFCFC),
+    dangerSoft: Color(0xFFFFE1E2),
+    dangerSoftForeground: Color(0xFFFF383C),
     success: Color(0xFF17C964),
-    successForeground: Color(0xFFFFFFFF),
+    successForeground: Color(0xFF18181B),
     warning: Color(0xFFF5A524),
     warningForeground: Color(0xFF18181B),
     disabledOpacity: 0.5,
-    accentHover: Color(0xFF005BC4),
-    defaultHover: Color(0xFFD4D4D8),
-    dangerHover: Color(0xFFBE123C),
-    dangerSoftHover: Color(0xFFFECDD3),
-    successHover: Color(0xFF12A150),
-    warningHover: Color(0xFFE48B16),
+    accentHover: Color(0xFF1D91F8),
+    defaultHover: Color(0xFFE3E3E4),
+    dangerHover: Color(0xFFFF4C4F),
+    dangerSoftHover: Color(0xFFFFCDCE),
+    successHover: Color(0xFF17B75D),
+    warningHover: Color(0xFFDF9723),
   );
 
   static const RiseThemeData dark = RiseThemeData(
-    background: Color(0xFF09090B),
+    background: Color(0xFF060607),
+    surface: Color(0xFF18181B),
+    surfaceSecondary: Color(0xFF232325),
+    surfaceTertiary: Color(0xFF262728),
+    overlay: Color(0xFF18181B),
     muted: Color(0xFF27272A),
-    mutedForegroundBase: Color(0xFFA1A1AA),
-    accent: Color(0xFF006FEE),
-    accentForeground: Color(0xFFFFFFFF),
-    accentSoftForeground: Color(0xFF7CB8FF),
-    defaultForeground: Color(0xFFFAFAFA),
-    border: Color(0xFF3F3F46),
-    danger: Color(0xFFF31260),
-    dangerForeground: Color(0xFFFFFFFF),
-    dangerSoft: Color(0xFF312038),
-    dangerSoftForeground: Color(0xFFF31260),
+    mutedForegroundBase: Color(0xFF9F9FA9),
+    separator: Color(0xFF212124),
+    accent: Color(0xFF0485F7),
+    accentForeground: Color(0xFFFCFCFC),
+    accentSoftForeground: Color(0xFF0485F7),
+    defaultForeground: Color(0xFFFCFCFC),
+    border: Color(0xFF28282C),
+    danger: Color(0xFFDB3B3E),
+    dangerForeground: Color(0xFFFCFCFC),
+    dangerSoft: Color(0xFF3B1D20),
+    dangerSoftForeground: Color(0xFFDB3B3E),
     success: Color(0xFF17C964),
-    successForeground: Color(0xFFFFFFFF),
-    warning: Color(0xFFF5A524),
+    successForeground: Color(0xFF18181B),
+    warning: Color(0xFFF7B750),
     warningForeground: Color(0xFF18181B),
     disabledOpacity: 0.5,
-    accentHover: Color(0xFF3389FF),
-    defaultHover: Color(0xFF52525B),
-    dangerHover: Color(0xFFC11E4A),
-    dangerSoftHover: Color(0xFF4A2040),
-    successHover: Color(0xFF12A150),
-    warningHover: Color(0xFFE48B16),
+    accentHover: Color(0xFF1D91F8),
+    defaultHover: Color(0xFF303032),
+    dangerHover: Color(0xFFDE4E51),
+    dangerSoftHover: Color(0xFF532023),
+    successHover: Color(0xFF17B75D),
+    warningHover: Color(0xFFDF9723),
   );
 
   Color resolveAccentHover() => accentHover ?? _darken(accent, 0.08);
@@ -156,13 +188,21 @@ class RiseThemeData extends ThemeExtension<RiseThemeData> {
 
   Color resolveWarningHover() => warningHover ?? _darken(warning, 0.06);
 
-  /// HeroUI `--foreground` (alias for primary text).
+  /// HeroUI `--foreground`.
   Color get foreground => defaultForeground;
 
-  /// Hairlines / dividers — same token family as [border].
-  Color get divider => border;
+  /// Prefer [separator] for rules; [border] for outlines.
+  Color get divider => separator;
 
-  /// Muted secondary text (HeroUI `--muted-foreground`) — scales [mutedForegroundBase].
+  /// HeroUI `--focus` → `var(--accent)`.
+  Color get focus => accent;
+
+  /// HeroUI shared theme `separator-secondary` (surface / foreground mix).
+  Color get separatorSecondary => Color.lerp(surface, defaultForeground, 0.15)!;
+
+  /// `separator-tertiary` mix.
+  Color get separatorTertiary => Color.lerp(surface, defaultForeground, 0.19)!;
+
   Color mutedForeground([double alpha = 0.65]) {
     return mutedForegroundBase.withValues(alpha: alpha);
   }
@@ -179,8 +219,13 @@ class RiseThemeData extends ThemeExtension<RiseThemeData> {
   @override
   RiseThemeData copyWith({
     Color? background,
+    Color? surface,
+    Color? surfaceSecondary,
+    Color? surfaceTertiary,
+    Color? overlay,
     Color? muted,
     Color? mutedForegroundBase,
+    Color? separator,
     Color? accent,
     Color? accentForeground,
     Color? accentSoftForeground,
@@ -204,8 +249,13 @@ class RiseThemeData extends ThemeExtension<RiseThemeData> {
   }) {
     return RiseThemeData(
       background: background ?? this.background,
+      surface: surface ?? this.surface,
+      surfaceSecondary: surfaceSecondary ?? this.surfaceSecondary,
+      surfaceTertiary: surfaceTertiary ?? this.surfaceTertiary,
+      overlay: overlay ?? this.overlay,
       muted: muted ?? this.muted,
       mutedForegroundBase: mutedForegroundBase ?? this.mutedForegroundBase,
+      separator: separator ?? this.separator,
       accent: accent ?? this.accent,
       accentForeground: accentForeground ?? this.accentForeground,
       accentSoftForeground: accentSoftForeground ?? this.accentSoftForeground,
@@ -234,8 +284,13 @@ class RiseThemeData extends ThemeExtension<RiseThemeData> {
     if (other is! RiseThemeData) return this;
     return RiseThemeData(
       background: Color.lerp(background, other.background, t)!,
+      surface: Color.lerp(surface, other.surface, t)!,
+      surfaceSecondary: Color.lerp(surfaceSecondary, other.surfaceSecondary, t)!,
+      surfaceTertiary: Color.lerp(surfaceTertiary, other.surfaceTertiary, t)!,
+      overlay: Color.lerp(overlay, other.overlay, t)!,
       muted: Color.lerp(muted, other.muted, t)!,
       mutedForegroundBase: Color.lerp(mutedForegroundBase, other.mutedForegroundBase, t)!,
+      separator: Color.lerp(separator, other.separator, t)!,
       accent: Color.lerp(accent, other.accent, t)!,
       accentForeground: Color.lerp(accentForeground, other.accentForeground, t)!,
       accentSoftForeground: Color.lerp(accentSoftForeground, other.accentSoftForeground, t)!,

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-27T18:36:46.771077Z",
+  "generated": "2026-03-27T19:31:41.059231Z",
   "components": [
     {
       "id": "accordion",
@@ -17,7 +17,7 @@
         {
           "slug": "surface",
           "sectionTitle": "Usage · Surface",
-          "subtitle": "Rounded 24px surface (`RiseAccordionDecorations.surface`), wider padding, inset separators — HeroUI `variant=\"surface\"`.",
+          "subtitle": "Rounded 24px `RiseThemeData.surface` shell (`RiseAccordionDecorations.surface`), wider padding, inset separators — HeroUI `variant=\"surface\"`.",
           "minHeight": 340.0,
           "embed": "accordion-surface"
         },
@@ -881,6 +881,62 @@
           "subtitle": "Label stacked above `RiseInput`.",
           "minHeight": 160.0,
           "embed": "label-with-input"
+        }
+      ]
+    },
+    {
+      "id": "list-group",
+      "title": "List group",
+      "description": "Surface-backed grouped rows with prefix, title, description, and suffix slots — aligned with HeroUI Native [ListGroup](https://heroui.com/docs/native/components/list-group) and [list-group.tsx](https://github.com/heroui-inc/heroui-native/tree/main/src/components/list-group).",
+      "variants": [
+        {
+          "slug": "usage",
+          "sectionTitle": "Basic usage",
+          "subtitle": "Title and description rows with inset separators (Hero `Separator className=\"mx-4\"`).",
+          "minHeight": 220.0,
+          "embed": "list-group-usage"
+        },
+        {
+          "slug": "with-icons",
+          "sectionTitle": "With icons",
+          "subtitle": "ItemPrefix at 22px; default suffix chevron at 16px.",
+          "minHeight": 200.0,
+          "embed": "list-group-with-icons"
+        },
+        {
+          "slug": "title-only",
+          "sectionTitle": "Title only",
+          "subtitle": "Omit description; leading icon + title + chevron.",
+          "minHeight": 180.0,
+          "embed": "list-group-title-only"
+        },
+        {
+          "slug": "surface-variants",
+          "sectionTitle": "Surface variants",
+          "subtitle": "default / secondary / tertiary / transparent shells on [RiseSurface].",
+          "minHeight": 420.0,
+          "embed": "list-group-surface-variants"
+        },
+        {
+          "slug": "custom-suffix",
+          "sectionTitle": "Custom suffix",
+          "subtitle": "Trailing arrow, description as value, and a semantic chip.",
+          "minHeight": 200.0,
+          "embed": "list-group-custom-suffix"
+        },
+        {
+          "slug": "suffix-props",
+          "sectionTitle": "Suffix icon props",
+          "subtitle": "Chevron size 18 and custom muted color via [RiseListGroupItemSuffix].",
+          "minHeight": 140.0,
+          "embed": "list-group-suffix-props"
+        },
+        {
+          "slug": "full-layout",
+          "sectionTitle": "Sectioned layout",
+          "subtitle": "“Account” / “Preferences” labels and two groups — Hero example structure.",
+          "minHeight": 480.0,
+          "embed": "list-group-full-layout"
         }
       ]
     },

@@ -9,6 +9,7 @@ import 'catalog/description_showcase.dart';
 import 'catalog/close_button_showcase.dart';
 import 'catalog/field_error_showcase.dart';
 import 'catalog/label_showcase.dart';
+import 'catalog/list_group_showcase.dart';
 import 'catalog/input_showcase.dart';
 import 'catalog/input_group_showcase.dart';
 import 'catalog/input_otp_showcase.dart';
@@ -42,6 +43,7 @@ final List<RiseComponentShowcase> kRiseComponentShowcases = [
   riseDescriptionShowcase,
   riseFieldErrorShowcase,
   riseLabelShowcase,
+  riseListGroupShowcase,
   risePopoverShowcase,
   riseRadioShowcase,
   riseSearchFieldShowcase,

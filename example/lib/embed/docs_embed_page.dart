@@ -9,6 +9,7 @@ import '../showcase/catalog/checkbox_showcase.dart';
 import '../showcase/catalog/description_showcase.dart';
 import '../showcase/catalog/field_error_showcase.dart';
 import '../showcase/catalog/label_showcase.dart';
+import '../showcase/catalog/list_group_showcase.dart';
 import '../showcase/catalog/popover_showcase.dart';
 import '../showcase/catalog/radio_showcase.dart';
 import '../showcase/catalog/search_field_showcase.dart';
@@ -119,6 +120,10 @@ class DocsEmbedPage extends StatelessWidget {
     final labelEmbed = buildLabelDocsEmbed(context, embedId);
     if (labelEmbed != null) {
       return labelEmbed;
+    }
+    final listGroupEmbed = buildListGroupDocsEmbed(context, embedId);
+    if (listGroupEmbed != null) {
+      return listGroupEmbed;
     }
     final popoverEmbed = buildPopoverDocsEmbed(context, embedId);
     if (popoverEmbed != null) {

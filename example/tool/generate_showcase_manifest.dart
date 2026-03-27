@@ -19,6 +19,7 @@ import 'package:rise_ui_example/showcase/config/close_button_public_config.dart'
 import 'package:rise_ui_example/showcase/config/description_public_config.dart';
 import 'package:rise_ui_example/showcase/config/field_error_public_config.dart';
 import 'package:rise_ui_example/showcase/config/label_public_config.dart';
+import 'package:rise_ui_example/showcase/config/list_group_public_config.dart';
 import 'package:rise_ui_example/showcase/config/popover_public_config.dart';
 import 'package:rise_ui_example/showcase/config/radio_public_config.dart';
 import 'package:rise_ui_example/showcase/config/search_field_public_config.dart';
@@ -61,6 +62,7 @@ void main() {
       _descriptionManifestMap(),
       _fieldErrorManifestMap(),
       _labelManifestMap(),
+      _listGroupManifestMap(),
       _popoverManifestMap(),
       _radioManifestMap(),
       _searchFieldManifestMap(),
@@ -363,6 +365,22 @@ Map<String, dynamic> _labelManifestMap() => {
             'subtitle': c.subtitle,
             'minHeight': c.minHeight,
             'embed': c.embedId(kLabelComponentId),
+          },
+      ],
+    };
+
+Map<String, dynamic> _listGroupManifestMap() => {
+      'id': kListGroupComponentId,
+      'title': kListGroupTitle,
+      'description': kListGroupDescription,
+      'variants': [
+        for (final c in kListGroupUsagePublicConfigs)
+          {
+            'slug': c.slug,
+            'sectionTitle': c.sectionTitle,
+            'subtitle': c.subtitle,
+            'minHeight': c.minHeight,
+            'embed': c.embedId(kListGroupComponentId),
           },
       ],
     };

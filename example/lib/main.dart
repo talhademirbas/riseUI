@@ -9,12 +9,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   final embedId = _readEmbedId();
   final ThemeMode? embedThemeMode = _readEmbedThemeMode();
-  runApp(
-    RiseUiExampleApp(
-      embedId: embedId,
-      embedThemeMode: embedThemeMode,
-    ),
-  );
+  runApp(RiseUiExampleApp(embedId: embedId, embedThemeMode: embedThemeMode));
 }
 
 /// Docs site loads `/…?embed=accordion-faq` inside an iframe.
@@ -41,17 +36,44 @@ ThemeMode? _readEmbedThemeMode() {
   }
 }
 
+ThemeData _riseExampleTheme({required Brightness brightness}) {
+  final rise = brightness == Brightness.dark ? RiseThemeData.dark : RiseThemeData.light;
+  final scheme = ColorScheme.fromSeed(
+        seedColor: rise.accent,
+        brightness: brightness,
+        surface: rise.surface,
+        onSurface: rise.defaultForeground,
+        primary: rise.accent,
+        onPrimary: rise.accentForeground,
+        error: rise.danger,
+        onError: rise.dangerForeground,
+      )
+      .copyWith(
+        surfaceContainerLowest: rise.background,
+        surfaceContainerLow: rise.muted,
+        surfaceContainer: rise.surfaceSecondary,
+        surfaceContainerHigh: rise.surfaceTertiary,
+        surfaceContainerHighest: rise.surfaceTertiary,
+        outline: rise.border,
+        outlineVariant: rise.separator,
+      );
+
+  return ThemeData(
+    useMaterial3: true,
+    brightness: brightness,
+    scaffoldBackgroundColor: rise.background,
+    colorScheme: scheme,
+    extensions: [rise],
+  );
+}
+
 /// Example app for the `rise_ui` package.
 ///
 /// Each component lives under [pages/demos] and is opened from [HomePage] so
 /// only one heavy screen is built at a time. For documentation **embed** mode,
 /// [build] uses [DocsEmbedPage] when `?embed=` is present (Flutter web).
 class RiseUiExampleApp extends StatelessWidget {
-  const RiseUiExampleApp({
-    super.key,
-    this.embedId,
-    this.embedThemeMode,
-  });
+  const RiseUiExampleApp({super.key, this.embedId, this.embedThemeMode});
 
   /// When set (web + `?embed=`), shows a single preview for iframe embedding.
   final String? embedId;
@@ -65,24 +87,8 @@ class RiseUiExampleApp extends StatelessWidget {
     return MaterialApp(
       title: 'RiseUI Example',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF006FEE)).copyWith(
-          surface: RiseThemeData.light.background,
-        ),
-        useMaterial3: true,
-        extensions: const [RiseThemeData.light],
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF006FEE),
-          brightness: Brightness.dark,
-        ).copyWith(
-          surface: RiseThemeData.dark.background,
-        ),
-        useMaterial3: true,
-        extensions: const [RiseThemeData.dark],
-      ),
+      theme: _riseExampleTheme(brightness: Brightness.light),
+      darkTheme: _riseExampleTheme(brightness: Brightness.dark),
       themeMode: embedThemeMode ?? ThemeMode.system,
       home: embed != null ? DocsEmbedPage(embedId: embed) : const HomePage(),
     );
