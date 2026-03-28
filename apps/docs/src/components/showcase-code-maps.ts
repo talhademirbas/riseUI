@@ -183,8 +183,9 @@ import {
 import {
   scrollShadowCustomSizeCode,
   scrollShadowHideScrollbarCode,
-  scrollShadowHorizontalCode,
+  scrollShadowOrientationCode,
   scrollShadowUsageCode,
+  scrollShadowVariantsCode,
   scrollShadowVisibilityStateCode,
   scrollShadowWithCardCode,
 } from "./doc-code-snippets/scroll-shadow";
@@ -424,7 +425,8 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
   },
   "scroll-shadow": {
     usage: scrollShadowUsageCode,
-    horizontal: scrollShadowHorizontalCode,
+    variants: scrollShadowVariantsCode,
+    orientation: scrollShadowOrientationCode,
     "hide-scrollbar": scrollShadowHideScrollbarCode,
     "custom-size": scrollShadowCustomSizeCode,
     "visibility-state": scrollShadowVisibilityStateCode,

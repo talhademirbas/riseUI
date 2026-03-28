@@ -6,7 +6,8 @@ import '../rise_showcase_models.dart';
 
 final Map<String, Widget Function(BuildContext context)> _scrollShadowBuilders = {
   'usage': DocsEmbedScrollShadow.usage,
-  'horizontal': DocsEmbedScrollShadow.horizontal,
+  'variants': DocsEmbedScrollShadow.variants,
+  'orientation': DocsEmbedScrollShadow.orientation,
   'hide-scrollbar': DocsEmbedScrollShadow.hideScrollbar,
   'custom-size': DocsEmbedScrollShadow.customSize,
   'visibility-state': DocsEmbedScrollShadow.visibilityState,

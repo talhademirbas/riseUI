@@ -1,6 +1,18 @@
+import 'dart:ui' show ImageFilter;
+
 import 'package:flutter/material.dart';
 
 import '../../theme/rise_theme.dart';
+
+/// Hero [scroll-shadow.styles.ts](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/src/components/scroll-shadow/scroll-shadow.styles.ts)
+/// (`fade` / `blur` in Storybook — CSS currently ships `fade` only).
+enum RiseScrollShadowEffect {
+  /// Opacity-style edge fades (default).
+  fade,
+
+  /// Softer edges via blurred gradient overlays (Storybook “Blur” label).
+  blur,
+}
 
 /// Matches HeroUI [ScrollShadowVisibility](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/scroll-shadow/scroll-shadow.tsx).
 enum RiseScrollShadowVisibility {
@@ -41,6 +53,7 @@ class RiseScrollShadow extends StatefulWidget {
     this.visibility = RiseScrollShadowVisibility.auto,
     this.onVisibilityChange,
     this.shadowColor,
+    this.effect = RiseScrollShadowEffect.fade,
   });
 
   final Widget child;
@@ -68,6 +81,9 @@ class RiseScrollShadow extends StatefulWidget {
 
   /// Tint for the fade; defaults to [RiseThemeData.defaultForeground] at low opacity.
   final Color? shadowColor;
+
+  /// Edge fade style — `fade` or soft `blur` overlays (Hero Storybook `Variants`).
+  final RiseScrollShadowEffect effect;
 
   @override
   State<RiseScrollShadow> createState() => _RiseScrollShadowState();
@@ -189,7 +205,8 @@ class _RiseScrollShadowState extends State<RiseScrollShadow> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.visibility != widget.visibility ||
         oldWidget.axis != widget.axis ||
-        oldWidget.isEnabled != widget.isEnabled) {
+        oldWidget.isEnabled != widget.isEnabled ||
+        oldWidget.effect != widget.effect) {
       _lastEmitted = null;
     }
   }
@@ -232,15 +249,29 @@ class _RiseScrollShadowState extends State<RiseScrollShadow> {
 
     Widget scrollChild = widget.child;
     if (widget.hideScrollBar) {
-      scrollChild = Theme(
-        data: Theme.of(context).copyWith(
-          scrollbarTheme: ScrollbarThemeData(
-            thumbVisibility: WidgetStateProperty.all(false),
-            trackVisibility: WidgetStateProperty.all(false),
+      scrollChild = ScrollConfiguration(
+        behavior: const _HideScrollbarScrollBehavior(),
+        child: Theme(
+          data: Theme.of(context).copyWith(
+            scrollbarTheme: ScrollbarThemeData(
+              thumbVisibility: WidgetStateProperty.all(false),
+              trackVisibility: WidgetStateProperty.all(false),
+            ),
           ),
+          child: scrollChild,
         ),
-        child: scrollChild,
       );
+    }
+
+    Widget edgeOverlay(Gradient gradient) {
+      Widget box = DecoratedBox(decoration: BoxDecoration(gradient: gradient));
+      if (widget.effect == RiseScrollShadowEffect.blur) {
+        box = ImageFiltered(
+          imageFilter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+          child: box,
+        );
+      }
+      return IgnorePointer(child: box);
     }
 
     return NotificationListener<ScrollMetricsNotification>(
@@ -259,9 +290,7 @@ class _RiseScrollShadowState extends State<RiseScrollShadow> {
                   left: 0,
                   right: 0,
                   height: extent,
-                  child: IgnorePointer(
-                    child: DecoratedBox(decoration: BoxDecoration(gradient: leadingVertical)),
-                  ),
+                  child: edgeOverlay(leadingVertical),
                 ),
               if (effectiveTrailing)
                 Positioned(
@@ -269,9 +298,7 @@ class _RiseScrollShadowState extends State<RiseScrollShadow> {
                   left: 0,
                   right: 0,
                   height: extent,
-                  child: IgnorePointer(
-                    child: DecoratedBox(decoration: BoxDecoration(gradient: trailingVertical)),
-                  ),
+                  child: edgeOverlay(trailingVertical),
                 ),
             ] else ...[
               if (effectiveLeading)
@@ -280,9 +307,7 @@ class _RiseScrollShadowState extends State<RiseScrollShadow> {
                   top: 0,
                   bottom: 0,
                   width: extent,
-                  child: IgnorePointer(
-                    child: DecoratedBox(decoration: BoxDecoration(gradient: leadingHorizontal)),
-                  ),
+                  child: edgeOverlay(leadingHorizontal),
                 ),
               if (effectiveTrailing)
                 Positioned(
@@ -290,14 +315,22 @@ class _RiseScrollShadowState extends State<RiseScrollShadow> {
                   top: 0,
                   bottom: 0,
                   width: extent,
-                  child: IgnorePointer(
-                    child: DecoratedBox(decoration: BoxDecoration(gradient: trailingHorizontal)),
-                  ),
+                  child: edgeOverlay(trailingHorizontal),
                 ),
             ],
           ],
         ),
       ),
     );
+  }
+}
+
+/// WebKit-style `scrollbar-hide` — [scroll-shadow.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/scroll-shadow.css) `.scroll-shadow--hide-scrollbar`.
+class _HideScrollbarScrollBehavior extends ScrollBehavior {
+  const _HideScrollbarScrollBehavior();
+
+  @override
+  Widget buildScrollbar(BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
   }
 }

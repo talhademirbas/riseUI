@@ -5,44 +5,52 @@ const String kScrollShadowComponentId = 'scroll-shadow';
 const String kScrollShadowTitle = 'Scroll shadow';
 
 const String kScrollShadowDescription =
-    'Edge fade overlays when content overflows — aligned with HeroUI ScrollShadow, scroll-shadow.tsx, '
-    'and scroll-shadow.css (vertical / horizontal, size, offset, hide scrollbar, visibility).';
+    'Scroll edge hints — [scroll-shadow.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/scroll-shadow/scroll-shadow.tsx), '
+    '[use-scroll-shadow.ts](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/scroll-shadow/use-scroll-shadow.ts), '
+    '[scroll-shadow.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/scroll-shadow.css) '
+    '(vertical / horizontal, `--scroll-shadow-size`, hide scrollbar, visibility callbacks).';
 
 const List<RiseUsagePublicConfig> kScrollShadowUsagePublicConfigs = [
   RiseUsagePublicConfig(
     slug: 'usage',
     sectionTitle: 'Usage',
-    subtitle: 'Vertical list: fades at the top and/or bottom when there is more content.',
-    minHeight: 260,
+    subtitle: '`Default`: max height 240px, padding 16 — lorem paragraphs like Storybook `LoremContent`.',
+    minHeight: 280,
   ),
   RiseUsagePublicConfig(
-    slug: 'horizontal',
-    sectionTitle: 'Horizontal',
-    subtitle: 'Axis.horizontal with a horizontal ListView.',
-    minHeight: 200,
+    slug: 'variants',
+    sectionTitle: 'Variants',
+    subtitle: 'Fade vs blur edge treatment (`RiseScrollShadowEffect` — Storybook “Fade / Blur” labels).',
+    minHeight: 560,
+  ),
+  RiseUsagePublicConfig(
+    slug: 'orientation',
+    sectionTitle: 'Orientation',
+    subtitle: '`Orientation`: vertical surface + horizontal doc image strip (`LoremCards`).',
+    minHeight: 520,
   ),
   RiseUsagePublicConfig(
     slug: 'hide-scrollbar',
     sectionTitle: 'Hide scrollbar',
-    subtitle: 'Hero hideScrollBar — thumb and track hidden for Material scrollbars.',
-    minHeight: 260,
+    subtitle: '`hideScrollBar` — webkit-style hidden scrollbar ([scroll-shadow.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/scroll-shadow.css) `.scroll-shadow--hide-scrollbar`).',
+    minHeight: 280,
   ),
   RiseUsagePublicConfig(
     slug: 'custom-size',
-    sectionTitle: 'Custom shadow size',
-    subtitle: 'Hero size prop (fade extent in logical pixels, default 40).',
-    minHeight: 260,
+    sectionTitle: 'Custom size',
+    subtitle: '`CustomSize`: 20px · 40px (default) · 80px shadow extent.',
+    minHeight: 720,
   ),
   RiseUsagePublicConfig(
     slug: 'visibility-state',
     sectionTitle: 'Visibility state',
-    subtitle: 'onVisibilityChange when visibility is auto (both · top · bottom · none for vertical).',
-    minHeight: 280,
+    subtitle: '`VisibilityChange`: vertical + horizontal `onVisibilityChange` with state panels.',
+    minHeight: 560,
   ),
   RiseUsagePublicConfig(
     slug: 'with-card',
-    sectionTitle: 'Inside surface',
-    subtitle: 'ScrollShadow inside a padded RiseSurface shell.',
-    minHeight: 360,
+    sectionTitle: 'With card',
+    subtitle: '`WithCard`: terms shell, `height: 300`, `size: 80`, footer actions.',
+    minHeight: 420,
   ),
 ];
