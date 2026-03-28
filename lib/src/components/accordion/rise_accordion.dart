@@ -22,6 +22,15 @@ enum RiseAccordionSelectionMode {
   multiple,
 }
 
+/// HeroUI React [`variant`](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/accordion/accordion.tsx) — default is borderless full-width; surface adds a rounded shell.
+enum RiseAccordionVariant {
+  /// Full-width, hairline separators only ([`accordion.css`](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/accordion.css) default).
+  default_,
+
+  /// Rounded surface card + inset dividers + `bg-default` trigger hover when collapsed.
+  surface,
+}
+
 /// Root scope: expansion state and layout tokens for [RiseAccordionItem] descendants.
 @immutable
 class RiseAccordionData {
@@ -31,10 +40,14 @@ class RiseAccordionData {
     required this.isExpanded,
     required this.onToggle,
     required this.rootDisabled,
+    required this.variant,
   });
 
   /// HeroUI `.accordion__trigger`: `px-4` → **16**; surface-style panels often use **20**.
   final double horizontalPadding;
+
+  /// Matches [RiseAccordion.variant] — drives trigger hover and divider tone.
+  final RiseAccordionVariant variant;
 
   final EdgeInsetsGeometry? separatorMargin;
 
@@ -123,14 +136,16 @@ class RiseAccordionItemScope extends InheritedWidget {
 /// Root → items → trigger / indicator / content.
 ///
 /// Default **chrome**: none (HeroUI web `variant="default"` is full-width with item separators only).
-/// Opt in to a tinted or bordered shell with [backgroundColor] / [showBorder], or pass [decoration]
-/// (e.g. [RiseAccordionDecorations.surface] for `variant="surface"`).
+/// Set [variant] to [RiseAccordionVariant.surface] for the rounded shell (same as passing
+/// [RiseAccordionDecorations.surface] via [decoration], which wins when both are set).
+/// Alternatively opt in with [backgroundColor] / [showBorder].
 class RiseAccordion extends StatefulWidget {
   const RiseAccordion({
     super.key,
     required this.children,
     this.backgroundColor,
     this.decoration,
+    this.variant = RiseAccordionVariant.default_,
     this.borderRadius = 12,
     this.showBorder = false,
     this.horizontalPadding = 16,
@@ -153,6 +168,10 @@ class RiseAccordion extends StatefulWidget {
   final Color? backgroundColor;
 
   final BoxDecoration? decoration;
+
+  /// When [decoration] is null and this is [RiseAccordionVariant.surface], applies
+  /// [RiseAccordionDecorations.surface].
+  final RiseAccordionVariant variant;
 
   final double borderRadius;
 
@@ -234,10 +253,16 @@ class _RiseAccordionState extends State<RiseAccordion> {
 
   @override
   Widget build(BuildContext context) {
+    final effectiveDecoration = widget.decoration ??
+        (widget.variant == RiseAccordionVariant.surface
+            ? RiseAccordionDecorations.surface(context)
+            : null);
+
     final data = RiseAccordionData(
       horizontalPadding: widget.horizontalPadding,
       separatorMargin: widget.separatorMargin,
       rootDisabled: widget.isDisabled,
+      variant: widget.variant,
       isExpanded: (v) => _effective.contains(v),
       onToggle: _toggle,
     );
@@ -258,16 +283,18 @@ class _RiseAccordionState extends State<RiseAccordion> {
       children: columnChildren,
     );
 
-    body = _decorateRoot(context, body);
+    body = _decorateRoot(context, body, effectiveDecoration);
 
     return RiseAccordionScope(data: data, child: body);
   }
 
-  Widget _decorateRoot(BuildContext context, Widget body) {
-    final rise = context.riseTheme;
-
-    if (widget.decoration != null) {
-      final d = widget.decoration!;
+  Widget _decorateRoot(
+    BuildContext context,
+    Widget body,
+    BoxDecoration? effectiveDecoration,
+  ) {
+    if (effectiveDecoration != null) {
+      final d = effectiveDecoration;
       final r = d.borderRadius?.resolve(Directionality.of(context)) ??
           BorderRadius.circular(widget.borderRadius);
       return DecoratedBox(
@@ -284,6 +311,7 @@ class _RiseAccordionState extends State<RiseAccordion> {
       return body;
     }
 
+    final rise = context.riseTheme;
     final bg = widget.backgroundColor;
     final br = BorderRadius.circular(widget.borderRadius);
     return DecoratedBox(
@@ -310,10 +338,14 @@ class _RiseAccordionSeparator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rise = context.riseTheme;
+    final variant = RiseAccordionScope.of(context).variant;
+    final color = variant == RiseAccordionVariant.surface
+        ? rise.defaultForeground.withValues(alpha: 0.06)
+        : rise.separator;
     final line = Divider(
       height: 1,
       thickness: 1,
-      color: rise.border.withValues(alpha: 0.5),
+      color: color,
     );
     if (margin != null) {
       return Padding(
@@ -453,7 +485,7 @@ class _RiseAccordionItemRenderBridge extends StatelessWidget {
   }
 }
 
-/// HeroUI `.accordion__trigger`: hover `color-mix(foreground 3%)` when collapsed; focus ring.
+/// HeroUI `.accordion__trigger`: default hover `color-mix(foreground 3%)` when collapsed; surface variant uses `bg-default` ([RiseThemeData.muted]); focus ring.
 class RiseAccordionTrigger extends StatelessWidget {
   const RiseAccordionTrigger({
     super.key,
@@ -476,8 +508,11 @@ class RiseAccordionTrigger extends StatelessWidget {
     final expanded = data.isExpanded(item.value);
     final disabled = data.rootDisabled || item.itemDisabled;
 
-    final hoverColor =
-        disabled || expanded ? Colors.transparent : rise.defaultForeground.withValues(alpha: 0.03);
+    final hoverColor = disabled || expanded
+        ? Colors.transparent
+        : data.variant == RiseAccordionVariant.surface
+            ? rise.muted
+            : rise.defaultForeground.withValues(alpha: 0.03);
 
     return Material(
       color: Colors.transparent,

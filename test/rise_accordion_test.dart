@@ -76,4 +76,31 @@ void main() {
     expect(find.text('Alpha'), findsOneWidget);
     expect(find.text('Beta'), findsOneWidget);
   });
+
+  testWidgets('surface variant builds without explicit BoxDecoration', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: ThemeData(
+          extensions: const [RiseThemeData.light],
+        ),
+        home: Scaffold(
+          body: RiseAccordion(
+            variant: RiseAccordionVariant.surface,
+            children: [
+              RiseAccordionItem.panel(
+                value: '1',
+                title: const Text('Title'),
+                content: const Text('Body'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text('Title'), findsOneWidget);
+    await tester.tap(find.text('Title'));
+    await tester.pumpAndSettle();
+    expect(find.text('Body'), findsOneWidget);
+  });
 }

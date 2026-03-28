@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-28T08:15:18.384295Z",
+  "generated": "2026-03-28T08:21:18.051888Z",
   "components": [
     {
       "id": "accordion",
@@ -11,13 +11,13 @@
           "slug": "faq",
           "sectionTitle": "Usage · Default",
           "subtitle": "Full-width accordion with hairline separators and no outer chrome (HeroUI `variant=\"default\"`). Triggers use 14px / font-medium; body uses muted 14px text; chevron 250ms; panel 200ms.",
-          "minHeight": 420.0,
+          "minHeight": 560.0,
           "embed": "accordion-faq"
         },
         {
           "slug": "surface",
           "sectionTitle": "Usage · Surface",
-          "subtitle": "Rounded 24px `RiseThemeData.surface` shell (`RiseAccordionDecorations.surface`), wider padding, inset separators — HeroUI `variant=\"surface\"`.",
+          "subtitle": "`RiseAccordionVariant.surface` → rounded 24px `RiseThemeData.surface` shell, wider padding, inset dividers (`surface-foreground/6%`), `bg-default` trigger hover — HeroUI `variant=\"surface\"`.",
           "minHeight": 340.0,
           "embed": "accordion-surface"
         },

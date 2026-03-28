@@ -17,7 +17,7 @@ RiseAccordion(
 )`;
 
 export const accordionSurfaceCode = `RiseAccordion(
-  decoration: RiseAccordionDecorations.surface(context),
+  variant: RiseAccordionVariant.surface,
   horizontalPadding: 20,
   separatorMargin: const EdgeInsets.symmetric(horizontal: 12),
   selectionMode: RiseAccordionSelectionMode.single,

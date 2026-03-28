@@ -34,13 +34,13 @@ const List<RiseUsagePublicConfig> kAccordionUsagePublicConfigs = [
     subtitle:
         'Full-width accordion with hairline separators and no outer chrome (HeroUI `variant="default"`). '
         'Triggers use 14px / font-medium; body uses muted 14px text; chevron 250ms; panel 200ms.',
-    minHeight: 420,
+    minHeight: 560,
   ),
   RiseUsagePublicConfig(
     slug: 'surface',
     sectionTitle: 'Usage · Surface',
     subtitle:
-        'Rounded 24px `RiseThemeData.surface` shell (`RiseAccordionDecorations.surface`), wider padding, inset separators — HeroUI `variant="surface"`.',
+        '`RiseAccordionVariant.surface` → rounded 24px `RiseThemeData.surface` shell, wider padding, inset dividers (`surface-foreground/6%`), `bg-default` trigger hover — HeroUI `variant="surface"`.',
     minHeight: 340,
   ),
   RiseUsagePublicConfig(

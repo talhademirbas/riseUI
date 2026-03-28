@@ -37,7 +37,7 @@ class DocsEmbedAccordion {
     );
   }
 
-  /// HeroUI surface shell: [RiseAccordionDecorations.surface] + inset separators.
+  /// HeroUI `variant="surface"`: [RiseAccordionVariant.surface] (same shell as [RiseAccordionDecorations.surface]) + inset separators.
   static RiseAccordion _surfaceAccordion({
     required BuildContext context,
     required List<Widget> children,
@@ -45,7 +45,7 @@ class DocsEmbedAccordion {
     RiseAccordionSelectionMode selectionMode = RiseAccordionSelectionMode.single,
   }) {
     return RiseAccordion(
-      decoration: RiseAccordionDecorations.surface(context),
+      variant: RiseAccordionVariant.surface,
       horizontalPadding: 20,
       separatorMargin: const EdgeInsets.symmetric(horizontal: 12),
       selectionMode: selectionMode,
@@ -86,6 +86,30 @@ class DocsEmbedAccordion {
               'Lorem ipsum dolor sit amet consectetur. Netus nunc mauris risus consequat.',
             ),
           ),
+          RiseAccordionItem.panel(
+            value: '4',
+            leading: Icon(Icons.assignment_return_outlined, size: 16, color: muted),
+            title: const Text('What is your return policy?'),
+            content: const Text(
+              'You may return most items within 30 days of delivery for a full refund or exchange.',
+            ),
+          ),
+          RiseAccordionItem.panel(
+            value: '5',
+            leading: Icon(Icons.support_agent_outlined, size: 16, color: muted),
+            title: const Text('How can I contact customer support?'),
+            content: const Text(
+              'Reach us via live chat, email, or phone — see the Contact page for hours and response times.',
+            ),
+          ),
+          RiseAccordionItem.panel(
+            value: '6',
+            leading: Icon(Icons.verified_user_outlined, size: 16, color: muted),
+            title: const Text('Is my payment information secure?'),
+            content: const Text(
+              'We use industry-standard encryption and never store full card numbers on our servers.',
+            ),
+          ),
         ],
       ),
     );
@@ -109,7 +133,7 @@ class DocsEmbedAccordion {
             value: 'b',
             title: const Text('Surface panel B'),
             content: const Text(
-              'Use RiseAccordionDecorations.surface or your own BoxDecoration.',
+              'Use variant: RiseAccordionVariant.surface or pass a custom BoxDecoration.',
             ),
           ),
         ],
