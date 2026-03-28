@@ -7,24 +7,36 @@ export const switchUsageCode = `RiseSwitch(
 )`;
 
 export const switchDisabledCode = `RiseSwitch(
-  value: true,
-  onChanged: (_) {},
+  value: false,
+  onChanged: null,
   isDisabled: true,
   label: const Text('Enable notifications'),
+)`;
+
+export const switchControlledCode = `RiseSwitch(
+  value: on,
+  onChanged: (v) => setState(() => on = v),
+  label: const Text('Enable notifications'),
+)`;
+
+export const switchWithoutLabelCode = `RiseSwitch(
+  value: on,
+  onChanged: (v) => setState(() => on = v),
+  semanticLabel: 'Enable notifications',
 )`;
 
 export const switchSizesCode = `RiseSwitch(
   size: RiseSwitchSize.sm,
   value: on,
   onChanged: (v) => setState(() => on = v),
-  label: const Text('Small'),
+  label: const Text('Enable notifications'),
 )`;
 
 export const switchLabelPositionCode = `RiseSwitch(
   labelPosition: RiseSwitchLabelPosition.before,
   value: on,
   onChanged: (v) => setState(() => on = v),
-  label: const Text('Label before'),
+  label: const Text('Enable notifications'),
 )`;
 
 export const switchWithDescriptionCode = `RiseSwitch(
@@ -34,12 +46,26 @@ export const switchWithDescriptionCode = `RiseSwitch(
   description: const Text('Allow others to see your profile information'),
 )`;
 
+export const switchWithCustomStylesCode = `RiseSwitch(
+  value: on,
+  onChanged: (v) => setState(() => on = v),
+  accentColor: Colors.blue,
+  label: const Text('Accent (blue)'),
+)`;
+
 export const switchWithIconsCode = `RiseSwitch(
   value: on,
   onChanged: (v) => setState(() => on = v),
-  label: const Text('Alerts'),
-  thumbIconSelected: Icons.notifications_active_outlined,
-  thumbIconUnselected: Icons.notifications_off_outlined,
+  accentColor: Colors.blue,
+  thumbIconSelected: Icons.volume_up,
+  thumbIconUnselected: Icons.volume_off,
+  label: const Text('Sound'),
+)`;
+
+export const switchRenderPropsCode = `RiseSwitch(
+  value: on,
+  onChanged: (v) => setState(() => on = v),
+  label: Text(on ? 'Enabled' : 'Disabled'),
 )`;
 
 export const switchGroupCode = `RiseSwitchGroup(

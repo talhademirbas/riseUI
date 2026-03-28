@@ -103,12 +103,16 @@ import {
 } from "./doc-code-snippets/spinner";
 import { surfaceUsageCode, surfaceWithFormCode } from "./doc-code-snippets/surface";
 import {
+  switchControlledCode,
   switchDisabledCode,
   switchGroupCode,
   switchGroupHorizontalCode,
   switchLabelPositionCode,
+  switchRenderPropsCode,
   switchSizesCode,
   switchUsageCode,
+  switchWithoutLabelCode,
+  switchWithCustomStylesCode,
   switchWithDescriptionCode,
   switchWithIconsCode,
 } from "./doc-code-snippets/switch";
@@ -350,10 +354,14 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
   switch: {
     usage: switchUsageCode,
     disabled: switchDisabledCode,
+    controlled: switchControlledCode,
+    "without-label": switchWithoutLabelCode,
     sizes: switchSizesCode,
     "label-position": switchLabelPositionCode,
     "with-description": switchWithDescriptionCode,
+    "with-custom-styles": switchWithCustomStylesCode,
     "with-icons": switchWithIconsCode,
+    "render-props": switchRenderPropsCode,
     group: switchGroupCode,
     "group-horizontal": switchGroupHorizontalCode,
   },

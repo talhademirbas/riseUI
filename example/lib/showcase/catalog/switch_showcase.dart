@@ -7,10 +7,14 @@ import '../rise_showcase_models.dart';
 final Map<String, Widget Function(BuildContext context)> _switchBuilders = {
   'usage': DocsEmbedSwitch.usage,
   'disabled': DocsEmbedSwitch.disabled,
+  'controlled': DocsEmbedSwitch.controlled,
+  'without-label': DocsEmbedSwitch.withoutLabel,
   'sizes': DocsEmbedSwitch.sizes,
   'label-position': DocsEmbedSwitch.labelPosition,
   'with-description': DocsEmbedSwitch.withDescription,
+  'with-custom-styles': DocsEmbedSwitch.withCustomStyles,
   'with-icons': DocsEmbedSwitch.withIcons,
+  'render-props': DocsEmbedSwitch.renderProps,
   'group': DocsEmbedSwitch.group,
   'group-horizontal': DocsEmbedSwitch.groupHorizontal,
 };

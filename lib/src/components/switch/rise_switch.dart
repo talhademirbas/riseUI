@@ -34,6 +34,7 @@ class RiseSwitch extends StatelessWidget {
     this.semanticLabel,
     this.thumbIconSelected,
     this.thumbIconUnselected,
+    this.accentColor,
   });
 
   final bool value;
@@ -62,11 +63,15 @@ class RiseSwitch extends StatelessWidget {
   /// Optional icon in the thumb when off.
   final IconData? thumbIconUnselected;
 
+  /// Checked track color — overrides [RiseThemeData.accent] (HeroUI `WithIcons` / custom styles).
+  final Color? accentColor;
+
+  /// Scales the Material [Switch] toward [switch.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/switch.css) track sizes (sm/md/lg).
   static double _scale(RiseSwitchSize s) {
     return switch (s) {
-      RiseSwitchSize.sm => 0.82,
+      RiseSwitchSize.sm => 0.78,
       RiseSwitchSize.md => 1.0,
-      RiseSwitchSize.lg => 1.16,
+      RiseSwitchSize.lg => 1.22,
     };
   }
 
@@ -77,12 +82,12 @@ class RiseSwitch extends StatelessWidget {
     final effectiveOnChanged = isDisabled ? null : onChanged;
 
     Widget control = SwitchTheme(
-      data: _themeData(rise),
+      data: _themeData(rise, accentColor: accentColor),
       child: Switch(
         value: value,
         onChanged: effectiveOnChanged,
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        thumbIcon: _thumbIconProperty(rise),
+        thumbIcon: _thumbIconProperty(rise, accentColor: accentColor),
       ),
     );
 
@@ -108,10 +113,15 @@ class RiseSwitch extends StatelessWidget {
       'RiseSwitch: use a label when providing a description.',
     );
 
-    final labelStyle = theme.textTheme.bodyLarge?.copyWith(
-      color: rise.defaultForeground,
-      fontWeight: FontWeight.w500,
-    );
+    // Hero `switch__label`: text-base font-medium text-foreground
+    final labelStyle = theme.textTheme.titleMedium?.copyWith(
+          fontWeight: FontWeight.w500,
+          color: rise.defaultForeground,
+        ) ??
+        theme.textTheme.bodyLarge?.copyWith(
+          color: rise.defaultForeground,
+          fontWeight: FontWeight.w500,
+        );
 
     final labelColumn = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,9 +132,10 @@ class RiseSwitch extends StatelessWidget {
             style: labelStyle ?? const TextStyle(),
             child: label!,
           ),
+        // Hero `switch__content`: flex-col gap-0 — keep description tight to the label.
         if (description != null)
           Padding(
-            padding: const EdgeInsets.only(top: 4),
+            padding: const EdgeInsets.only(top: 2),
             child: DefaultTextStyle(
               style: theme.textTheme.bodyMedium?.copyWith(
                     color: rise.mutedForeground(0.65),
@@ -137,6 +148,7 @@ class RiseSwitch extends StatelessWidget {
       ],
     );
 
+    // Hero `.switch`: gap-3 between control and label column
     const gap = 12.0;
 
     return LayoutBuilder(
@@ -205,14 +217,15 @@ class RiseSwitch extends StatelessWidget {
     );
   }
 
-  WidgetStateProperty<Icon?>? _thumbIconProperty(RiseThemeData rise) {
+  WidgetStateProperty<Icon?>? _thumbIconProperty(RiseThemeData rise, {Color? accentColor}) {
     if (thumbIconSelected == null && thumbIconUnselected == null) {
       return null;
     }
+    final onAccent = accentColor ?? rise.accent;
     return WidgetStateProperty.resolveWith<Icon?>((states) {
       final selected = states.contains(WidgetState.selected);
       if (selected && thumbIconSelected != null) {
-        return Icon(thumbIconSelected, size: 14, color: rise.accent);
+        return Icon(thumbIconSelected, size: 14, color: onAccent);
       }
       if (!selected && thumbIconUnselected != null) {
         return Icon(thumbIconUnselected, size: 14, color: rise.mutedForeground(0.8));
@@ -221,15 +234,18 @@ class RiseSwitch extends StatelessWidget {
     });
   }
 
-  static SwitchThemeData _themeData(RiseThemeData rise) {
+  static SwitchThemeData _themeData(RiseThemeData rise, {Color? accentColor}) {
     final disabled = rise.disabledOpacity;
+    final accent = accentColor ?? rise.accent;
+    final thumbWhenOn =
+        accentColor != null ? Colors.white : rise.accentForeground;
     return SwitchThemeData(
       thumbColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.disabled)) {
           return rise.defaultForeground.withValues(alpha: 0.35);
         }
         if (states.contains(WidgetState.selected)) {
-          return rise.accentForeground;
+          return thumbWhenOn;
         }
         return rise.background;
       }),
@@ -238,7 +254,7 @@ class RiseSwitch extends StatelessWidget {
           return rise.muted.withValues(alpha: disabled);
         }
         if (states.contains(WidgetState.selected)) {
-          return rise.accent;
+          return accent;
         }
         return rise.muted;
       }),
