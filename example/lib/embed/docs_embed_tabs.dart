@@ -19,7 +19,6 @@ class DocsEmbedTabs {
   static Widget usage(BuildContext context) => _wrap(const _TabsUsageEmbed());
   static Widget vertical(BuildContext context) => _wrap(const _TabsVerticalEmbed());
   static Widget disabled(BuildContext context) => _wrap(const _TabsDisabledEmbed());
-  static Widget withSeparator(BuildContext context) => _wrap(const _TabsWithSeparatorEmbed());
   static Widget customStyles(BuildContext context) => _wrap(const _TabsCustomStylesEmbed());
   static Widget secondary(BuildContext context) => _wrap(const _TabsSecondaryEmbed());
   static Widget secondaryVertical(BuildContext context) => _wrap(const _TabsSecondaryVerticalEmbed());
@@ -54,7 +53,7 @@ class _TabsVerticalEmbed extends StatelessWidget {
   Widget build(BuildContext context) {
     return RiseTabs(
       orientation: RiseTabsOrientation.vertical,
-      variant: RiseTabsVariant.primary,
+      variant: RiseTabsVariant.default_,
       tabViewHeight: 200,
       tabs: const [
         Tab(text: 'Account'),
@@ -97,71 +96,28 @@ class _TabsDisabledEmbed extends StatelessWidget {
   }
 }
 
-class _TabsWithSeparatorEmbed extends StatelessWidget {
-  const _TabsWithSeparatorEmbed();
-
-  @override
-  Widget build(BuildContext context) {
-    final line = Theme.of(context).colorScheme.outline.withValues(alpha: 0.35);
-    return RiseTabs(
-      tabViewHeight: 140,
-      tabs: [
-        const Tab(text: 'Overview'),
-        Tab(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                width: 1,
-                height: 14,
-                child: DecoratedBox(decoration: BoxDecoration(color: line)),
-              ),
-              const SizedBox(width: 12),
-              const Text('Analytics'),
-            ],
-          ),
-        ),
-        Tab(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                width: 1,
-                height: 14,
-                child: DecoratedBox(decoration: BoxDecoration(color: line)),
-              ),
-              const SizedBox(width: 12),
-              const Text('Reports'),
-            ],
-          ),
-        ),
-      ],
-      children: const [
-        _PanelText('View your project overview and recent activity.'),
-        _PanelText('Analytics content.'),
-        _PanelText('Reports content.'),
-      ],
-    );
-  }
-}
-
 class _TabsCustomStylesEmbed extends StatelessWidget {
   const _TabsCustomStylesEmbed();
 
   @override
   Widget build(BuildContext context) {
+    final rise = context.riseTheme;
+    // Distinct from default usage: denser type + tracking (Hero WithCustomStyle-style),
+    // accent selected label, and a non-zero initial index so the segment pill does not mirror "Usage".
     return RiseTabs(
-      variant: RiseTabsVariant.secondary,
       tabViewHeight: 140,
-      isScrollable: true,
-      tabAlignment: TabAlignment.center,
-      labelStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
+      initialIndex: 1,
+      labelColor: rise.accent,
+      labelStyle: const TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w600,
+        letterSpacing: 0.35,
+        height: 16 / 12,
+      ),
       tabs: const [
         Tab(text: 'Daily'),
         Tab(text: 'Weekly'),
-        Tab(text: 'Bi-weekly'),
+        Tab(text: 'Bi-Weekly'),
         Tab(text: 'Monthly'),
       ],
       children: const [
@@ -232,6 +188,7 @@ class _TabsScrollableEmbed extends StatelessWidget {
     return RiseTabs(
       variant: RiseTabsVariant.secondary,
       isScrollable: true,
+      tabAlignment: TabAlignment.start,
       tabViewHeight: 120,
       tabs: const [
         Tab(text: 'Overview'),

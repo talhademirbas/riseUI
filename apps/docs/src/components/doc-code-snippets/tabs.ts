@@ -16,7 +16,7 @@ export const tabsUsageCode = `RiseTabs(
 
 export const tabsVerticalCode = `RiseTabs(
   orientation: RiseTabsOrientation.vertical,
-  variant: RiseTabsVariant.primary,
+  variant: RiseTabsVariant.default_,
   tabViewHeight: 200,
   tabs: const [
     Tab(text: 'Account'),
@@ -36,34 +36,23 @@ export const tabsDisabledCode = `RiseTabs(
   children: const [Text('A'), Text('B'), Text('C')],
 )`;
 
-export const tabsWithSeparatorCode = `RiseTabs(
-  tabViewHeight: 140,
-  tabs: [
-    const Tab(text: 'Overview'),
-    Tab(child: Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(width: 1, height: 14, child: DecoratedBox(decoration: BoxDecoration(color: lineColor))),
-        const SizedBox(width: 12),
-        const Text('Analytics'),
-      ],
-    )),
-  ],
-  children: const [Text('…'), Text('…')],
-)`;
-
 export const tabsCustomStylesCode = `RiseTabs(
-  variant: RiseTabsVariant.secondary,
   tabViewHeight: 140,
-  isScrollable: true,
-  tabAlignment: TabAlignment.center,
-  labelStyle: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w600),
+  initialIndex: 1,
+  labelColor: rise.accent,
+  labelStyle: const TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.35,
+    height: 16 / 12,
+  ),
   tabs: const [
     Tab(text: 'Daily'),
     Tab(text: 'Weekly'),
+    Tab(text: 'Bi-Weekly'),
     Tab(text: 'Monthly'),
   ],
-  children: const [Text('…'), Text('…'), Text('…')],
+  children: const [Text('…'), Text('…'), Text('…'), Text('…')],
 )`;
 
 export const tabsSecondaryCode = `RiseTabs(
@@ -90,6 +79,7 @@ export const tabsSecondaryVerticalCode = `RiseTabs(
 export const tabsScrollableCode = `RiseTabs(
   variant: RiseTabsVariant.secondary,
   isScrollable: true,
+  tabAlignment: TabAlignment.start,
   tabViewHeight: 120,
   tabs: const [
     Tab(text: 'Overview'),

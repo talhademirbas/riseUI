@@ -116,7 +116,6 @@ import {
   tabsSecondaryVerticalCode,
   tabsUsageCode,
   tabsVerticalCode,
-  tabsWithSeparatorCode,
 } from "./doc-code-snippets/tabs";
 import {
   checkboxControlledCode,
@@ -353,7 +352,6 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
     usage: tabsUsageCode,
     vertical: tabsVerticalCode,
     disabled: tabsDisabledCode,
-    "with-separator": tabsWithSeparatorCode,
     "custom-styles": tabsCustomStylesCode,
     secondary: tabsSecondaryCode,
     "secondary-vertical": tabsSecondaryVerticalCode,

@@ -2,13 +2,22 @@ import 'package:flutter/material.dart';
 
 import '../../theme/rise_theme.dart';
 
-/// Visual variant (HeroUI [Tabs](https://heroui.com/docs/react/components/tabs) /
+/// HeroUI [`tabs.css`](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/tabs.css)
+/// indicator motion (`250ms`, `ease-out-fluid` in CSS).
+abstract final class RiseTabsMotion {
+  RiseTabsMotion._();
+
+  /// Selection indicator translate / size (`.tabs__indicator` `transition-duration: 250ms`).
+  static const Duration indicator = Duration(milliseconds: 250);
+}
+
+/// Visual variant (HeroUI [Tabs](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/tabs/tabs.tsx) /
 /// [tabs.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/tabs.css)).
 enum RiseTabsVariant {
-  /// Filled segment indicator on a muted track (`tabs__indicator` + pill list).
-  primary,
+  /// Default: `bg-default` track (`.tabs__list`), `bg-segment` pill + `--shadow-surface` (`.tabs__indicator`).
+  default_,
 
-  /// Underline / leading-edge indicator, transparent list (`tabs--secondary`).
+  /// Underline / leading-edge indicator, transparent list (`.tabs--secondary`).
   secondary,
 }
 
@@ -18,17 +27,17 @@ enum RiseTabsOrientation {
   vertical,
 }
 
-/// Coordinates a tab strip and [TabBarView] (HeroUI Tabs + [tabs.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/tabs/tabs.tsx)).
+/// Coordinates a tab strip and [TabBarView] (HeroUI [tabs.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/tabs/tabs.tsx)).
 ///
 /// [tabViewHeight] bounds the tab content when the parent does not give a tight height
-/// (e.g. inside a [ListView]).
+/// (e.g. inside a [ListView]). Spacing before the panel matches `.tabs__panel` (`mt-4` / **16**).
 class RiseTabs extends StatefulWidget {
   const RiseTabs({
     super.key,
     required this.tabs,
     required this.children,
     this.tabViewHeight = 240,
-    this.variant = RiseTabsVariant.primary,
+    this.variant = RiseTabsVariant.default_,
     this.orientation = RiseTabsOrientation.horizontal,
     this.tabEnabled,
     this.labelStyle,
@@ -37,6 +46,8 @@ class RiseTabs extends StatefulWidget {
     this.initialIndex = 0,
     this.onChanged,
     this.tabAlignment,
+    this.labelColor,
+    this.unselectedLabelColor,
   })  : assert(tabs.length == children.length, 'tabs and children must match'),
         assert(tabEnabled == null || tabEnabled.length == tabs.length);
 
@@ -67,6 +78,12 @@ class RiseTabs extends StatefulWidget {
   /// Horizontal [TabBar] alignment (e.g. [TabAlignment.center] for centered secondary tabs).
   final TabAlignment? tabAlignment;
 
+  /// Selected tab label color. Defaults to [RiseThemeData.defaultForeground].
+  final Color? labelColor;
+
+  /// Unselected tab label color. Defaults to muted foreground at 55% opacity.
+  final Color? unselectedLabelColor;
+
   @override
   State<RiseTabs> createState() => _RiseTabsState();
 }
@@ -74,6 +91,40 @@ class RiseTabs extends StatefulWidget {
 class _RiseTabsState extends State<RiseTabs> with SingleTickerProviderStateMixin {
   late TabController _controller;
   int _lastValidIndex = 0;
+
+  /// Hero `--shadow-surface` on the segment pill (light only; matches [RiseSurface] / accordion).
+  static const List<BoxShadow> _segmentShadowsLight = [
+    BoxShadow(color: Color(0x0A000000), offset: Offset(0, 2), blurRadius: 4),
+    BoxShadow(color: Color(0x0F000000), offset: Offset(0, 1), blurRadius: 2),
+    BoxShadow(color: Color(0x0F000000), offset: Offset(0, 0), blurRadius: 0, spreadRadius: 1),
+  ];
+
+  /// Hero `.tabs__tab` horizontal strip: `h-8` (32px) — Flutter [Tab] defaults to 46px without [Tab.height].
+  static const double _horizontalTabHeight = 32;
+
+  /// Horizontal [TabBar] label insets only (not used by vertical list).
+  static const EdgeInsets _horizontalLabelPadding =
+      EdgeInsets.symmetric(horizontal: 16, vertical: 0);
+
+  /// Vertical list rows (Hero vertical tab list); keep comfortable tap targets — not the same as [_horizontalLabelPadding].
+  static const EdgeInsets _verticalTabPadding =
+      EdgeInsets.symmetric(horizontal: 14, vertical: 10);
+
+  void _onTabBarTap(int index) {
+    final e = widget.tabEnabled;
+    if (e != null && index < e.length && !e[index]) {
+      _controller.index = _controller.previousIndex;
+    }
+  }
+
+  /// Swiping [TabBarView] can land on a disabled index; block gestures when any tab is disabled.
+  ScrollPhysics? get _tabViewPhysics {
+    final e = widget.tabEnabled;
+    if (e != null && e.any((enabled) => !enabled)) {
+      return const NeverScrollableScrollPhysics();
+    }
+    return null;
+  }
 
   int _safeInitialIndex() {
     final n = widget.tabs.length;
@@ -137,11 +188,32 @@ class _RiseTabsState extends State<RiseTabs> with SingleTickerProviderStateMixin
   Widget _buildHorizontal(BuildContext context) {
     final rise = context.riseTheme;
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final effectiveTabs = _effectiveTabs(context);
     final baseLabel = widget.labelStyle ??
-        theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600);
+        TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          height: 20 / 14,
+          color: rise.defaultForeground,
+        );
 
-    if (widget.variant == RiseTabsVariant.primary) {
+    final anyDisabled = widget.tabEnabled?.any((e) => !e) ?? false;
+
+    if (widget.variant == RiseTabsVariant.default_) {
+      final tabTheme = TabBarThemeData(
+        indicatorAnimation: TabIndicatorAnimation.elastic,
+        splashFactory: anyDisabled ? NoSplash.splashFactory : null,
+        overlayColor: WidgetStateProperty.resolveWith(
+          (states) {
+            if (states.contains(WidgetState.selected)) return Colors.transparent;
+            if (states.contains(WidgetState.hovered)) {
+              return rise.defaultForeground.withValues(alpha: 0.08);
+            }
+            return null;
+          },
+        ),
+      );
       return Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -149,38 +221,41 @@ class _RiseTabsState extends State<RiseTabs> with SingleTickerProviderStateMixin
           DecoratedBox(
             decoration: BoxDecoration(
               color: rise.muted,
-              borderRadius: BorderRadius.circular(22),
+              borderRadius: BorderRadius.circular(20),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(4),
-              child: TabBar(
-                controller: _controller,
-                tabs: effectiveTabs,
-                isScrollable: widget.isScrollable,
-                dividerColor: Colors.transparent,
-                indicatorSize: TabBarIndicatorSize.tab,
-                indicator: BoxDecoration(
-                  color: theme.colorScheme.surface,
-                  borderRadius: BorderRadius.circular(18),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.07),
-                      blurRadius: 6,
-                      offset: const Offset(0, 1),
-                    ),
-                  ],
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+              child: Theme(
+                data: theme.copyWith(tabBarTheme: tabTheme),
+                child: TabBar(
+                  controller: _controller,
+                  tabs: effectiveTabs,
+                  isScrollable: widget.isScrollable,
+                  padding: widget.isScrollable ? EdgeInsets.zero : null,
+                  labelPadding: _horizontalLabelPadding,
+                  dividerColor: Colors.transparent,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicator: BoxDecoration(
+                    color: rise.surface,
+                    borderRadius: BorderRadius.circular(18),
+                    boxShadow: isDark ? null : _segmentShadowsLight,
+                  ),
+                  labelStyle: baseLabel,
+                  labelColor: widget.labelColor ?? rise.defaultForeground,
+                  unselectedLabelColor:
+                      widget.unselectedLabelColor ?? rise.mutedForeground(0.55),
+                  splashBorderRadius: BorderRadius.circular(18),
+                  onTap: _onTabBarTap,
                 ),
-                labelStyle: baseLabel,
-                labelColor: rise.defaultForeground,
-                unselectedLabelColor: rise.mutedForeground(0.55),
-                splashBorderRadius: BorderRadius.circular(18),
               ),
             ),
           ),
+          const SizedBox(height: 16),
           SizedBox(
             height: widget.tabViewHeight,
             child: TabBarView(
               controller: _controller,
+              physics: _tabViewPhysics,
               children: widget.children,
             ),
           ),
@@ -188,26 +263,40 @@ class _RiseTabsState extends State<RiseTabs> with SingleTickerProviderStateMixin
       );
     }
 
+    final secondaryTabTheme = TabBarThemeData(
+      dividerColor: rise.border,
+      splashFactory: anyDisabled ? NoSplash.splashFactory : null,
+    );
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        TabBar(
-          controller: _controller,
-          tabs: effectiveTabs,
-          isScrollable: widget.isScrollable,
-          tabAlignment: widget.tabAlignment,
-          labelStyle: baseLabel,
-          labelColor: rise.defaultForeground,
-          unselectedLabelColor: rise.mutedForeground(0.55),
-          indicatorColor: rise.accent,
-          indicatorWeight: widget.indicatorWeight,
-          dividerColor: rise.border.withValues(alpha: 0.65),
+        Theme(
+          data: theme.copyWith(tabBarTheme: secondaryTabTheme),
+          child: TabBar(
+            controller: _controller,
+            tabs: effectiveTabs,
+            isScrollable: widget.isScrollable,
+            padding: widget.isScrollable ? EdgeInsets.zero : null,
+            labelPadding: _horizontalLabelPadding,
+            tabAlignment: widget.tabAlignment,
+            labelStyle: baseLabel,
+            labelColor: widget.labelColor ?? rise.defaultForeground,
+            unselectedLabelColor:
+                widget.unselectedLabelColor ?? rise.mutedForeground(0.55),
+            indicatorColor: rise.accent,
+            indicatorWeight: widget.indicatorWeight,
+            dividerColor: rise.border,
+            onTap: _onTabBarTap,
+          ),
         ),
+        const SizedBox(height: 16),
         SizedBox(
           height: widget.tabViewHeight,
           child: TabBarView(
             controller: _controller,
+            physics: _tabViewPhysics,
             children: widget.children,
           ),
         ),
@@ -218,20 +307,11 @@ class _RiseTabsState extends State<RiseTabs> with SingleTickerProviderStateMixin
   Widget _buildVertical(BuildContext context) {
     final rise = context.riseTheme;
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final secondary = widget.variant == RiseTabsVariant.secondary;
 
     final list = secondary
-        ? DecoratedBox(
-            decoration: BoxDecoration(
-              border: Border(
-                left: BorderSide(color: rise.border.withValues(alpha: 0.75)),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 4),
-              child: _verticalTabList(context, rise, theme, true),
-            ),
-          )
+        ? _verticalTabList(context, rise, theme, true, isDark)
         : DecoratedBox(
             decoration: BoxDecoration(
               color: rise.muted,
@@ -239,7 +319,7 @@ class _RiseTabsState extends State<RiseTabs> with SingleTickerProviderStateMixin
             ),
             child: Padding(
               padding: const EdgeInsets.all(4),
-              child: _verticalTabList(context, rise, theme, false),
+              child: _verticalTabList(context, rise, theme, false, isDark),
             ),
           );
 
@@ -254,6 +334,7 @@ class _RiseTabsState extends State<RiseTabs> with SingleTickerProviderStateMixin
               height: widget.tabViewHeight,
               child: TabBarView(
                 controller: _controller,
+                physics: _tabViewPhysics,
                 children: widget.children,
               ),
             ),
@@ -268,48 +349,66 @@ class _RiseTabsState extends State<RiseTabs> with SingleTickerProviderStateMixin
     RiseThemeData rise,
     ThemeData theme,
     bool secondary,
+    bool isDark,
   ) {
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, _) {
+        final n = widget.tabs.length;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: List.generate(widget.tabs.length, (i) {
+          children: List.generate(n, (i) {
             final selected = _controller.index == i;
             final disabled =
                 widget.tabEnabled != null && i < widget.tabEnabled!.length && !widget.tabEnabled![i];
             final title = _tabTitle(widget.tabs[i], i);
-            final style = (widget.labelStyle ??
-                    theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600))
-                ?.copyWith(
+            final baseVerticalLabel = widget.labelStyle ??
+                TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  height: 20 / 14,
+                );
+            final style = baseVerticalLabel.copyWith(
               color: disabled
                   ? rise.mutedForeground(0.35)
                   : selected
-                      ? rise.defaultForeground
-                      : rise.mutedForeground(0.55),
+                      ? (widget.labelColor ?? rise.defaultForeground)
+                      : (widget.unselectedLabelColor ?? rise.mutedForeground(0.55)),
             );
 
             void onTap() {
-              if (disabled) return;
               _controller.animateTo(i);
             }
 
-            if (secondary && selected) {
-              return Material(
+            if (secondary) {
+              final cell = Material(
                 color: Colors.transparent,
                 child: InkWell(
-                  onTap: onTap,
+                  onTap: disabled ? null : onTap,
+                  mouseCursor: disabled ? SystemMouseCursors.basic : null,
                   child: Container(
                     alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                    padding: _verticalTabPadding,
                     decoration: BoxDecoration(
                       border: Border(
-                        left: BorderSide(color: rise.accent, width: 2),
+                        left: BorderSide(
+                          color: selected ? rise.accent : rise.border,
+                          width: selected ? 2 : 1,
+                        ),
                       ),
                     ),
                     child: Text(title, style: style),
                   ),
                 ),
+              );
+              if (i == 0) return cell;
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: 4),
+                  cell,
+                ],
               );
             }
 
@@ -319,23 +418,16 @@ class _RiseTabsState extends State<RiseTabs> with SingleTickerProviderStateMixin
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(16),
                 child: InkWell(
-                  onTap: onTap,
+                  onTap: disabled ? null : onTap,
+                  mouseCursor: disabled ? SystemMouseCursors.basic : null,
                   borderRadius: BorderRadius.circular(16),
                   child: Container(
                     alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                    padding: _verticalTabPadding,
                     decoration: BoxDecoration(
-                      color: !secondary && selected ? theme.colorScheme.surface : null,
+                      color: selected ? rise.surface : null,
                       borderRadius: BorderRadius.circular(16),
-                      boxShadow: !secondary && selected
-                          ? [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.07),
-                                blurRadius: 6,
-                                offset: const Offset(0, 1),
-                              ),
-                            ]
-                          : null,
+                      boxShadow: selected && !isDark ? _segmentShadowsLight : null,
                     ),
                     child: Text(title, style: style),
                   ),
@@ -351,21 +443,40 @@ class _RiseTabsState extends State<RiseTabs> with SingleTickerProviderStateMixin
   List<Widget> _effectiveTabs(BuildContext context) {
     final rise = context.riseTheme;
     return List.generate(widget.tabs.length, (i) {
-      final tab = widget.tabs[i];
       final disabled =
           widget.tabEnabled != null && i < widget.tabEnabled!.length && !widget.tabEnabled![i];
-      if (!disabled) return tab;
-      final title = _tabTitle(tab, i);
-      return Tab(
-        child: Opacity(
-          opacity: rise.disabledOpacity,
-          child: Text(
-            title,
-            style: widget.labelStyle,
+      if (disabled) {
+        final title = _tabTitle(widget.tabs[i], i);
+        return Tab(
+          height: _horizontalTabHeight,
+          child: Opacity(
+            opacity: rise.disabledOpacity,
+            child: Text(
+              title,
+              style: widget.labelStyle,
+            ),
           ),
-        ),
-      );
+        );
+      }
+
+      return _horizontalTabWithHeroHeight(widget.tabs[i]);
     });
+  }
+
+  /// Coerces default [Tab] height (46px) down to Hero `h-8` for horizontal bars only.
+  Widget _horizontalTabWithHeroHeight(Widget tab) {
+    if (tab is! Tab || tab.height != null) return tab;
+    if (tab.icon != null && (tab.text != null || tab.child != null)) {
+      return tab;
+    }
+    return Tab(
+      key: tab.key,
+      text: tab.text,
+      icon: tab.icon,
+      iconMargin: tab.iconMargin,
+      height: _horizontalTabHeight,
+      child: tab.child,
+    );
   }
 
   String _tabTitle(Widget tab, int index) {

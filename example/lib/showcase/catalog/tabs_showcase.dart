@@ -8,7 +8,6 @@ final Map<String, Widget Function(BuildContext context)> _tabsBuilders = {
   'usage': DocsEmbedTabs.usage,
   'vertical': DocsEmbedTabs.vertical,
   'disabled': DocsEmbedTabs.disabled,
-  'with-separator': DocsEmbedTabs.withSeparator,
   'custom-styles': DocsEmbedTabs.customStyles,
   'secondary': DocsEmbedTabs.secondary,
   'secondary-vertical': DocsEmbedTabs.secondaryVertical,
