@@ -22,7 +22,6 @@ if [[ "${1:-}" == "--full" || "${1:-}" == "--all" ]]; then
 fi
 
 echo "Refreshing showcase manifest + Flutter previews (Next dev keeps running)…"
-npm run generate:showcase
 bash scripts/build-flutter-docs-preview.sh
 
 echo ""
