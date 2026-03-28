@@ -5,7 +5,8 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT/example"
 flutter pub get
 dart run tool/generate_showcase_manifest.dart
-flutter build web --release --base-href /flutter-previews/
+# Must match Next `basePath` + folder name (see `rise-flutter-embed.tsx`).
+flutter build web --release --base-href /riseui/docs/flutter-previews/
 rm -rf "$ROOT/apps/docs/public/flutter-previews"
 mkdir -p "$ROOT/apps/docs/public"
 cp -R "$ROOT/example/build/web" "$ROOT/apps/docs/public/flutter-previews"

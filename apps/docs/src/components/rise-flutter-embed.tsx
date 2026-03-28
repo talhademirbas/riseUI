@@ -16,12 +16,13 @@ function buildFlutterEmbedSrc(embed: string): string {
   if (origin) {
     return `${origin}/?${params.toString()}`;
   }
-  return `/flutter-previews/index.html?${params.toString()}`;
+  const base = (process.env.NEXT_PUBLIC_DOCS_BASE_PATH ?? "").replace(/\/$/, "");
+  return `${base}/flutter-previews/index.html?${params.toString()}`;
 }
 
 /**
  * Embeds the **real** RiseUI Flutter web build (same widgets as the example app)
- * inside the docs site. Production: static files under `/flutter-previews/`
+ * inside the docs site. Production: static files under `{basePath}/flutter-previews/`
  * (see `scripts/build-flutter-docs-preview.sh`). Local dev: set
  * `NEXT_PUBLIC_FLUTTER_EMBED_ORIGIN` to the Flutter dev server origin, e.g.
  * `http://localhost:57567`.

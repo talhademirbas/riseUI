@@ -11,7 +11,7 @@ Live docs on the main site: **`https://www.risition.com/riseui/docs/`** (same pa
 
 ## Deploy (Vercel, public `riseUI` repo)
 
-This folder includes **`vercel.json`**: install and build run from the **monorepo root** (`npm install` + `npm run build --workspace=@rise-ui/docs`) so Turborepo detection does not run the wrong build.
+This folder includes **`vercel.json`**: install runs from the **monorepo root**; **build** runs `scripts/vercel-build-docs.sh`, which installs a Flutter SDK if needed, then **`npm run build:docs`** (showcase manifest + Flutter web → `public/flutter-previews/` + Next build). The first deploy can take several minutes.
 
 1. Create a Vercel project connected to this repository.
 2. Set **Root Directory** to the folder that contains this `package.json` (in this monorepo that is `apps/docs` — a filesystem path only; it does not affect the public URL).
@@ -36,6 +36,10 @@ npm run dev
 ```
 
 After editing MDX under `content/docs/`, run `npx fumadocs-mdx` if needed (also runs on `postinstall`).
+
+### Flutter live previews (embeds)
+
+Doc pages embed the example app via iframes. URLs use **`{basePath}/flutter-previews/`** (with `basePath` `/riseui/docs`). Local dev with a running Flutter web server: set **`NEXT_PUBLIC_FLUTTER_EMBED_ORIGIN`** (see `rise-flutter-embed.tsx`).
 
 ## Content
 

@@ -13,10 +13,16 @@ const withMDX = createMDX({
   outDir: path.join(docsAppRoot, ".source"),
 });
 
+/** Must match `rise-flutter-embed` + `scripts/build-flutter-docs-preview.sh` (`--base-href`). */
+const docsBasePath = "/riseui/docs";
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   /** Standalone deploy + same path when proxied from www.risition.com (see risitionWeb rewrites). */
-  basePath: "/riseui/docs",
+  basePath: docsBasePath,
+  env: {
+    NEXT_PUBLIC_DOCS_BASE_PATH: docsBasePath,
+  },
   transpilePackages: ["fumadocs-ui", "fumadocs-core"],
   turbopack: {
     root: workspaceRoot,
