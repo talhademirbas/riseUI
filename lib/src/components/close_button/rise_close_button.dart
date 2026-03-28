@@ -8,10 +8,7 @@ import '../../theme/rise_theme.dart';
 /// Maps to HeroUI Native `CloseButtonIconProps` (`iconProps`).
 @immutable
 class RiseCloseButtonIconProps {
-  const RiseCloseButtonIconProps({
-    this.size = 20,
-    this.color,
-  });
+  const RiseCloseButtonIconProps({this.size = 20, this.color});
 
   /// Icon size in logical pixels (HeroUI default **20** in API table).
   final double size;
@@ -75,7 +72,8 @@ class RiseCloseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Widget content = child ??
+    final Widget content =
+        child ??
         Icon(
           Icons.close,
           size: iconProps.size,

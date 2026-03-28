@@ -27,13 +27,25 @@ const List<RiseUsagePublicConfig> kCardUsagePublicConfigs = [
   RiseUsagePublicConfig(
     slug: 'horizontal',
     sectionTitle: 'Horizontal layout',
-    subtitle: 'Row with media placeholder and stacked copy (responsive pattern).',
-    minHeight: 200,
+    subtitle: 'Media + copy; stacks on narrow widths (Hero horizontal / md:flex-row).',
+    minHeight: 240,
+  ),
+  RiseUsagePublicConfig(
+    slug: 'with-avatar',
+    sectionTitle: 'With avatar',
+    subtitle: 'Community rows with large avatar, title, members, and byline — Hero With Avatar story.',
+    minHeight: 260,
+  ),
+  RiseUsagePublicConfig(
+    slug: 'with-images',
+    sectionTitle: 'With images',
+    subtitle: 'Hero-style media header card plus secondary payment / community cards.',
+    minHeight: 520,
   ),
   RiseUsagePublicConfig(
     slug: 'with-form',
     sectionTitle: 'With form',
-    subtitle: 'Stacked fields and actions inside the card.',
+    subtitle: 'Login-style fields and footer actions (Hero With Form).',
     minHeight: 320,
   ),
 ];

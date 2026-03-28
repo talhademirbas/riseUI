@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-27T19:31:41.059231Z",
+  "generated": "2026-03-28T08:08:59.713539Z",
   "components": [
     {
       "id": "accordion",
@@ -367,14 +367,28 @@
         {
           "slug": "horizontal",
           "sectionTitle": "Horizontal layout",
-          "subtitle": "Row with media placeholder and stacked copy (responsive pattern).",
-          "minHeight": 200.0,
+          "subtitle": "Media + copy; stacks on narrow widths (Hero horizontal / md:flex-row).",
+          "minHeight": 240.0,
           "embed": "card-horizontal"
+        },
+        {
+          "slug": "with-avatar",
+          "sectionTitle": "With avatar",
+          "subtitle": "Community rows with large avatar, title, members, and byline — Hero With Avatar story.",
+          "minHeight": 260.0,
+          "embed": "card-with-avatar"
+        },
+        {
+          "slug": "with-images",
+          "sectionTitle": "With images",
+          "subtitle": "Hero-style media header card plus secondary payment / community cards.",
+          "minHeight": 520.0,
+          "embed": "card-with-images"
         },
         {
           "slug": "with-form",
           "sectionTitle": "With form",
-          "subtitle": "Stacked fields and actions inside the card.",
+          "subtitle": "Login-style fields and footer actions (Hero With Form).",
           "minHeight": 320.0,
           "embed": "card-with-form"
         }

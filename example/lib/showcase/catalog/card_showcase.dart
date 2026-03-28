@@ -8,6 +8,8 @@ final Map<String, Widget Function(BuildContext context)> _cardBuilders = {
   'usage': DocsEmbedCard.usage,
   'variants': DocsEmbedCard.variants,
   'horizontal': DocsEmbedCard.horizontal,
+  'with-avatar': DocsEmbedCard.withAvatar,
+  'with-images': DocsEmbedCard.withImages,
   'with-form': DocsEmbedCard.withForm,
 };
 

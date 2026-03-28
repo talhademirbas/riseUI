@@ -8,11 +8,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         theme: ThemeData.light().copyWith(extensions: const [RiseThemeData.light]),
-        home: Scaffold(
-          body: RiseCloseButton(
-            onPressed: () => taps++,
-          ),
-        ),
+        home: Scaffold(body: RiseCloseButton(onPressed: () => taps++)),
       ),
     );
 

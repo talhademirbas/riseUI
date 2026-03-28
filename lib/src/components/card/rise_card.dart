@@ -6,11 +6,11 @@ import '../surface/rise_surface.dart';
 /// Prominence levels aligned with HeroUI [Card](https://heroui.com/docs/react/components/card)
 /// ([card.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/card.css)).
 enum RiseCardVariant {
-  /// `card--transparent` — no fill or shadow (nested cards).
+  /// `card--transparent` — `border-none bg-transparent shadow-none` (nested cards).
   transparent,
 
-  /// `card--default` / `bg-surface`.
-  standard,
+  /// Hero `default` — `card--default` / `bg-surface`.
+  default_,
 
   /// `card--secondary` / `bg-surface-secondary`.
   secondary,
@@ -22,7 +22,7 @@ enum RiseCardVariant {
 RiseSurfaceVariant _surfaceForCard(RiseCardVariant variant) {
   return switch (variant) {
     RiseCardVariant.transparent => RiseSurfaceVariant.transparent,
-    RiseCardVariant.standard => RiseSurfaceVariant.primary,
+    RiseCardVariant.default_ => RiseSurfaceVariant.primary,
     RiseCardVariant.secondary => RiseSurfaceVariant.secondary,
     RiseCardVariant.tertiary => RiseSurfaceVariant.tertiary,
   };
@@ -30,20 +30,23 @@ RiseSurfaceVariant _surfaceForCard(RiseCardVariant variant) {
 
 /// Flexible container for grouped content ([card.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/card/card.tsx)).
 ///
-/// Uses `rounded-3xl`, padding, column `gap-3` (12px), and Hero surface variants.
+/// Uses `rounded-3xl`, `p-4`, column `gap-3` (12px), `shadow-surface` when not transparent
+/// ([card.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/card.css)).
 /// Prefer the compound widgets ([RiseCardHeader], [RiseCardTitle], …) for anatomy
 /// matching `Card.Header` / `Card.Title` / etc.
 class RiseCard extends StatelessWidget {
-  /// Vertical spacing between [RiseCardHeader], [RiseCardContent], and [RiseCardFooter]
-  /// when composing manually inside [child] (HeroUI `gap-3`).
+  /// Spacing between header / content / footer sections (`.card` `gap-3`).
   static const double sectionGap = 12;
+
+  /// Inner content stack spacing (`.card__content` `gap-1`).
+  static const double contentGap = 4;
 
   const RiseCard({
     super.key,
     required this.child,
     this.header,
     this.footer,
-    this.variant = RiseCardVariant.standard,
+    this.variant = RiseCardVariant.default_,
     this.padding = const EdgeInsets.all(16),
     this.borderRadius = 24,
     this.clipBehavior = Clip.antiAlias,
@@ -129,7 +132,7 @@ class _CardOnSurfaceScope extends StatelessWidget {
   }
 }
 
-/// `card__header` — column header region.
+/// `card__header` — `flex flex-col` ([card.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/card.css)).
 class RiseCardHeader extends StatelessWidget {
   const RiseCardHeader({super.key, required this.child});
 
@@ -145,7 +148,7 @@ class RiseCardHeader extends StatelessWidget {
   }
 }
 
-/// `card__title` — `text-sm` / `font-medium` / foreground (maps to `h3` in Hero).
+/// `card__title` — `text-sm font-medium text-foreground` (renders as `h3` in Hero).
 class RiseCardTitle extends StatelessWidget {
   const RiseCardTitle({super.key, required this.child});
 
@@ -188,7 +191,7 @@ class RiseCardDescription extends StatelessWidget {
   }
 }
 
-/// `card__content` — main body (`flex-1` column semantics for layout children).
+/// `card__content` — `flex-1 flex-col gap-1` (use [RiseCard.contentGap] between stacked blocks).
 class RiseCardContent extends StatelessWidget {
   const RiseCardContent({super.key, required this.child});
 
@@ -204,7 +207,7 @@ class RiseCardContent extends StatelessWidget {
   }
 }
 
-/// `card__footer` — trailing actions (typically a [Row] of buttons).
+/// `card__footer` — `flex flex-row items-center` for trailing actions.
 class RiseCardFooter extends StatelessWidget {
   const RiseCardFooter({super.key, required this.child});
 
@@ -217,7 +220,12 @@ class RiseCardFooter extends StatelessWidget {
       data: IconThemeData(color: rise.defaultForeground),
       child: DefaultTextStyle.merge(
         style: TextStyle(color: rise.defaultForeground, fontSize: 14, height: 20 / 14),
-        child: child,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Flexible(child: child),
+          ],
+        ),
       ),
     );
   }

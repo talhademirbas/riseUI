@@ -61,7 +61,9 @@ import {
   cardHorizontalCode,
   cardUsageCode,
   cardVariantsCode,
+  cardWithAvatarCode,
   cardWithFormCode,
+  cardWithImagesCode,
 } from "./doc-code-snippets/card";
 import {
   tagGroupDisabledCode,
@@ -297,6 +299,8 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
     usage: cardUsageCode,
     variants: cardVariantsCode,
     horizontal: cardHorizontalCode,
+    "with-avatar": cardWithAvatarCode,
+    "with-images": cardWithImagesCode,
     "with-form": cardWithFormCode,
   },
   "tag-group": {
