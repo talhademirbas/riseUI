@@ -14,13 +14,14 @@ const List<RiseUsagePublicConfig> kSurfaceUsagePublicConfigs = [
   RiseUsagePublicConfig(
     slug: 'usage',
     sectionTitle: 'Variants',
-    subtitle: 'primary (default), secondary, tertiary, transparent — with on-surface copy.',
-    minHeight: 420,
+    subtitle:
+        'Hero Storybook order: transparent, default, secondary, tertiary — each with sample Email field; base surface is shadowless (surface.css).',
+    minHeight: 560,
   ),
   RiseUsagePublicConfig(
     slug: 'with-form',
     sectionTitle: 'With form fields',
-    subtitle: 'Nested inputs use secondary field variant on a default surface (Hero pattern).',
+    subtitle: 'Secondary [RiseTextField]s on a default surface shell (Hero With Form–style).',
     minHeight: 220,
   ),
 ];

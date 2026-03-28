@@ -189,7 +189,7 @@ class _ListGroupSurfaceVariantsEmbed extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        mini(RiseSurfaceVariant.primary),
+        mini(RiseSurfaceVariant.default_),
         const SizedBox(height: 12),
         mini(RiseSurfaceVariant.secondary),
         const SizedBox(height: 12),

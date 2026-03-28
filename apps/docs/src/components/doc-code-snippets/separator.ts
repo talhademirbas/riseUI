@@ -45,7 +45,7 @@ RiseSeparator(tone: RiseSeparatorTone.secondary)
 RiseSeparator(tone: RiseSeparatorTone.tertiary)`;
 
 export const separatorWithSurfaceCode = `RiseSurface(
-  variant: RiseSurfaceVariant.primary,
+  variant: RiseSurfaceVariant.default_,
   child: Column(
     children: [
       Text('Heading'),

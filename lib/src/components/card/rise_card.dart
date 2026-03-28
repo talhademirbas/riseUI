@@ -22,7 +22,7 @@ enum RiseCardVariant {
 RiseSurfaceVariant _surfaceForCard(RiseCardVariant variant) {
   return switch (variant) {
     RiseCardVariant.transparent => RiseSurfaceVariant.transparent,
-    RiseCardVariant.default_ => RiseSurfaceVariant.primary,
+    RiseCardVariant.default_ => RiseSurfaceVariant.default_,
     RiseCardVariant.secondary => RiseSurfaceVariant.secondary,
     RiseCardVariant.tertiary => RiseSurfaceVariant.tertiary,
   };
@@ -102,6 +102,7 @@ class RiseCard extends StatelessWidget {
         variant: _surfaceForCard(variant),
         padding: padding,
         borderRadius: borderRadius,
+        showShadow: variant != RiseCardVariant.transparent,
         child: inner,
       ),
     );

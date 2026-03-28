@@ -25,7 +25,7 @@ class RiseListGroup extends StatelessWidget {
   const RiseListGroup({
     super.key,
     required this.children,
-    this.variant = RiseSurfaceVariant.primary,
+    this.variant = RiseSurfaceVariant.default_,
     this.borderRadius = 16,
     this.padding = EdgeInsets.zero,
     this.showDividers = false,
@@ -33,7 +33,7 @@ class RiseListGroup extends StatelessWidget {
 
   final List<Widget> children;
 
-  /// Passed through to the underlying [RiseSurface] (`default` → [RiseSurfaceVariant.primary], etc.).
+  /// Passed through to the underlying [RiseSurface] (Hero `default` → [RiseSurfaceVariant.default_], etc.).
   final RiseSurfaceVariant variant;
 
   final double borderRadius;
@@ -59,6 +59,7 @@ class RiseListGroup extends StatelessWidget {
         variant: variant,
         padding: padding,
         borderRadius: borderRadius,
+        showShadow: true,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-28T08:12:46.407970Z",
+  "generated": "2026-03-28T08:15:18.384295Z",
   "components": [
     {
       "id": "accordion",
@@ -598,14 +598,14 @@
         {
           "slug": "usage",
           "sectionTitle": "Variants",
-          "subtitle": "primary (default), secondary, tertiary, transparent — with on-surface copy.",
-          "minHeight": 420.0,
+          "subtitle": "Hero Storybook order: transparent, default, secondary, tertiary — each with sample Email field; base surface is shadowless (surface.css).",
+          "minHeight": 560.0,
           "embed": "surface-usage"
         },
         {
           "slug": "with-form",
           "sectionTitle": "With form fields",
-          "subtitle": "Nested inputs use secondary field variant on a default surface (Hero pattern).",
+          "subtitle": "Secondary [RiseTextField]s on a default surface shell (Hero With Form–style).",
           "minHeight": 220.0,
           "embed": "surface-with-form"
         }

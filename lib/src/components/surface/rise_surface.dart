@@ -3,22 +3,23 @@ import 'package:flutter/material.dart';
 import '../../theme/rise_theme.dart';
 
 /// Prominence levels aligned with HeroUI [Surface](https://heroui.com/docs/react/components/surface)
-/// (`--surface`, `--surface-secondary`, `--surface-tertiary`, `transparent`).
+/// ([surface.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/surface.css)
+/// `surface--default` / `secondary` / `tertiary` / `transparent`).
 enum RiseSurfaceVariant {
-  /// HeroUI `default` — `--surface`.
-  primary,
+  /// HeroUI `default` — `surface--default` / `bg-surface`.
+  default_,
 
-  /// HeroUI `secondary` — `--surface-secondary`.
+  /// `surface--secondary` / `bg-surface-secondary`.
   secondary,
 
-  /// HeroUI `tertiary` — `--surface-tertiary`.
+  /// `surface--tertiary` / `bg-surface-tertiary`.
   tertiary,
 
-  /// HeroUI `transparent` — no fill or shadow (`SurfaceContext` still exposed).
+  /// `surface--transparent` — no fill (`SurfaceContext` still exposed).
   transparent,
 }
 
-/// Exposes the enclosing [RiseSurfaceVariant] to descendants (Hero `SurfaceContext`).
+/// Exposes the enclosing [RiseSurfaceVariant] to descendants (Hero [SurfaceContext](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/surface/surface.tsx)).
 class RiseSurfaceScope extends InheritedWidget {
   const RiseSurfaceScope({
     super.key,
@@ -43,17 +44,22 @@ class RiseSurfaceScope extends InheritedWidget {
   }
 }
 
-/// Rounded container using [RiseThemeData] surface tokens and Hero `--surface-shadow` (light only).
+/// Semantic shell using [RiseThemeData] surface tokens.
 ///
-/// Non-[RiseSurfaceVariant.transparent] surfaces wrap [child] with
-/// [DefaultTextStyle] / [IconTheme] using [RiseThemeData.defaultForeground].
+/// Hero’s base [surface.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/surface.css)
+/// is **fill + foreground only** (no shadow). Composite components that need elevation
+/// (e.g. [RiseCard], [RiseListGroup]) pass [showShadow] to apply `--surface-shadow` in light mode.
+///
+/// Non-[RiseSurfaceVariant.transparent] surfaces wrap [child] with [DefaultTextStyle] /
+/// [IconTheme] using on-surface foreground (Hero `text-surface-foreground` resolves to theme foreground).
 class RiseSurface extends StatelessWidget {
   const RiseSurface({
     super.key,
     required this.child,
-    this.variant = RiseSurfaceVariant.primary,
+    this.variant = RiseSurfaceVariant.default_,
     this.padding = const EdgeInsets.all(16),
     this.borderRadius = 24,
+    this.showShadow = false,
   });
 
   final Widget child;
@@ -62,10 +68,13 @@ class RiseSurface extends StatelessWidget {
 
   final EdgeInsetsGeometry padding;
 
-  /// Corner radius (`rounded-3xl` ≈ 24; Hero examples often use `rounded-2xl` — override as needed).
+  /// Corner radius (`rounded-3xl` ≈ 24).
   final double borderRadius;
 
-  /// Approximates `--surface-shadow` first layers from [variables.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/themes/default/variables.css).
+  /// When true (non-transparent, light theme), applies Hero `--surface-shadow` layers.
+  /// Default **false** so standalone [RiseSurface] matches `surface.css` (shadowless).
+  final bool showShadow;
+
   static List<BoxShadow> _surfaceShadowsLight() {
     return const [
       BoxShadow(color: Color(0x0A000000), offset: Offset(0, 2), blurRadius: 4),
@@ -79,15 +88,14 @@ class RiseSurface extends StatelessWidget {
     final rise = context.riseTheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final Color bg = switch (variant) {
-      RiseSurfaceVariant.primary => rise.surface,
+      RiseSurfaceVariant.default_ => rise.surface,
       RiseSurfaceVariant.secondary => rise.surfaceSecondary,
       RiseSurfaceVariant.tertiary => rise.surfaceTertiary,
       RiseSurfaceVariant.transparent => Colors.transparent,
     };
 
-    final List<BoxShadow>? shadows = variant == RiseSurfaceVariant.transparent || isDark
-        ? null
-        : _surfaceShadowsLight();
+    final List<BoxShadow>? shadows =
+        showShadow && variant != RiseSurfaceVariant.transparent && !isDark ? _surfaceShadowsLight() : null;
 
     Widget inner = Padding(
       padding: padding,

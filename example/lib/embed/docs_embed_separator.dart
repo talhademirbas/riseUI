@@ -219,7 +219,7 @@ class _SeparatorWithSurfaceEmbed extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        panel('Default surface', RiseSurfaceVariant.primary),
+        panel('Default surface', RiseSurfaceVariant.default_),
         const SizedBox(height: 12),
         panel('Secondary surface', RiseSurfaceVariant.secondary),
         const SizedBox(height: 12),
