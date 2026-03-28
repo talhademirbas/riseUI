@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-28T09:12:54.164167Z",
+  "generated": "2026-03-28T09:28:17.247087Z",
   "components": [
     {
       "id": "accordion",
@@ -320,35 +320,42 @@
     {
       "id": "chip",
       "title": "Chip",
-      "description": "Small informational badges for labels, statuses, and categories — aligned with @heroui/react Chip (heroui.com/docs/react/components/chip) and chip.css (rounded-2xl, compound colors × variants).",
+      "description": "Inline badges — [chip.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/chip/chip.tsx), [chip.styles.ts](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/src/components/chip/chip.styles.ts), [chip.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/chip.css) (`rounded-2xl`, `text-xs`/`text-sm` lg, compound primary · soft surfaces).",
       "variants": [
         {
           "slug": "usage",
           "sectionTitle": "Usage",
-          "subtitle": "Semantic colors with the default soft style (HeroUI Usage row).",
-          "minHeight": 140.0,
+          "subtitle": "Storybook `Default`: `color: accent`, `variant: secondary`, child `Label` (Hero defaultArgs).",
+          "minHeight": 120.0,
           "embed": "chip-usage"
         },
         {
-          "slug": "variants",
-          "sectionTitle": "Variants",
-          "subtitle": "Variant × color matrix at md size — primary, secondary, tertiary, soft.",
-          "minHeight": 520.0,
-          "embed": "chip-variants"
+          "slug": "sizes",
+          "sectionTitle": "Sizes",
+          "subtitle": "`sm` · `md` · `lg` — `Sizes` story (accent + secondary).",
+          "minHeight": 140.0,
+          "embed": "chip-sizes"
         },
         {
           "slug": "with-icons",
           "sectionTitle": "With icons",
-          "subtitle": "Leading icon + label via leading.",
-          "minHeight": 180.0,
+          "subtitle": "`WithIcon`: leading + `Label` + trailing (circle-outline icons).",
+          "minHeight": 120.0,
           "embed": "chip-with-icons"
         },
         {
           "slug": "statuses",
           "sectionTitle": "Statuses",
-          "subtitle": "Typical status and release labels using semantic colors.",
-          "minHeight": 220.0,
+          "subtitle": "`Statuses`: four variant rows × Information / Completed / Pending / Failed.",
+          "minHeight": 420.0,
           "embed": "chip-statuses"
+        },
+        {
+          "slug": "variants",
+          "sectionTitle": "Variants",
+          "subtitle": "`Variants`: lg / md / sm blocks — variant × color matrix with icons + label.",
+          "minHeight": 720.0,
+          "embed": "chip-variants"
         }
       ]
     },

@@ -6,9 +6,10 @@ import '../rise_showcase_models.dart';
 
 final Map<String, Widget Function(BuildContext context)> _chipBuilders = {
   'usage': DocsEmbedChip.usage,
-  'variants': DocsEmbedChip.variants,
+  'sizes': DocsEmbedChip.sizes,
   'with-icons': DocsEmbedChip.withIcons,
   'statuses': DocsEmbedChip.statuses,
+  'variants': DocsEmbedChip.variants,
 };
 
 final RiseComponentShowcase riseChipShowcase = RiseComponentShowcase(

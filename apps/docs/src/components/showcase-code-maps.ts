@@ -53,6 +53,7 @@ import {
   closeButtonWithCustomIconCode,
 } from "./doc-code-snippets/close-button";
 import {
+  chipSizesCode,
   chipStatusesCode,
   chipUsageCode,
   chipVariantsCode,
@@ -292,9 +293,10 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
   },
   chip: {
     usage: chipUsageCode,
-    variants: chipVariantsCode,
+    sizes: chipSizesCode,
     "with-icons": chipWithIconsCode,
     statuses: chipStatusesCode,
+    variants: chipVariantsCode,
   },
   card: {
     usage: cardUsageCode,

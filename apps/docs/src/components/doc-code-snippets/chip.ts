@@ -1,88 +1,71 @@
 /** Dart snippets — keep in sync with `example/lib/embed/docs_embed_chip.dart`. */
 
-export const chipUsageCode = `Wrap(
-  spacing: 12,
-  runSpacing: 12,
+export const chipUsageCode = `const Row(
   children: [
     RiseChip(
-      variant: RiseChipVariant.soft,
-      color: RiseChipColor.default_,
-      child: Text('Default'),
-    ),
-    RiseChip(
-      variant: RiseChipVariant.soft,
       color: RiseChipColor.accent,
-      child: Text('Accent'),
-    ),
-    RiseChip(
-      variant: RiseChipVariant.soft,
-      color: RiseChipColor.success,
-      child: Text('Success'),
-    ),
-    RiseChip(
-      variant: RiseChipVariant.soft,
-      color: RiseChipColor.warning,
-      child: Text('Warning'),
-    ),
-    RiseChip(
-      variant: RiseChipVariant.soft,
-      color: RiseChipColor.danger,
-      child: Text('Danger'),
+      variant: RiseChipVariant.secondary,
+      child: Text('Label'),
     ),
   ],
 )`;
 
-export const chipVariantsCode = `// For each variant (primary, secondary, tertiary, soft), one Wrap with
-// five chips — colors: default_, accent, success, warning, danger; size md.
-Wrap(
-  spacing: 8,
-  runSpacing: 8,
+export const chipSizesCode = `Wrap(
+  spacing: 12,
   children: [
     RiseChip(
-      variant: RiseChipVariant.primary,
-      color: RiseChipColor.default_,
-      size: RiseChipSize.md,
-      child: Text('Label'),
+      color: RiseChipColor.accent,
+      variant: RiseChipVariant.secondary,
+      size: RiseChipSize.sm,
+      child: Text('Small'),
     ),
     RiseChip(
-      variant: RiseChipVariant.primary,
       color: RiseChipColor.accent,
+      variant: RiseChipVariant.secondary,
       size: RiseChipSize.md,
-      child: Text('Label'),
+      child: Text('Medium'),
     ),
-    // … success, warning, danger
+    RiseChip(
+      color: RiseChipColor.accent,
+      variant: RiseChipVariant.secondary,
+      size: RiseChipSize.lg,
+      child: Text('Large'),
+    ),
   ],
 )`;
 
 export const chipWithIconsCode = `RiseChip(
-  leading: Icon(Icons.info_outline),
-  color: RiseChipColor.default_,
-  child: Text('Information'),
+  color: RiseChipColor.accent,
+  variant: RiseChipVariant.secondary,
+  leading: Icon(Icons.circle_outlined, size: 14),
+  trailing: Icon(Icons.circle_outlined, size: 14),
+  child: Text('Label'),
 )`;
 
 export const chipStatusesCode = `Wrap(
   spacing: 12,
-  runSpacing: 12,
   children: [
     RiseChip(
-      leading: Icon(Icons.circle_outlined),
-      child: Text('Default'),
-    ),
-    RiseChip(
-      leading: Icon(Icons.check_circle),
       variant: RiseChipVariant.primary,
-      color: RiseChipColor.accent,
-      child: Text('Active'),
+      color: RiseChipColor.default_,
+      leading: Icon(Icons.circle, size: 6),
+      child: Text('Information'),
     ),
     RiseChip(
-      leading: Icon(Icons.schedule),
-      color: RiseChipColor.warning,
-      child: Text('Pending'),
-    ),
-    RiseChip(
-      leading: Icon(Icons.auto_awesome_outlined),
+      variant: RiseChipVariant.primary,
       color: RiseChipColor.success,
-      child: Text('New Feature'),
+      leading: Icon(Icons.circle, size: 6),
+      child: Text('Completed'),
     ),
   ],
+)`;
+
+export const chipVariantsCode = `// lg / md / sm × primary|secondary|tertiary|soft × five colors
+RiseChip(
+  color: RiseChipColor.accent,
+  variant: RiseChipVariant.secondary,
+  size: RiseChipSize.md,
+  leading: Icon(Icons.circle_outlined, size: 14),
+  trailing: Icon(Icons.circle_outlined, size: 14),
+  child: Text('Label'),
 )`;
