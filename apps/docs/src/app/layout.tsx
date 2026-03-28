@@ -5,7 +5,7 @@ import {RiseUiDocsAppShell} from "../rise-ui-docs-app-shell";
 
 import "./global.css";
 
-/** Public site (Risition). Docs route: /rise_ui/docs */
+/** Public site (Risition). Docs route: /riseui/docs */
 const siteUrl = "https://www.risition.com";
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     siteName: "RiseUI",
     type: "website",
-    url: `${siteUrl}/rise_ui/docs`,
+    url: `${siteUrl}/riseui/docs`,
   },
 };
 

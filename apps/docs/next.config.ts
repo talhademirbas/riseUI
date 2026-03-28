@@ -12,6 +12,8 @@ const withMDX = createMDX();
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  /** Standalone deploy + same path when proxied from www.risition.com (see risitionWeb rewrites). */
+  basePath: "/riseui/docs",
   transpilePackages: ["fumadocs-ui", "fumadocs-core"],
   turbopack: {
     root: workspaceRoot,
