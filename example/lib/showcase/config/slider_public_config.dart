@@ -6,25 +6,25 @@ const String kSliderTitle = 'Slider';
 
 const String kSliderDescription =
     'Single and range sliders with label/output row, vertical layout, and HeroUI-aligned track '
-    'styling — see heroui.com/docs/react/components/slider and slider.css.';
+    '(heroui.com/docs/react/components/slider, slider.tsx, slider.css in heroui v3).';
 
 const List<RiseUsagePublicConfig> kSliderUsagePublicConfigs = [
   RiseUsagePublicConfig(
     slug: 'usage',
     sectionTitle: 'Usage',
-    subtitle: 'Label, value output, and accent track (default 0–100).',
+    subtitle: 'Label + output row, h-5 track, accent fill (HeroUI Default).',
     minHeight: 120,
   ),
   RiseUsagePublicConfig(
     slug: 'vertical',
     sectionTitle: 'Vertical',
-    subtitle: 'Orientation vertical — output, track, label.',
+    subtitle: 'Output · track · label (HeroUI Vertical).',
     minHeight: 280,
   ),
   RiseUsagePublicConfig(
     slug: 'range',
     sectionTitle: 'Range',
-    subtitle: 'Two thumbs with combined output (e.g. price band).',
+    subtitle: 'Two thumbs, combined output (HeroUI Range).',
     minHeight: 120,
   ),
   RiseUsagePublicConfig(

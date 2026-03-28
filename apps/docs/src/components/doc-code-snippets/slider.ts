@@ -19,7 +19,7 @@ export const sliderRangeCode = `RiseRangeSlider(
   max: 1000,
   step: 50,
   onChanged: (v) => setState(() => range = v),
-  label: const Text('Price range'),
+  label: const Text('Price Range'),
 )`;
 
 export const sliderDisabledCode = `RiseSlider(

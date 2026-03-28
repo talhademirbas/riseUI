@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-28T10:25:21.549809Z",
+  "generated": "2026-03-28T14:39:52.498608Z",
   "components": [
     {
       "id": "accordion",
@@ -488,26 +488,26 @@
     {
       "id": "slider",
       "title": "Slider",
-      "description": "Single and range sliders with label/output row, vertical layout, and HeroUI-aligned track styling — see heroui.com/docs/react/components/slider and slider.css.",
+      "description": "Single and range sliders with label/output row, vertical layout, and HeroUI-aligned track (heroui.com/docs/react/components/slider, slider.tsx, slider.css in heroui v3).",
       "variants": [
         {
           "slug": "usage",
           "sectionTitle": "Usage",
-          "subtitle": "Label, value output, and accent track (default 0–100).",
+          "subtitle": "Label + output row, h-5 track, accent fill (HeroUI Default).",
           "minHeight": 120.0,
           "embed": "slider-usage"
         },
         {
           "slug": "vertical",
           "sectionTitle": "Vertical",
-          "subtitle": "Orientation vertical — output, track, label.",
+          "subtitle": "Output · track · label (HeroUI Vertical).",
           "minHeight": 280.0,
           "embed": "slider-vertical"
         },
         {
           "slug": "range",
           "sectionTitle": "Range",
-          "subtitle": "Two thumbs with combined output (e.g. price band).",
+          "subtitle": "Two thumbs, combined output (HeroUI Range).",
           "minHeight": 120.0,
           "embed": "slider-range"
         },

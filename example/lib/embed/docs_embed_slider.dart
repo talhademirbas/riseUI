@@ -87,7 +87,7 @@ class _SliderRangeEmbedState extends State<_SliderRangeEmbed> {
       max: 1000,
       step: 50,
       onChanged: (v) => setState(() => _r = v),
-      label: const Text('Price range'),
+      label: const Text('Price Range'),
     );
   }
 }
@@ -141,7 +141,7 @@ class _SliderCustomFormatEmbedState extends State<_SliderCustomFormatEmbed> {
           max: 1000,
           step: 50,
           onChanged: (v) => setState(() => _r = v),
-          label: const Text('Price range'),
+          label: const Text('Price Range'),
           formatRange: (a, b) => '${usd(a)} – ${usd(b)}',
         ),
       ],

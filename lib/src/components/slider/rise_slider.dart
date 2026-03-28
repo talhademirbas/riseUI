@@ -12,7 +12,8 @@ enum RiseSliderOrientation {
 }
 
 /// Single-thumb slider with optional label + value output row — aligned with
-/// [HeroUI Slider](https://heroui.com/docs/react/components/slider) and `slider.css`.
+/// [HeroUI Slider](https://heroui.com/docs/react/components/slider) and
+/// [slider.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/slider.css).
 class RiseSlider extends StatelessWidget {
   const RiseSlider({
     super.key,
@@ -96,19 +97,32 @@ class RiseSlider extends StatelessWidget {
     return v == v.roundToDouble() ? v.round().toString() : v.toStringAsFixed(1);
   }
 
+  /// Hero `text-sm font-medium` + `tabular-nums` on output.
+  static TextStyle? _labelTextStyle(TextTheme textTheme, RiseThemeData rise) {
+    return textTheme.labelLarge?.copyWith(
+      fontSize: 14,
+      height: 1.4,
+      fontWeight: FontWeight.w500,
+      color: rise.defaultForeground,
+    );
+  }
+
+  static TextStyle? _outputTextStyle(TextTheme textTheme, RiseThemeData rise) {
+    return textTheme.labelLarge?.copyWith(
+      fontSize: 14,
+      height: 1.4,
+      fontWeight: FontWeight.w500,
+      color: rise.defaultForeground,
+      fontFeatures: const [FontFeature.tabularFigures()],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final rise = context.riseTheme;
     final textTheme = Theme.of(context).textTheme;
-    final labelStyle = textTheme.labelLarge?.copyWith(
-      color: rise.defaultForeground,
-      fontWeight: FontWeight.w500,
-    );
-    final outputStyle = textTheme.labelLarge?.copyWith(
-      color: rise.defaultForeground,
-      fontWeight: FontWeight.w500,
-      fontFeatures: const [FontFeature.tabularFigures()],
-    );
+    final labelStyle = _labelTextStyle(textTheme, rise);
+    final outputStyle = _outputTextStyle(textTheme, rise);
 
     final effectiveDivisions = _effectiveDivisions(min, max, step, divisions);
     final clamped = value.clamp(min, max);
@@ -177,7 +191,7 @@ class RiseSlider extends StatelessWidget {
       );
     }
 
-    // Vertical: output, track, label (see HeroUI `slider.css` vertical grid).
+    // Vertical: output, track, label (`slider.css` vertical grid, gap-2 between blocks).
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -204,20 +218,68 @@ class RiseSlider extends StatelessWidget {
   }
 
   static SliderThemeData _theme(RiseThemeData rise) {
+    final disabled = rise.disabledOpacity;
     return SliderThemeData(
+      trackHeight: 20,
       activeTrackColor: rise.accent,
       inactiveTrackColor: rise.muted,
+      disabledActiveTrackColor: rise.muted.withValues(alpha: disabled),
+      disabledInactiveTrackColor: rise.muted.withValues(alpha: disabled * 0.85),
       thumbColor: rise.accent,
-      overlayColor: WidgetStateColor.resolveWith((states) {
-        if (states.contains(WidgetState.dragged)) {
-          return rise.accent.withValues(alpha: 0.2);
-        }
-        return rise.accent.withValues(alpha: 0.12);
-      }),
-      trackHeight: 6,
-      thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10),
-      overlayShape: const RoundSliderOverlayShape(overlayRadius: 16),
+      disabledThumbColor: rise.defaultForeground.withValues(alpha: 0.35),
+      overlayColor: rise.accent.withValues(alpha: 0.12),
+      thumbShape: _RiseHeroSliderThumbShape(rise: rise),
+      rangeThumbShape: _RiseHeroRangeSliderThumbShape(rise: rise),
+      trackShape: const RoundedRectSliderTrackShape(),
+      overlayShape: const RoundSliderOverlayShape(overlayRadius: 12),
+      overlappingShapeStrokeColor: rise.surface,
     );
+  }
+}
+
+/// Stacks multiple slider rows for example layouts.
+class RiseSliderGroup extends StatelessWidget {
+  const RiseSliderGroup({
+    super.key,
+    required this.children,
+    this.orientation = Axis.vertical,
+    this.spacing = 12,
+  });
+
+  final List<Widget> children;
+
+  /// `vertical` (default) or `horizontal` scrollable row.
+  final Axis orientation;
+
+  final double spacing;
+
+  @override
+  Widget build(BuildContext context) {
+    if (orientation == Axis.horizontal) {
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: _withSpacing(children, spacing, horizontal: true),
+        ),
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: _withSpacing(children, spacing, horizontal: false),
+    );
+  }
+
+  static List<Widget> _withSpacing(List<Widget> children, double gap, {required bool horizontal}) {
+    if (children.isEmpty) return children;
+    final out = <Widget>[];
+    for (var i = 0; i < children.length; i++) {
+      if (i > 0) {
+        out.add(horizontal ? SizedBox(width: gap) : SizedBox(height: gap));
+      }
+      out.add(children[i]);
+    }
+    return out;
   }
 }
 
@@ -275,22 +337,15 @@ class RiseRangeSlider extends StatelessWidget {
   static String _defaultPair(double a, double b, double? step) {
     final fa = RiseSlider._defaultFormat(a, step);
     final fb = RiseSlider._defaultFormat(b, step);
-    return '$fa – $fb';
+    return '$fa\u202f–\u202f$fb';
   }
 
   @override
   Widget build(BuildContext context) {
     final rise = context.riseTheme;
     final textTheme = Theme.of(context).textTheme;
-    final labelStyle = textTheme.labelLarge?.copyWith(
-      color: rise.defaultForeground,
-      fontWeight: FontWeight.w500,
-    );
-    final outputStyle = textTheme.labelLarge?.copyWith(
-      color: rise.defaultForeground,
-      fontWeight: FontWeight.w500,
-      fontFeatures: const [FontFeature.tabularFigures()],
-    );
+    final labelStyle = RiseSlider._labelTextStyle(textTheme, rise);
+    final outputStyle = RiseSlider._outputTextStyle(textTheme, rise);
 
     final start = values.start.clamp(min, max);
     final end = values.end.clamp(min, max);
@@ -382,5 +437,144 @@ class RiseRangeSlider extends StatelessWidget {
         ],
       ],
     );
+  }
+}
+
+/// Hero `slider__thumb`: outer accent capsule + inner `accent-foreground` pill (`::after`), shadow-field.
+class _RiseHeroSliderThumbShape extends SliderComponentShape {
+  const _RiseHeroSliderThumbShape({required this.rise});
+
+  final RiseThemeData rise;
+
+  static const double _outerW = 28;
+  static const double _outerH = 20;
+  static const double _innerW = 24;
+  static const double _innerH = 16;
+
+  @override
+  Size getPreferredSize(bool isEnabled, bool isDiscrete) {
+    return const Size(_outerW, _outerH);
+  }
+
+  @override
+  void paint(
+    PaintingContext context,
+    Offset center, {
+    required Animation<double> activationAnimation,
+    required Animation<double> enableAnimation,
+    required bool isDiscrete,
+    required TextPainter labelPainter,
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required TextDirection textDirection,
+    required double value,
+    required double textScaleFactor,
+    required Size sizeWithOverflow,
+  }) {
+    final Canvas canvas = context.canvas;
+    final outerPaint = Paint()
+      ..color = ColorTween(
+        begin: sliderTheme.disabledThumbColor,
+        end: sliderTheme.thumbColor,
+      ).evaluate(enableAnimation)!;
+
+    final outerR = RRect.fromRectAndRadius(
+      Rect.fromCenter(center: center, width: _outerW, height: _outerH),
+      Radius.circular(_outerH / 2),
+    );
+    canvas.drawRRect(outerR, outerPaint);
+
+    final innerScale = 1.0 - 0.1 * activationAnimation.value;
+    final innerColor = ColorTween(
+      begin: rise.defaultForeground.withValues(alpha: 0.35),
+      end: rise.accentForeground,
+    ).evaluate(enableAnimation)!;
+
+    canvas.save();
+    canvas.translate(center.dx, center.dy);
+    canvas.scale(innerScale);
+    canvas.translate(-center.dx, -center.dy);
+
+    final innerR = RRect.fromRectAndRadius(
+      Rect.fromCenter(center: center, width: _innerW, height: _innerH),
+      Radius.circular(_innerH / 2),
+    );
+    final innerPath = Path()..addRRect(innerR);
+    canvas.drawShadow(innerPath, Colors.black, 1.2, true);
+    canvas.drawRRect(innerR, Paint()..color = innerColor);
+    canvas.restore();
+  }
+}
+
+/// Same thumb geometry for [RangeSlider] thumbs (HeroUI range track).
+class _RiseHeroRangeSliderThumbShape extends RangeSliderThumbShape {
+  const _RiseHeroRangeSliderThumbShape({required this.rise});
+
+  final RiseThemeData rise;
+
+  static const double _outerW = 28;
+  static const double _outerH = 20;
+  static const double _innerW = 24;
+  static const double _innerH = 16;
+
+  @override
+  Size getPreferredSize(bool isEnabled, bool isDiscrete) {
+    return const Size(_outerW, _outerH);
+  }
+
+  @override
+  void paint(
+    PaintingContext context,
+    Offset center, {
+    required Animation<double> activationAnimation,
+    required Animation<double> enableAnimation,
+    bool isDiscrete = false,
+    bool isEnabled = false,
+    bool? isOnTop,
+    required SliderThemeData sliderTheme,
+    TextDirection? textDirection,
+    Thumb? thumb,
+    bool? isPressed,
+  }) {
+    final Canvas canvas = context.canvas;
+    final ColorTween colorTween = ColorTween(
+      begin: sliderTheme.disabledThumbColor,
+      end: sliderTheme.thumbColor,
+    );
+    final outerPaint = Paint()..color = colorTween.evaluate(enableAnimation)!;
+
+    final outerR = RRect.fromRectAndRadius(
+      Rect.fromCenter(center: center, width: _outerW, height: _outerH),
+      Radius.circular(_outerH / 2),
+    );
+
+    canvas.drawRRect(outerR, outerPaint);
+    if (isOnTop ?? false) {
+      final stroke = Paint()
+        ..color = sliderTheme.overlappingShapeStrokeColor ?? Colors.white
+        ..strokeWidth = 1
+        ..style = PaintingStyle.stroke;
+      canvas.drawRRect(outerR, stroke);
+    }
+
+    final innerScale = 1.0 - 0.1 * activationAnimation.value;
+    final innerColor = ColorTween(
+      begin: rise.defaultForeground.withValues(alpha: 0.35),
+      end: rise.accentForeground,
+    ).evaluate(enableAnimation)!;
+
+    canvas.save();
+    canvas.translate(center.dx, center.dy);
+    canvas.scale(innerScale);
+    canvas.translate(-center.dx, -center.dy);
+
+    final innerR = RRect.fromRectAndRadius(
+      Rect.fromCenter(center: center, width: _innerW, height: _innerH),
+      Radius.circular(_innerH / 2),
+    );
+    final innerPath = Path()..addRRect(innerR);
+    canvas.drawShadow(innerPath, Colors.black, (isPressed ?? false) ? 2.0 : 1.2, true);
+    canvas.drawRRect(innerR, Paint()..color = innerColor);
+    canvas.restore();
   }
 }
