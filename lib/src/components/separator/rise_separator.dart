@@ -2,43 +2,45 @@ import 'package:flutter/material.dart';
 
 import '../../theme/rise_theme.dart';
 
-/// Line contrast presets aligned with HeroUI [Separator](https://heroui.com/docs/react/components/separator)
-/// (`separator--default` / `secondary` / `tertiary` — [separator.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/separator.css)).
+/// Tone presets aligned with HeroUI [separator.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/separator.css)
+/// (`separator--default`, `separator--secondary`, `separator--tertiary`).
 enum RiseSeparatorTone {
-  /// Standard contrast (`bg-separator`).
-  standard,
+  /// `separator--default` / `bg-separator`.
+  default_,
 
-  /// Medium contrast (`bg-separator-secondary`).
+  /// `separator--secondary` / `bg-separator-secondary`.
   secondary,
 
-  /// Subtle contrast (`bg-separator-tertiary`).
+  /// `separator--tertiary` / `bg-separator-tertiary`.
   tertiary,
 }
 
 /// `data-orientation` — [separator.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/separator/separator.tsx).
 enum RiseSeparatorOrientation {
+  /// `separator--horizontal` — `h-px w-full`.
   horizontal,
+
+  /// `separator--vertical` — `w-px` + stretch in flex (`min-h-2` in Hero when not stretched).
   vertical,
 }
 
-/// A 1px hairline divider with rounded caps (`rounded-[4px]`).
+/// 1px hairline with `rounded-[4px]` caps ([separator.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/separator.css) `.separator`).
 ///
-/// For [RiseSeparatorOrientation.vertical], place inside a **height-bounded** parent
-/// (e.g. `SizedBox(height: 48, child: Row(...))`).
+/// **Vertical:** put inside a **height-bounded** flex child (e.g. `SizedBox(height: 48, child: Row(...))`)
+/// so the line can stretch like `self-stretch`.
 class RiseSeparator extends StatelessWidget {
   const RiseSeparator({
     super.key,
-    this.tone = RiseSeparatorTone.standard,
+    this.tone = RiseSeparatorTone.default_,
     this.orientation = RiseSeparatorOrientation.horizontal,
     this.thickness = 1,
   });
 
-  /// Foreground line contrast.
   final RiseSeparatorTone tone;
 
   final RiseSeparatorOrientation orientation;
 
-  /// Line width (vertical) or height (horizontal). Hero defaults to `h-px` / `w-px`.
+  /// Thickness in logical px (`h-px` / `w-px` → 1).
   final double thickness;
 
   static const double _radius = 4;
@@ -46,7 +48,7 @@ class RiseSeparator extends StatelessWidget {
   static Color lineColor(BuildContext context, RiseSeparatorTone tone) {
     final rise = context.riseTheme;
     return switch (tone) {
-      RiseSeparatorTone.standard => rise.separator,
+      RiseSeparatorTone.default_ => rise.separator,
       RiseSeparatorTone.secondary => rise.separatorSecondary,
       RiseSeparatorTone.tertiary => rise.separatorTertiary,
     };
@@ -79,14 +81,14 @@ class RiseSeparator extends StatelessWidget {
   }
 }
 
-/// Horizontal rule with centered content (`separator__container` + `separator__content` in Hero).
+/// Horizontal rule with centered label (`separator__container`, `separator__line`, `separator__content`).
 ///
-/// Gap between lines and content follows Hero `gap-3` (12px).
+/// Gap between lines and label follows Hero `gap-3` (12px).
 class RiseLabeledSeparator extends StatelessWidget {
   const RiseLabeledSeparator({
     super.key,
     required this.child,
-    this.tone = RiseSeparatorTone.standard,
+    this.tone = RiseSeparatorTone.default_,
     this.gap = 12,
     this.thickness = 1,
   });

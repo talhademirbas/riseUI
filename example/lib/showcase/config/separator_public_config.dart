@@ -5,8 +5,8 @@ const String kSeparatorComponentId = 'separator';
 const String kSeparatorTitle = 'Separator';
 
 const String kSeparatorDescription =
-    'Dividers with HeroUI tones (standard, secondary, tertiary), horizontal and vertical orientation, '
-    'optional centered label, and surface-aware contrast — see '
+    'Hairlines with HeroUI tokens (`separator--default`, `secondary`, `tertiary`), horizontal / vertical '
+    'orientation, optional labeled row (`separator__container`), and on-surface contrast — see '
     '[Separator](https://heroui.com/docs/react/components/separator), '
     '[separator.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/separator/separator.tsx), '
     'and [separator.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/separator.css).';
@@ -15,25 +15,25 @@ const List<RiseUsagePublicConfig> kSeparatorUsagePublicConfigs = [
   RiseUsagePublicConfig(
     slug: 'usage',
     sectionTitle: 'Usage',
-    subtitle: 'Horizontal rule under intro copy; link row with vertical separators.',
+    subtitle: 'Horizontal rule under intro; row links with vertical separators (Storybook Default).',
     minHeight: 200,
   ),
   RiseUsagePublicConfig(
     slug: 'vertical',
     sectionTitle: 'Vertical',
-    subtitle: '1px vertical line between row items (bounded height).',
+    subtitle: '`separator--vertical` in a height-bounded row (Storybook Vertical).',
     minHeight: 100,
   ),
   RiseUsagePublicConfig(
     slug: 'with-content',
     sectionTitle: 'With content',
-    subtitle: 'RiseLabeledSeparator — muted label between growing lines.',
-    minHeight: 220,
+    subtitle: 'Icon steps + plain `RiseSeparator` blocks + `RiseLabeledSeparator` (Storybook With).',
+    minHeight: 320,
   ),
   RiseUsagePublicConfig(
     slug: 'variants',
     sectionTitle: 'Variants',
-    subtitle: 'standard, secondary, and tertiary line contrast.',
+    subtitle: 'Default, secondary, tertiary line contrast (`bg-separator*`).',
     minHeight: 140,
   ),
   RiseUsagePublicConfig(

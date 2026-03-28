@@ -74,7 +74,7 @@ class RiseListGroupInsetSeparator extends StatelessWidget {
   const RiseListGroupInsetSeparator({
     super.key,
     this.inset = kRiseListGroupDividerInset,
-    this.tone = RiseSeparatorTone.standard,
+    this.tone = RiseSeparatorTone.default_,
     this.color,
   });
 

@@ -3,7 +3,10 @@ import 'package:rise_ui/rise_ui.dart';
 
 import 'docs_embed_accordion.dart' show kDocsEmbedMaxWidth;
 
-/// Separator demos for docs iframe (`?embed=separator-*`).
+/// Separator demos for docs iframe (`?embed=separator-*`) — aligned with
+/// [Separator](https://heroui.com/docs/react/components/separator),
+/// [separator.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/separator/separator.tsx),
+/// and [separator.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/separator.css).
 class DocsEmbedSeparator {
   DocsEmbedSeparator._();
 
@@ -58,14 +61,14 @@ class _SeparatorUsageEmbed extends StatelessWidget {
             Text('Blog', style: TextStyle(color: rise.accent, fontSize: 14, fontWeight: FontWeight.w500)),
             const SizedBox(width: 16),
             SizedBox(
-              height: 20,
+              height: 24,
               child: const RiseSeparator(orientation: RiseSeparatorOrientation.vertical),
             ),
             const SizedBox(width: 16),
             Text('Docs', style: TextStyle(color: rise.accent, fontSize: 14, fontWeight: FontWeight.w500)),
             const SizedBox(width: 16),
             SizedBox(
-              height: 20,
+              height: 24,
               child: const RiseSeparator(orientation: RiseSeparatorOrientation.vertical),
             ),
             const SizedBox(width: 16),
@@ -104,13 +107,29 @@ class _SeparatorWithContentEmbed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rise = context.riseTheme;
-    Widget step(String title, String body) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+
+    Widget step(IconData icon, String title, String subtitle) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: rise.defaultForeground)),
-          const SizedBox(height: 4),
-          Text(body, style: TextStyle(fontSize: 14, height: 20 / 14, color: rise.mutedForeground())),
+          Icon(icon, size: 36, color: rise.accent),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: rise.defaultForeground),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: TextStyle(fontSize: 14, height: 20 / 14, color: rise.mutedForeground()),
+                ),
+              ],
+            ),
+          ),
         ],
       );
     }
@@ -119,15 +138,27 @@ class _SeparatorWithContentEmbed extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        step('Set Up Notifications', 'Receive account activity updates'),
+        step(
+          Icons.notifications_outlined,
+          'Set Up Notifications',
+          'Receive account activity updates',
+        ),
+        const SizedBox(height: 16),
+        const RiseSeparator(),
+        const SizedBox(height: 16),
+        step(
+          Icons.extension_outlined,
+          'Set up Browser Extension',
+          'Connect your browser to your account',
+        ),
         const SizedBox(height: 16),
         RiseLabeledSeparator(child: const Text('OR')),
         const SizedBox(height: 16),
-        step('Set up Browser Extension', 'Connect your browser to your account'),
-        const SizedBox(height: 16),
-        const RiseLabeledSeparator(child: Text('· · ·')),
-        const SizedBox(height: 16),
-        step('Mint Collectible', 'Create your first collectible'),
+        step(
+          Icons.auto_awesome_outlined,
+          'Mint Collectible',
+          'Create your first collectible',
+        ),
       ],
     );
   }
@@ -152,7 +183,7 @@ class _SeparatorVariantsEmbed extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        row('Default (standard)', RiseSeparatorTone.standard),
+        row('Default (separator--default)', RiseSeparatorTone.default_),
         const SizedBox(height: 16),
         row('Secondary', RiseSeparatorTone.secondary),
         const SizedBox(height: 16),

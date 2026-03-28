@@ -10,7 +10,7 @@ export const separatorUsageCode = `Column(
       children: [
         Text('Blog'),
         SizedBox(
-          height: 20,
+          height: 24,
           child: RiseSeparator(orientation: RiseSeparatorOrientation.vertical),
         ),
         Text('Docs'),
@@ -33,12 +33,14 @@ export const separatorVerticalCode = `SizedBox(
 export const separatorWithContentCode = `Column(
   children: [
     Text('Step title'),
+    RiseSeparator(),
+    SizedBox(height: 16),
     RiseLabeledSeparator(child: Text('OR')),
     Text('Next step'),
   ],
 )`;
 
-export const separatorVariantsCode = `RiseSeparator(tone: RiseSeparatorTone.standard)
+export const separatorVariantsCode = `RiseSeparator(tone: RiseSeparatorTone.default_)
 RiseSeparator(tone: RiseSeparatorTone.secondary)
 RiseSeparator(tone: RiseSeparatorTone.tertiary)`;
 
