@@ -1,105 +1,93 @@
 /** Dart snippets — keep in sync with `example/lib/embed/docs_embed_avatar.dart`. */
 
-export const avatarUsageCode = `Wrap(
-  spacing: 16,
+const _chat = "https://img.heroui.chat/image/avatar?w=400&h=400&u=";
+
+export const avatarUsageCode = `Row(
+  crossAxisAlignment: CrossAxisAlignment.start,
   children: [
-    RiseAvatar(
-      image: NetworkImage(kDocsAvatarSampleImageUrl),
-      name: 'Sam Rowe',
+    Column(
+      children: [
+        RiseAvatar(name: 'PG'),
+        RiseAvatar(name: 'JR'),
+        RiseAvatar(
+          child: Icon(Icons.person_outline, size: RiseAvatar.iconSizeFor(RiseAvatarSize.md)),
+        ),
+      ],
     ),
-    const RiseAvatar(
-      name: 'Alex Griffin',
-      color: RiseAvatarColor.accent,
-    ),
-    RiseAvatar(
-      child: ColoredBox(
-        color: rise.accent.withValues(alpha: 0.2),
-        child: Icon(Icons.person_outline, color: rise.accent),
-      ),
-    ),
+    // + chat portraits + heroui-assets columns — see docs embed
   ],
 )`;
 
-export const avatarSizesCode = `const Wrap(
+export const avatarWithDelayCode = `// After 300ms timer — same portrait as Hero \`WithDelay\`
+RiseAvatar(
+  image: NetworkImage('${_chat}3'),
+  name: 'John',
+)`;
+
+export const avatarSizesCode = `Wrap(
   spacing: 16,
   children: [
     RiseAvatar(
-      image: NetworkImage(kDocsAvatarSampleImageUrl),
-      name: 'S',
+      image: NetworkImage('${_chat}3'),
+      name: 'SM',
       size: RiseAvatarSize.sm,
     ),
     RiseAvatar(
-      image: NetworkImage(kDocsAvatarSampleImageUrl),
-      name: 'M',
+      image: NetworkImage('${_chat}4'),
+      name: 'MD',
       size: RiseAvatarSize.md,
     ),
     RiseAvatar(
-      image: NetworkImage(kDocsAvatarSampleImageUrl),
-      name: 'L',
+      image: NetworkImage('${_chat}5'),
+      name: 'LG',
       size: RiseAvatarSize.lg,
     ),
   ],
 )`;
 
-export const avatarColorsCode = `const Wrap(
-  spacing: 12,
+export const avatarColorsCode = `Wrap(
+  spacing: 16,
   children: [
-    RiseAvatar(name: 'AG', color: RiseAvatarColor.standard),
-    RiseAvatar(name: 'AG', color: RiseAvatarColor.accent),
-    RiseAvatar(name: 'AG', color: RiseAvatarColor.success),
-    RiseAvatar(name: 'AG', color: RiseAvatarColor.warning),
-    RiseAvatar(name: 'AG', color: RiseAvatarColor.danger),
+    RiseAvatar(name: 'DF', color: RiseAvatarColor.standard),
+    RiseAvatar(name: 'AC', color: RiseAvatarColor.accent),
+    RiseAvatar(name: 'SC', color: RiseAvatarColor.success),
+    RiseAvatar(name: 'WR', color: RiseAvatarColor.warning),
+    RiseAvatar(name: 'DG', color: RiseAvatarColor.danger),
   ],
 )`;
 
 export const avatarVariantsCode = `Column(
   crossAxisAlignment: CrossAxisAlignment.start,
   children: [
-    Text('Solid'),
-    Wrap(
-      spacing: 12,
+    RiseSeparator(tone: RiseSeparatorTone.default_),
+    Row(
       children: [
-        for (final c in RiseAvatarColor.values)
-          RiseAvatar(
-            name: 'AG',
-            color: c,
-            variant: RiseAvatarVariant.solid,
-          ),
-      ],
-    ),
-    Text('Soft'),
-    Wrap(
-      spacing: 12,
-      children: [
-        for (final c in RiseAvatarColor.values)
-          RiseAvatar(
-            name: 'AG',
-            color: c,
-            variant: RiseAvatarVariant.soft,
-          ),
+        RiseAvatar(name: 'AG', color: RiseAvatarColor.accent),
+        // … kHeroAvatarColorColumnOrder × letter | soft | icon | img rows
       ],
     ),
   ],
 )`;
 
-export const avatarFallbackCode = `const RiseAvatar(
-  image: NetworkImage('https://example.invalid/no-image.png'),
-  name: 'Jamie Doe',
-  color: RiseAvatarColor.accent,
+export const avatarFallbackCode = `Wrap(
+  spacing: 16,
+  children: [
+    RiseAvatar(name: 'JD'),
+    RiseAvatar(
+      child: Icon(Icons.person_outline, size: RiseAvatar.iconSizeFor(RiseAvatarSize.md)),
+    ),
+    RiseAvatar(
+      image: NetworkImage('https://invalid-url-to-show-fallback.com/image.jpg'),
+      name: 'NA',
+    ),
+  ],
 )`;
 
 export const avatarGroupCode = `RiseAvatarGroup(
   children: [
-    RiseAvatar(
-      image: NetworkImage(kDocsAvatarSampleImageUrl),
-      name: 'A',
-    ),
-    const RiseAvatar(name: 'Bo Chen', color: RiseAvatarColor.success),
-    RiseAvatar(
-      image: NetworkImage('https://picsum.photos/seed/rise-avatar-b/200'),
-      name: 'C',
-    ),
-    const RiseAvatar(name: 'Dana Lee', color: RiseAvatarColor.warning),
+    RiseAvatar(image: NetworkImage('${_chat}3'), name: 'J'),
+    RiseAvatar(image: NetworkImage('${_chat}5'), name: 'K'),
+    const RiseAvatar(name: '+5', color: RiseAvatarColor.standard),
   ],
 )`;
 

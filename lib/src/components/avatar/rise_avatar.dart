@@ -121,9 +121,11 @@ class RiseAvatar extends StatelessWidget {
     }
   }
 
+  /// Hero [avatar.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/avatar.css):
+  /// `text-sm` on fallback; `text-base` only for `.avatar--lg`.
   static double _initialFontSize(RiseAvatarSize s) {
     return switch (s) {
-      RiseAvatarSize.sm => 12,
+      RiseAvatarSize.sm => 14,
       RiseAvatarSize.md => 14,
       RiseAvatarSize.lg => 16,
     };
@@ -140,11 +142,26 @@ class RiseAvatar extends StatelessWidget {
 
     late final Widget inner;
     if (child != null) {
+      // Match Hero `.avatar` + `.avatar__fallback`: icon / custom slots sit on the same
+      // default or soft surface as letter fallbacks (not a transparent hole).
       inner = ClipOval(
-        child: SizedBox(
+        child: Container(
           width: d,
           height: d,
-          child: child,
+          color: bg,
+          alignment: Alignment.center,
+          child: IconTheme.merge(
+            data: IconThemeData(color: fg, size: iconSizeFor(size)),
+            child: DefaultTextStyle.merge(
+              style: TextStyle(
+                color: fg,
+                fontSize: _initialFontSize(size),
+                fontWeight: FontWeight.w500,
+                height: 1,
+              ),
+              child: child!,
+            ),
+          ),
         ),
       );
     } else if (image != null) {
@@ -177,6 +194,17 @@ class RiseAvatar extends StatelessWidget {
       label: name ?? 'Avatar',
       child: SizedBox(width: d, height: d, child: inner),
     );
+  }
+
+  /// Centered icon size for custom [child] slots (HeroUI icon fallbacks in [avatar.stories.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/avatar/avatar.stories.tsx)).
+  static double iconSizeFor(RiseAvatarSize s) => _iconSize(s);
+
+  static double _iconSize(RiseAvatarSize s) {
+    return switch (s) {
+      RiseAvatarSize.sm => 16,
+      RiseAvatarSize.md => 18,
+      RiseAvatarSize.lg => 20,
+    };
   }
 }
 
@@ -219,7 +247,7 @@ class RiseAvatarGroup extends StatelessWidget {
     super.key,
     required this.children,
     this.size = RiseAvatarSize.md,
-    this.overlap = 10,
+    this.overlap = 8,
     this.ringColor,
     this.ringWidth = 2,
   });

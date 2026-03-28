@@ -32,6 +32,7 @@ import {
   avatarSizesCode,
   avatarUsageCode,
   avatarVariantsCode,
+  avatarWithDelayCode,
 } from "./doc-code-snippets/avatar";
 import {
   buttonCompoundLabelCode,
@@ -263,6 +264,7 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
   },
   avatar: {
     usage: avatarUsageCode,
+    "with-delay": avatarWithDelayCode,
     sizes: avatarSizesCode,
     colors: avatarColorsCode,
     variants: avatarVariantsCode,

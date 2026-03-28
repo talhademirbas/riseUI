@@ -6,6 +6,7 @@ import '../rise_showcase_models.dart';
 
 final Map<String, Widget Function(BuildContext context)> _avatarBuilders = {
   'usage': DocsEmbedAvatar.usage,
+  'with-delay': DocsEmbedAvatar.withDelay,
   'sizes': DocsEmbedAvatar.sizes,
   'colors': DocsEmbedAvatar.colors,
   'variants': DocsEmbedAvatar.variants,
