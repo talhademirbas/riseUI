@@ -8,7 +8,10 @@ const docsAppRoot = path.dirname(fileURLToPath(import.meta.url));
 /** Monorepo root (…/riseUI) where workspace node_modules lives */
 const workspaceRoot = path.join(docsAppRoot, "../..");
 
-const withMDX = createMDX();
+const withMDX = createMDX({
+  configPath: path.join(docsAppRoot, "source.config.ts"),
+  outDir: path.join(docsAppRoot, ".source"),
+});
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,

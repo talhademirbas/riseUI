@@ -11,6 +11,8 @@ Live docs on the main site: **`https://www.risition.com/riseui/docs/`** (same pa
 
 ## Deploy (Vercel, public `riseUI` repo)
 
+This folder includes **`vercel.json`**: install and build run from the **monorepo root** (`npm install` + `npm run build --workspace=@rise-ui/docs`) so Turborepo detection does not run the wrong build.
+
 1. Create a Vercel project connected to this repository.
 2. Set **Root Directory** to the folder that contains this `package.json` (in this monorepo that is `apps/docs` — a filesystem path only; it does not affect the public URL).
 3. Deploy. Note the project URL with path, e.g. `https://<project>.vercel.app/riseui/docs`.
