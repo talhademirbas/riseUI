@@ -10,9 +10,11 @@ final Map<String, Widget Function(BuildContext context)> _tagGroupBuilders = {
   'variants': DocsEmbedTagGroup.variants,
   'disabled': DocsEmbedTagGroup.disabled,
   'selection-modes': DocsEmbedTagGroup.selectionModes,
+  'controlled': DocsEmbedTagGroup.controlled,
   'with-icons': DocsEmbedTagGroup.withIcons,
   'with-remove': DocsEmbedTagGroup.withRemove,
   'with-error': DocsEmbedTagGroup.withError,
+  'with-list-data': DocsEmbedTagGroup.withListData,
 };
 
 final RiseComponentShowcase riseTagGroupShowcase = RiseComponentShowcase(

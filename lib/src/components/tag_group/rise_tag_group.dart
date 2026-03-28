@@ -203,8 +203,10 @@ class RiseTag extends StatelessWidget {
 
 /// Focusable list of tags with selection, keyboard-friendly styling, and optional removal.
 ///
-/// See [HeroUI TagGroup (web)](https://heroui.com/docs/react/components/tag-group) and
-/// [tag-group.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/tag-group.css).
+/// Slot order matches HeroUI: optional [label], tag list, optional [description], optional
+/// [errorMessage] (see [tag-group.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/tag-group.css) — `gap-1` between blocks, `p-1` on description/error).
+///
+/// See [HeroUI TagGroup (web)](https://heroui.com/docs/react/components/tag-group).
 class RiseTagGroup<T extends Object> extends StatelessWidget {
   const RiseTagGroup({
     super.key,
@@ -256,8 +258,10 @@ class RiseTagGroup<T extends Object> extends StatelessWidget {
 
   final String? label;
 
+  /// Helper text below the tag list (HeroUI `description` slot — after tags, `p-1`).
   final String? description;
 
+  /// Validation line below [description] (HeroUI `errorMessage` slot — after tags, `p-1`).
   final String? errorMessage;
 
   bool _isKeyDisabled(T v) {
@@ -321,6 +325,13 @@ class RiseTagGroup<T extends Object> extends StatelessWidget {
       }).toList(),
     );
 
+    final descStyle = theme.textTheme.bodySmall?.copyWith(
+          color: rise.mutedForeground(0.85),
+        ) ??
+        TextStyle(color: rise.mutedForeground(0.85), fontSize: 12);
+    final errStyle = theme.textTheme.bodySmall?.copyWith(color: rise.danger) ??
+        TextStyle(color: rise.danger, fontSize: 12);
+
     final children = <Widget>[
       if (label != null) ...[
         Text(
@@ -329,21 +340,19 @@ class RiseTagGroup<T extends Object> extends StatelessWidget {
         ),
         const SizedBox(height: 4),
       ],
-      if (description != null) ...[
-        Text(
-          description!,
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: rise.mutedForeground(0.85),
-          ),
-        ),
-        const SizedBox(height: 8),
-      ],
       list,
+      if (description != null) ...[
+        const SizedBox(height: 4),
+        Padding(
+          padding: const EdgeInsets.all(4),
+          child: Text(description!, style: descStyle),
+        ),
+      ],
       if (errorMessage != null) ...[
-        const SizedBox(height: 8),
-        Text(
-          errorMessage!,
-          style: theme.textTheme.bodySmall?.copyWith(color: rise.danger),
+        const SizedBox(height: 4),
+        Padding(
+          padding: const EdgeInsets.all(4),
+          child: Text(errorMessage!, style: errStyle),
         ),
       ],
     ];

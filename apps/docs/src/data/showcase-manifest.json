@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-28T10:07:53.115135Z",
+  "generated": "2026-03-28T10:15:52.120787Z",
   "components": [
     {
       "id": "accordion",
@@ -416,58 +416,72 @@
         {
           "slug": "usage",
           "sectionTitle": "Usage",
-          "subtitle": "Multi-select tags with accent selection styling.",
+          "subtitle": "Default: single selection with leading icons (HeroUI Default story).",
           "minHeight": 160.0,
           "embed": "tag-group-usage"
         },
         {
           "slug": "sizes",
           "sectionTitle": "Sizes",
-          "subtitle": "sm · md · lg.",
-          "minHeight": 260.0,
+          "subtitle": "sm · md · lg with Label captions.",
+          "minHeight": 280.0,
           "embed": "tag-group-sizes"
         },
         {
           "slug": "variants",
           "sectionTitle": "Variants",
           "subtitle": "default (outlined) vs surface (muted fill).",
-          "minHeight": 200.0,
+          "minHeight": 220.0,
           "embed": "tag-group-variants"
         },
         {
           "slug": "disabled",
           "sectionTitle": "Disabled",
-          "subtitle": "Whole group disabled, or per-tag disabledKeys.",
-          "minHeight": 220.0,
+          "subtitle": "Per-tag disabledKeys and helper copy below the list.",
+          "minHeight": 320.0,
           "embed": "tag-group-disabled"
         },
         {
           "slug": "selection-modes",
           "sectionTitle": "Selection modes",
-          "subtitle": "single vs multiple.",
-          "minHeight": 240.0,
+          "subtitle": "Single vs multiple with helper text.",
+          "minHeight": 300.0,
           "embed": "tag-group-selection-modes"
         },
         {
+          "slug": "controlled",
+          "sectionTitle": "Controlled",
+          "subtitle": "External selection state with summary line.",
+          "minHeight": 200.0,
+          "embed": "tag-group-controlled"
+        },
+        {
           "slug": "with-icons",
-          "sectionTitle": "With icons",
-          "subtitle": "Leading icon per tag via leadingBuilder.",
-          "minHeight": 140.0,
+          "sectionTitle": "With prefix",
+          "subtitle": "Icons and avatars (HeroUI WithPrefix).",
+          "minHeight": 360.0,
           "embed": "tag-group-with-icons"
         },
         {
           "slug": "with-remove",
           "sectionTitle": "With remove button",
-          "subtitle": "onRemove removes items from the list.",
-          "minHeight": 160.0,
+          "subtitle": "Removable lists and empty state.",
+          "minHeight": 320.0,
           "embed": "tag-group-with-remove"
         },
         {
           "slug": "with-error",
           "sectionTitle": "With error message",
-          "subtitle": "Label, description, and validation line.",
-          "minHeight": 200.0,
+          "subtitle": "Label, dynamic description after tags, and validation line.",
+          "minHeight": 240.0,
           "embed": "tag-group-with-error"
+        },
+        {
+          "slug": "with-list-data",
+          "sectionTitle": "With list data",
+          "subtitle": "Avatars, removal, and selected summary (HeroUI WithListData).",
+          "minHeight": 420.0,
+          "embed": "tag-group-with-list-data"
         }
       ]
     },

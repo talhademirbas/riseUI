@@ -68,6 +68,7 @@ import {
   cardWithImagesCode,
 } from "./doc-code-snippets/card";
 import {
+  tagGroupControlledCode,
   tagGroupDisabledCode,
   tagGroupSelectionModesCode,
   tagGroupSizesCode,
@@ -75,6 +76,7 @@ import {
   tagGroupVariantsCode,
   tagGroupWithErrorCode,
   tagGroupWithIconsCode,
+  tagGroupWithListDataCode,
   tagGroupWithRemoveCode,
 } from "./doc-code-snippets/tag-group";
 import {
@@ -313,9 +315,11 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
     variants: tagGroupVariantsCode,
     disabled: tagGroupDisabledCode,
     "selection-modes": tagGroupSelectionModesCode,
+    controlled: tagGroupControlledCode,
     "with-icons": tagGroupWithIconsCode,
     "with-remove": tagGroupWithRemoveCode,
     "with-error": tagGroupWithErrorCode,
+    "with-list-data": tagGroupWithListDataCode,
   },
   slider: {
     usage: sliderUsageCode,
