@@ -21,6 +21,8 @@ class DocsEmbedTextArea {
   static Widget rows(BuildContext context) => _wrap(const _TextAreaRowsEmbed());
   static Widget fullWidth(BuildContext context) => _wrap(const _TextAreaFullWidthEmbed());
   static Widget variants(BuildContext context) => _wrap(const _TextAreaVariantsEmbed());
+  static Widget disabled(BuildContext context) => _wrap(const _TextAreaDisabledEmbed());
+  static Widget invalid(BuildContext context) => _wrap(const _TextAreaInvalidEmbed());
 }
 
 class _TextAreaUsageEmbed extends StatelessWidget {
@@ -29,6 +31,7 @@ class _TextAreaUsageEmbed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const RiseTextArea(
+      fullWidth: true,
       placeholder: 'Type your message…',
       rows: 3,
       maxLines: 8,
@@ -59,6 +62,7 @@ class _TextAreaControlledEmbedState extends State<_TextAreaControlledEmbed> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         RiseTextArea(
+          fullWidth: true,
           controller: _controller,
           rows: 3,
           maxLines: 6,
@@ -81,6 +85,7 @@ class _TextAreaRowsEmbed extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         RiseTextArea(
+          fullWidth: true,
           labelText: 'Short feedback',
           hintText: 'A few lines…',
           rows: 2,
@@ -88,6 +93,7 @@ class _TextAreaRowsEmbed extends StatelessWidget {
         ),
         SizedBox(height: 12),
         RiseTextArea(
+          fullWidth: true,
           labelText: 'Detailed notes',
           hintText: 'More room to write…',
           rows: 5,
@@ -123,7 +129,7 @@ class _TextAreaVariantsEmbed extends StatelessWidget {
         RiseTextArea(
           fullWidth: true,
           variant: RiseTextAreaVariant.primary,
-          placeholder: 'Primary textarea',
+          placeholder: 'Primary — shadow-field',
           rows: 3,
           maxLines: 6,
         ),
@@ -131,11 +137,58 @@ class _TextAreaVariantsEmbed extends StatelessWidget {
         RiseTextArea(
           fullWidth: true,
           variant: RiseTextAreaVariant.secondary,
-          placeholder: 'Secondary textarea',
+          placeholder: 'Secondary — shadow-none, default fill',
           rows: 3,
           maxLines: 6,
         ),
       ],
+    );
+  }
+}
+
+class _TextAreaDisabledEmbed extends StatelessWidget {
+  const _TextAreaDisabledEmbed();
+
+  @override
+  Widget build(BuildContext context) {
+    return const RiseTextArea(
+      fullWidth: true,
+      enabled: false,
+      placeholder: 'Not editable',
+      rows: 3,
+      maxLines: 6,
+    );
+  }
+}
+
+class _TextAreaInvalidEmbed extends StatefulWidget {
+  const _TextAreaInvalidEmbed();
+
+  @override
+  State<_TextAreaInvalidEmbed> createState() => _TextAreaInvalidEmbedState();
+}
+
+class _TextAreaInvalidEmbedState extends State<_TextAreaInvalidEmbed> {
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final empty = _controller.text.trim().isEmpty;
+    return RiseTextArea(
+      fullWidth: true,
+      controller: _controller,
+      placeholder: 'Required notes',
+      rows: 3,
+      maxLines: 6,
+      isInvalid: empty,
+      errorText: empty ? 'This field is required' : null,
+      onChanged: (_) => setState(() {}),
     );
   }
 }

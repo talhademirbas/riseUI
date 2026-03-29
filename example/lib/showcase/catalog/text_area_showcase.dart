@@ -10,6 +10,8 @@ final Map<String, Widget Function(BuildContext context)> _textAreaBuilders = {
   'rows': DocsEmbedTextArea.rows,
   'full-width': DocsEmbedTextArea.fullWidth,
   'variants': DocsEmbedTextArea.variants,
+  'disabled': DocsEmbedTextArea.disabled,
+  'invalid': DocsEmbedTextArea.invalid,
 };
 
 final RiseComponentShowcase riseTextAreaShowcase = RiseComponentShowcase(

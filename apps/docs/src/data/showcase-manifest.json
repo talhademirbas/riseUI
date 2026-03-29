@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-29T10:38:07.588806Z",
+  "generated": "2026-03-29T12:43:14.184284Z",
   "components": [
     {
       "id": "accordion",
@@ -1797,42 +1797,56 @@
     {
       "id": "text-area",
       "title": "TextArea",
-      "description": "Multiline text input with HeroUI-style field tokens, rows, variants, and full width — aligned with @heroui/react TextArea and textarea.css.",
+      "description": "Multiline control with HeroUI field tokens — [textarea.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/textarea/textarea.tsx), [textarea.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/textarea.css) (`rounded-field`, `px-3`/`py-2`, `min-height: 38px`, primary/secondary, Storybook `Components/Forms/Textarea`).",
       "variants": [
         {
           "slug": "usage",
           "sectionTitle": "Usage",
-          "subtitle": "Basic multi-line input with placeholder.",
-          "minHeight": 160.0,
+          "subtitle": "Story `Default`: placeholder, rows, maxLines.",
+          "minHeight": 180.0,
           "embed": "text-area-usage"
         },
         {
           "slug": "controlled",
           "sectionTitle": "Controlled",
-          "subtitle": "Live character count with max length.",
-          "minHeight": 200.0,
+          "subtitle": "Character count with `maxLength` (like a capped message).",
+          "minHeight": 220.0,
           "embed": "text-area-controlled"
         },
         {
           "slug": "rows",
           "sectionTitle": "Rows",
-          "subtitle": "Short vs taller default row counts.",
-          "minHeight": 260.0,
+          "subtitle": "Different `rows` / `minLines` for short vs tall fields.",
+          "minHeight": 280.0,
           "embed": "text-area-rows"
         },
         {
           "slug": "full-width",
           "sectionTitle": "Full width",
-          "subtitle": "Stretches to container width.",
-          "minHeight": 160.0,
+          "subtitle": "`.textarea--full-width` — stretch to container.",
+          "minHeight": 180.0,
           "embed": "text-area-full-width"
         },
         {
           "slug": "variants",
           "sectionTitle": "Variants",
-          "subtitle": "Primary and secondary surface styles.",
-          "minHeight": 220.0,
+          "subtitle": "`Variants`: primary (`shadow-field`) vs secondary (`shadow-none`).",
+          "minHeight": 240.0,
           "embed": "text-area-variants"
+        },
+        {
+          "slug": "disabled",
+          "sectionTitle": "Disabled",
+          "subtitle": "`[data-disabled]` / non-interactive.",
+          "minHeight": 160.0,
+          "embed": "text-area-disabled"
+        },
+        {
+          "slug": "invalid",
+          "sectionTitle": "Invalid",
+          "subtitle": "`[data-invalid]` + error text.",
+          "minHeight": 200.0,
+          "embed": "text-area-invalid"
         }
       ]
     }

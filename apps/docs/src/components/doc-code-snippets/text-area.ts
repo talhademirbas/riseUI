@@ -1,6 +1,7 @@
 /** Dart snippets — keep in sync with `example/lib/embed/docs_embed_text_area.dart`. */
 
 export const textAreaUsageCode = `const RiseTextArea(
+  fullWidth: true,
   placeholder: 'Type your message…',
   rows: 3,
   maxLines: 8,
@@ -10,13 +11,13 @@ export const textAreaControlledCode = `Column(
   crossAxisAlignment: CrossAxisAlignment.start,
   children: [
     RiseTextArea(
+      fullWidth: true,
       controller: controller,
       rows: 3,
       maxLines: 6,
       maxLength: 280,
       onChanged: (_) => setState(() {}),
     ),
-    const SizedBox(height: 8),
     Text('Characters: \${controller.text.length} / 280'),
   ],
 )`;
@@ -25,15 +26,15 @@ export const textAreaRowsCode = `const Column(
   crossAxisAlignment: CrossAxisAlignment.start,
   children: [
     RiseTextArea(
+      fullWidth: true,
       labelText: 'Short feedback',
       hintText: 'A few lines…',
       rows: 2,
       maxLines: 4,
     ),
-    SizedBox(height: 12),
     RiseTextArea(
+      fullWidth: true,
       labelText: 'Detailed notes',
-      hintText: 'More room to write…',
       rows: 5,
       maxLines: 10,
     ),
@@ -53,17 +54,29 @@ export const textAreaVariantsCode = `const Column(
     RiseTextArea(
       fullWidth: true,
       variant: RiseTextAreaVariant.primary,
-      placeholder: 'Primary textarea',
+      placeholder: 'Primary — shadow-field',
       rows: 3,
       maxLines: 6,
     ),
-    SizedBox(height: 10),
     RiseTextArea(
       fullWidth: true,
       variant: RiseTextAreaVariant.secondary,
-      placeholder: 'Secondary textarea',
+      placeholder: 'Secondary — shadow-none',
       rows: 3,
       maxLines: 6,
     ),
   ],
+)`;
+
+export const textAreaDisabledCode = `const RiseTextArea(
+  fullWidth: true,
+  enabled: false,
+  placeholder: 'Not editable',
+  rows: 3,
+)`;
+
+export const textAreaInvalidCode = `RiseTextArea(
+  fullWidth: true,
+  isInvalid: empty,
+  errorText: empty ? 'This field is required' : null,
 )`;
