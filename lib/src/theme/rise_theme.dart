@@ -113,10 +113,12 @@ class RiseThemeData extends ThemeExtension<RiseThemeData> {
 
   final Color? warningHover;
 
-  /// OKLCH-derived defaults — see repo comment block for source tokens.
+  /// Defaults aligned with HeroUI theme tokens
+  /// ([variables.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/themes/default/variables.css));
+  /// `--surface` is #ffffff (light) / #19191c (dark).
   static const RiseThemeData light = RiseThemeData(
     background: Color(0xFFF5F5F5),
-    surface: Color(0xFFFFFFFF),
+    surface: Color(0xFFFFFFFF), // --surface
     surfaceSecondary: Color(0xFFEFEFF0),
     surfaceTertiary: Color(0xFFEAEAEB),
     overlay: Color(0xFFFFFFFF),
@@ -147,10 +149,10 @@ class RiseThemeData extends ThemeExtension<RiseThemeData> {
 
   static const RiseThemeData dark = RiseThemeData(
     background: Color(0xFF060607),
-    surface: Color(0xFF18181B),
+    surface: Color(0xFF19191C), // --surface
     surfaceSecondary: Color(0xFF232325),
     surfaceTertiary: Color(0xFF262728),
-    overlay: Color(0xFF18181B),
+    overlay: Color(0xFF19191C),
     muted: Color(0xFF27272A),
     mutedForegroundBase: Color(0xFF9F9FA9),
     separator: Color(0xFF212124),

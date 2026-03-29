@@ -6,11 +6,23 @@ import '../rise_showcase_models.dart';
 
 final Map<String, Widget Function(BuildContext context)> _inputGroupBuilders = {
   'usage': DocsEmbedInputGroup.usage,
+  'text-prefix': DocsEmbedInputGroup.textPrefix,
+  'text-suffix': DocsEmbedInputGroup.textSuffix,
+  'icon-prefix-text-suffix': DocsEmbedInputGroup.iconPrefixTextSuffix,
+  'copy-suffix': DocsEmbedInputGroup.copySuffix,
+  'icon-prefix-copy-suffix': DocsEmbedInputGroup.iconPrefixCopySuffix,
+  'loading': DocsEmbedInputGroup.loading,
+  'keyboard-shortcut': DocsEmbedInputGroup.keyboardShortcut,
+  'badge-suffix': DocsEmbedInputGroup.badgeSuffix,
+  'required-field': DocsEmbedInputGroup.requiredField,
+  'validation': DocsEmbedInputGroup.validation,
+  'disabled': DocsEmbedInputGroup.disabled,
   'with-suffix': DocsEmbedInputGroup.withSuffix,
   'prefix-and-suffix': DocsEmbedInputGroup.prefixAndSuffix,
   'password-toggle': DocsEmbedInputGroup.passwordToggle,
   'variants': DocsEmbedInputGroup.variants,
   'full-width': DocsEmbedInputGroup.fullWidth,
+  'invalid': DocsEmbedInputGroup.invalid,
 };
 
 final RiseComponentShowcase riseInputGroupShowcase = RiseComponentShowcase(

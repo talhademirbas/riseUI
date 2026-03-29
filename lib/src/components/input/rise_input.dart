@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../theme/rise_theme.dart';
+import '../input_group/rise_input_group.dart';
 
 /// Visual variant aligned with HeroUI Input (`primary` / `secondary`)
 /// ([input.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/input.css)).
@@ -99,6 +100,8 @@ class _RiseInputState extends State<RiseInput> {
   late FocusNode _focusNode;
   bool _ownsFocusNode = false;
   bool _hovering = false;
+  RiseInputGroupScope? _groupScope;
+  bool _registeredWithGroup = false;
 
   bool get _focused => _focusNode.hasFocus;
 
@@ -112,6 +115,14 @@ class _RiseInputState extends State<RiseInput> {
       _ownsFocusNode = true;
     }
     _focusNode.addListener(_onFocusChange);
+  }
+
+  void _tryRegisterWithGroup() {
+    if (_registeredWithGroup) return;
+    final g = RiseInputGroupScope.maybeOf(context);
+    if (g == null) return;
+    g.registerPrimaryFocus(_focusNode);
+    _registeredWithGroup = true;
   }
 
   @override
@@ -128,7 +139,19 @@ class _RiseInputState extends State<RiseInput> {
     }
   }
 
-  void _onFocusChange() => setState(() {});
+  void _onFocusChange() {
+    setState(() {});
+    _groupScope?.onChildFocusChanged(_focusNode.hasFocus);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _groupScope = RiseInputGroupScope.maybeOf(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _tryRegisterWithGroup();
+    });
+  }
 
   @override
   void dispose() {
@@ -139,10 +162,11 @@ class _RiseInputState extends State<RiseInput> {
     super.dispose();
   }
 
+  /// Same shell fills as [RiseListGroup] / [RiseSurface] (`bg-surface` / `bg-surface-secondary`).
   Color _baseFill(RiseThemeData rise, ThemeData theme) {
     return widget.variant == RiseInputVariant.primary
-        ? theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.35)
-        : rise.muted;
+        ? rise.surface
+        : rise.surfaceSecondary;
   }
 
   Color _resolveFill(RiseThemeData rise, ThemeData theme) {
@@ -162,16 +186,13 @@ class _RiseInputState extends State<RiseInput> {
 
   Color _borderColor(RiseThemeData rise) {
     if (!widget.enabled) {
-      return rise.border.withValues(alpha: 0.45);
+      return rise.border.withValues(alpha: rise.disabledOpacity);
     }
     if (widget.isInvalid) {
       return rise.danger;
     }
     if (_focused) {
       return rise.accent;
-    }
-    if (_hovering && !_focused) {
-      return Color.lerp(rise.border, rise.defaultForeground, 0.1)!;
     }
     return rise.border;
   }
@@ -209,15 +230,65 @@ class _RiseInputState extends State<RiseInput> {
     final rise = context.riseTheme;
     final theme = Theme.of(context);
     final hint = widget.hintText ?? widget.placeholder;
-    final borderColor = _borderColor(rise);
-    final borderWidth = _borderWidth();
-    final fill = _resolveFill(rise, theme);
-    final border = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(RiseInput._kRadius),
-      borderSide: BorderSide(color: borderColor, width: borderWidth),
-    );
+    final group = RiseInputGroupScope.maybeOf(context);
+    final inGroup = group != null;
+    final idx = RiseInputGroupIndexScope.maybeOf(context);
+    final isFirst = idx?.isFirst ?? true;
+    final isLast = idx?.isLast ?? true;
+    final effectiveEnabled = widget.enabled && (group?.enabled ?? true);
 
-    final field = TextField(
+    final InputDecoration decoration;
+    if (inGroup) {
+      final g = group;
+      final pl = (g.hasPrefix && isFirst) ? 0.0 : 12.0;
+      final pr = (g.hasSuffix && isLast) ? 0.0 : 12.0;
+      decoration = InputDecoration(
+        isDense: true,
+        constraints: const BoxConstraints(minHeight: RiseInput._kMinHeight),
+        hintText: hint,
+        hintStyle: _hintStyle(rise, theme),
+        prefixIcon: widget.prefixIcon,
+        suffixIcon: widget.suffixIcon,
+        filled: false,
+        fillColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        // `InputBorder.none` everywhere so theme/M3 cannot merge an inner outline.
+        border: InputBorder.none,
+        enabledBorder: InputBorder.none,
+        focusedBorder: InputBorder.none,
+        disabledBorder: InputBorder.none,
+        errorBorder: InputBorder.none,
+        focusedErrorBorder: InputBorder.none,
+        contentPadding: EdgeInsets.fromLTRB(pl, 12, pr, 12),
+        counterText: widget.maxLength != null ? '' : null,
+      );
+    } else {
+      final borderColor = _borderColor(rise);
+      final borderWidth = _borderWidth();
+      final fill = _resolveFill(rise, theme);
+      final border = OutlineInputBorder(
+        borderRadius: BorderRadius.circular(RiseInput._kRadius),
+        borderSide: BorderSide(color: borderColor, width: borderWidth),
+      );
+      decoration = InputDecoration(
+        isDense: true,
+        constraints: const BoxConstraints(minHeight: RiseInput._kMinHeight),
+        hintText: hint,
+        hintStyle: _hintStyle(rise, theme),
+        prefixIcon: widget.prefixIcon,
+        suffixIcon: widget.suffixIcon,
+        filled: true,
+        fillColor: fill,
+        border: border,
+        enabledBorder: border,
+        focusedBorder: border,
+        disabledBorder: border,
+        contentPadding: RiseInput._kContentPadding,
+        counterText: widget.maxLength != null ? '' : null,
+      );
+    }
+
+    Widget field = TextField(
       controller: widget.controller,
       focusNode: _focusNode,
       keyboardType: widget.keyboardType,
@@ -234,33 +305,41 @@ class _RiseInputState extends State<RiseInput> {
       onChanged: widget.onChanged,
       onEditingComplete: widget.onEditingComplete,
       onSubmitted: widget.onSubmitted,
-      enabled: widget.enabled,
+      enabled: effectiveEnabled,
       cursorColor: widget.cursorColor ?? rise.accent,
-      decoration: InputDecoration(
-        isDense: true,
-        constraints: const BoxConstraints(minHeight: RiseInput._kMinHeight),
-        hintText: hint,
-        hintStyle: _hintStyle(rise, theme),
-        prefixIcon: widget.prefixIcon,
-        suffixIcon: widget.suffixIcon,
-        filled: true,
-        fillColor: fill,
-        border: border,
-        enabledBorder: border,
-        focusedBorder: border,
-        disabledBorder: border,
-        contentPadding: RiseInput._kContentPadding,
-        counterText: widget.maxLength != null ? '' : null,
-      ),
+      decoration: decoration,
     );
 
-    Widget wrapped = MouseRegion(
-      onEnter: (_) => setState(() => _hovering = true),
-      onExit: (_) => setState(() => _hovering = false),
-      child: field,
-    );
+    if (inGroup) {
+      final deco = theme.inputDecorationTheme;
+      field = Theme(
+        data: theme.copyWith(
+          inputDecorationTheme: deco.copyWith(
+            border: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            focusedBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            errorBorder: InputBorder.none,
+            focusedErrorBorder: InputBorder.none,
+            filled: false,
+            fillColor: Colors.transparent,
+            hoverColor: Colors.transparent,
+            focusColor: Colors.transparent,
+          ),
+        ),
+        child: field,
+      );
+    }
 
-    if (widget.variant == RiseInputVariant.primary) {
+    Widget wrapped = inGroup
+        ? field
+        : MouseRegion(
+            onEnter: (_) => setState(() => _hovering = true),
+            onExit: (_) => setState(() => _hovering = false),
+            child: field,
+          );
+
+    if (!inGroup && widget.variant == RiseInputVariant.primary) {
       wrapped = Material(
         color: Colors.transparent,
         elevation: 1,
