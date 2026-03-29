@@ -3,7 +3,9 @@ import 'button_public_config.dart' show RiseUsagePublicConfig;
 const String kSearchFieldComponentId = 'search-field';
 const String kSearchFieldTitle = 'SearchField';
 const String kSearchFieldDescription =
-    'Search input with leading icon, clear button, validation, and variants — aligned with HeroUI SearchField and search-field.css.';
+    'Search input matching HeroUI [SearchField](https://github.com/heroui-inc/heroui/tree/v3/packages/react/src/components/search-field) and '
+    '[search-field.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/search-field.css) '
+    '(h-9 group, rounded-field, icon + clear slots, primary/secondary).';
 
 const List<RiseUsagePublicConfig> kSearchFieldUsagePublicConfigs = [
   RiseUsagePublicConfig(

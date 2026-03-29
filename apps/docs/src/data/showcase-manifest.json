@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-29T09:53:44.554126Z",
+  "generated": "2026-03-29T09:58:26.494670Z",
   "components": [
     {
       "id": "accordion",
@@ -1188,7 +1188,7 @@
     {
       "id": "search-field",
       "title": "SearchField",
-      "description": "Search input with leading icon, clear button, validation, and variants — aligned with HeroUI SearchField and search-field.css.",
+      "description": "Search input matching HeroUI [SearchField](https://github.com/heroui-inc/heroui/tree/v3/packages/react/src/components/search-field) and [search-field.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/search-field.css) (h-9 group, rounded-field, icon + clear slots, primary/secondary).",
       "variants": [
         {
           "slug": "usage",

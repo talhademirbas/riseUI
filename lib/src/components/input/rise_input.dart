@@ -88,7 +88,7 @@ class RiseInput extends StatefulWidget {
   static const double _kRadius = 14;
 
   /// Minimum height for the field container (Hero `py-2`+ comfortable tap target).
-  static const double _kMinHeight = 48;
+  static const double kMinHeight = 48;
 
   static const EdgeInsets _kContentPadding = EdgeInsets.symmetric(horizontal: 12, vertical: 12);
 
@@ -244,7 +244,7 @@ class _RiseInputState extends State<RiseInput> {
       final pr = (g.hasSuffix && isLast) ? 0.0 : 12.0;
       decoration = InputDecoration(
         isDense: true,
-        constraints: const BoxConstraints(minHeight: RiseInput._kMinHeight),
+        constraints: const BoxConstraints(minHeight: RiseInput.kMinHeight),
         hintText: hint,
         hintStyle: _hintStyle(rise, theme),
         prefixIcon: widget.prefixIcon,
@@ -272,7 +272,7 @@ class _RiseInputState extends State<RiseInput> {
       );
       decoration = InputDecoration(
         isDense: true,
-        constraints: const BoxConstraints(minHeight: RiseInput._kMinHeight),
+        constraints: const BoxConstraints(minHeight: RiseInput.kMinHeight),
         hintText: hint,
         hintStyle: _hintStyle(rise, theme),
         prefixIcon: widget.prefixIcon,

@@ -152,17 +152,34 @@ class _SearchFieldVariantsEmbed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    final rise = context.riseTheme;
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        RiseSearchField(
-          label: Text('Primary variant'),
+        Text(
+          'Primary variant',
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: rise.mutedForeground(0.75),
+          ),
+        ),
+        const SizedBox(height: 8),
+        const RiseSearchField(
           hintText: 'Search...',
           variant: RiseSearchFieldVariant.primary,
         ),
-        SizedBox(height: 10),
-        RiseSearchField(
-          label: Text('Secondary variant'),
+        const SizedBox(height: 20),
+        Text(
+          'Secondary variant',
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: rise.mutedForeground(0.75),
+          ),
+        ),
+        const SizedBox(height: 8),
+        const RiseSearchField(
           hintText: 'Search...',
           variant: RiseSearchFieldVariant.secondary,
         ),
