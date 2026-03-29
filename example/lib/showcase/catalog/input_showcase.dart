@@ -6,10 +6,13 @@ import '../rise_showcase_models.dart';
 
 final Map<String, Widget Function(BuildContext context)> _inputBuilders = {
   'usage': DocsEmbedInput.usage,
+  'variants': DocsEmbedInput.variants,
   'input-types': DocsEmbedInput.inputTypes,
   'controlled': DocsEmbedInput.controlled,
   'full-width': DocsEmbedInput.fullWidth,
-  'variants': DocsEmbedInput.variants,
+  'on-surfaces': DocsEmbedInput.onSurfaces,
+  'invalid': DocsEmbedInput.invalid,
+  'disabled': DocsEmbedInput.disabled,
 };
 
 final RiseComponentShowcase riseInputShowcase = RiseComponentShowcase(

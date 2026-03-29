@@ -1,12 +1,18 @@
 /** Dart snippets — keep in sync with `example/lib/embed/docs_embed_input.dart`. */
 
 export const inputUsageCode = `const RiseInput(
-  hintText: 'Enter your name',
+  placeholder: 'Your name',
+)`;
+
+export const inputVariantsCode = `const RiseInput(
+  fullWidth: true,
+  variant: RiseInputVariant.secondary,
+  placeholder: 'Secondary input',
 )`;
 
 export const inputTypesCode = `const RiseInput(
   keyboardType: TextInputType.emailAddress,
-  hintText: 'Email',
+  placeholder: 'Email',
 )`;
 
 export const inputControlledCode = `RiseInput(
@@ -16,10 +22,24 @@ export const inputControlledCode = `RiseInput(
 
 export const inputFullWidthCode = `const RiseInput(
   fullWidth: true,
-  hintText: 'Full width input',
+  placeholder: 'Full width input',
 )`;
 
-export const inputVariantsCode = `const RiseInput(
-  variant: RiseInputVariant.secondary,
-  hintText: 'Secondary input',
+export const inputOnSurfacesCode = `RiseSurface(
+  variant: RiseSurfaceVariant.secondary,
+  child: RiseInput(
+    fullWidth: true,
+    placeholder: 'Your name',
+    variant: RiseInputVariant.primary,
+  ),
+)`;
+
+export const inputInvalidCode = `const RiseInput(
+  isInvalid: true,
+  placeholder: 'Must be at least 3 characters',
+)`;
+
+export const inputDisabledCode = `const RiseInput(
+  enabled: false,
+  placeholder: 'Not editable',
 )`;

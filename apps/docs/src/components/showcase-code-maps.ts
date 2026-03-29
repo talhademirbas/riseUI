@@ -210,7 +210,10 @@ import {
 } from "./doc-code-snippets/separator";
 import {
   inputControlledCode,
+  inputDisabledCode,
   inputFullWidthCode,
+  inputInvalidCode,
+  inputOnSurfacesCode,
   inputTypesCode,
   inputUsageCode,
   inputVariantsCode,
@@ -465,10 +468,13 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
   },
   input: {
     usage: inputUsageCode,
+    variants: inputVariantsCode,
     "input-types": inputTypesCode,
     controlled: inputControlledCode,
     "full-width": inputFullWidthCode,
-    variants: inputVariantsCode,
+    "on-surfaces": inputOnSurfacesCode,
+    invalid: inputInvalidCode,
+    disabled: inputDisabledCode,
   },
   "input-group": {
     usage: inputGroupUsageCode,
