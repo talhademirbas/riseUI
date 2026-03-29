@@ -4,6 +4,10 @@ import 'package:rise_ui/rise_ui.dart';
 import 'docs_embed_accordion.dart' show kDocsEmbedMaxWidth;
 
 /// Spinner demos for docs iframe (`?embed=spinner-*`).
+///
+/// Mirrors HeroUI Storybook
+/// [spinner.stories.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/spinner/spinner.stories.tsx):
+/// Default, Colors (`gap-8` + muted labels), Sizes (`gap-8` + Hero size labels).
 class DocsEmbedSpinner {
   DocsEmbedSpinner._();
 
@@ -26,6 +30,7 @@ class DocsEmbedSpinner {
   static Widget loadingFlag(BuildContext context) => _wrap(const _SpinnerLoadingFlagEmbed());
 }
 
+/// Default story — centered spinner, `current` color via [IconTheme] (Hero `Default` template).
 class _SpinnerUsageEmbed extends StatelessWidget {
   const _SpinnerUsageEmbed();
 
@@ -43,84 +48,81 @@ class _SpinnerUsageEmbed extends StatelessWidget {
   }
 }
 
+/// Colors story — same order as Hero: Accent, Current, Success, Warning, Danger (`gap-8`).
 class _SpinnerColorsEmbed extends StatelessWidget {
   const _SpinnerColorsEmbed();
 
   @override
   Widget build(BuildContext context) {
+    final labelStyle = Theme.of(context).textTheme.labelSmall?.copyWith(
+          color: context.riseTheme.mutedForeground(),
+        );
+
     Widget labeled(String label, Widget spinner) {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           spinner,
           const SizedBox(height: 8),
-          Text(
-            label,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  color: context.riseTheme.mutedForeground(),
-                ),
-          ),
+          Text(label, style: labelStyle),
         ],
       );
     }
 
-    return Wrap(
-      spacing: 28,
-      runSpacing: 20,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      alignment: WrapAlignment.start,
+    return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
+        labeled('Accent', const RiseSpinner(color: RiseSpinnerColor.accent)),
+        const SizedBox(width: 32),
         labeled(
-          'current',
+          'Current',
           DefaultTextStyle(
             style: TextStyle(color: context.riseTheme.accent),
             child: const RiseSpinner(color: RiseSpinnerColor.current),
           ),
         ),
-        labeled(
-          'accent',
-          const RiseSpinner(color: RiseSpinnerColor.accent),
-        ),
-        labeled(
-          'success',
-          const RiseSpinner(color: RiseSpinnerColor.success),
-        ),
-        labeled(
-          'warning',
-          const RiseSpinner(color: RiseSpinnerColor.warning),
-        ),
-        labeled(
-          'danger',
-          const RiseSpinner(color: RiseSpinnerColor.danger),
-        ),
+        const SizedBox(width: 32),
+        labeled('Success', const RiseSpinner(color: RiseSpinnerColor.success)),
+        const SizedBox(width: 32),
+        labeled('Warning', const RiseSpinner(color: RiseSpinnerColor.warning)),
+        const SizedBox(width: 32),
+        labeled('Danger', const RiseSpinner(color: RiseSpinnerColor.danger)),
       ],
     );
   }
 }
 
+/// Sizes story — `gap-8`, labels Small … Extra Large (accent `current` via IconTheme).
 class _SpinnerSizesEmbed extends StatelessWidget {
   const _SpinnerSizesEmbed();
 
   @override
   Widget build(BuildContext context) {
+    final labelStyle = Theme.of(context).textTheme.labelSmall?.copyWith(
+          color: context.riseTheme.mutedForeground(),
+        );
+
+    Widget labeled(String label, RiseSpinnerSize size) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          RiseSpinner(size: size, color: RiseSpinnerColor.accent),
+          const SizedBox(height: 8),
+          Text(label, style: labelStyle),
+        ],
+      );
+    }
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        IconTheme.merge(
-          data: IconThemeData(color: context.riseTheme.accent),
-          child: const Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RiseSpinner(size: RiseSpinnerSize.sm),
-              SizedBox(width: 20),
-              RiseSpinner(size: RiseSpinnerSize.md),
-              SizedBox(width: 20),
-              RiseSpinner(size: RiseSpinnerSize.lg),
-              SizedBox(width: 20),
-              RiseSpinner(size: RiseSpinnerSize.xl),
-            ],
-          ),
-        ),
+        labeled('Small', RiseSpinnerSize.sm),
+        const SizedBox(width: 32),
+        labeled('Medium', RiseSpinnerSize.md),
+        const SizedBox(width: 32),
+        labeled('Large', RiseSpinnerSize.lg),
+        const SizedBox(width: 32),
+        labeled('Extra Large', RiseSpinnerSize.xl),
       ],
     );
   }

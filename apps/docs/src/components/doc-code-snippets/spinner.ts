@@ -1,25 +1,31 @@
 /** Dart snippets — keep in sync with `example/lib/embed/docs_embed_spinner.dart`. */
 
 export const spinnerUsageCode = `IconTheme.merge(
-  data: IconThemeData(color: theme.colorScheme.onSurface),
+  data: IconThemeData(color: theme.defaultForeground),
   child: const RiseSpinner(),
 )`;
 
-export const spinnerColorsCode = `const RiseSpinner(color: RiseSpinnerColor.accent)
-const RiseSpinner(color: RiseSpinnerColor.success)
-// … warning, danger
-
-DefaultTextStyle(
-  style: TextStyle(color: brandBlue),
-  child: const RiseSpinner(color: RiseSpinnerColor.current),
+export const spinnerColorsCode = `Row(
+  children: [
+    const RiseSpinner(color: RiseSpinnerColor.accent),
+    const SizedBox(width: 32),
+    DefaultTextStyle(
+      style: TextStyle(color: brandColor),
+      child: const RiseSpinner(color: RiseSpinnerColor.current),
+    ),
+    // … success, warning, danger
+  ],
 )`;
 
-export const spinnerSizesCode = `const Row(
+export const spinnerSizesCode = `Row(
   children: [
-    RiseSpinner(size: RiseSpinnerSize.sm),
-    RiseSpinner(size: RiseSpinnerSize.md),
-    RiseSpinner(size: RiseSpinnerSize.lg),
-    RiseSpinner(size: RiseSpinnerSize.xl),
+    RiseSpinner(size: RiseSpinnerSize.sm, color: RiseSpinnerColor.accent),
+    const SizedBox(width: 32),
+    RiseSpinner(size: RiseSpinnerSize.md, color: RiseSpinnerColor.accent),
+    const SizedBox(width: 32),
+    RiseSpinner(size: RiseSpinnerSize.lg, color: RiseSpinnerColor.accent),
+    const SizedBox(width: 32),
+    RiseSpinner(size: RiseSpinnerSize.xl, color: RiseSpinnerColor.accent),
   ],
 )`;
 

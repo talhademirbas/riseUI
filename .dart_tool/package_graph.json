@@ -7,7 +7,8 @@
       "name": "rise_ui",
       "version": "0.1.0",
       "dependencies": [
-        "flutter"
+        "flutter",
+        "path_drawing"
       ],
       "devDependencies": [
         "flutter_lints",
@@ -36,6 +37,16 @@
         "stack_trace",
         "stream_channel",
         "test_api",
+        "vector_math"
+      ]
+    },
+    {
+      "name": "path_drawing",
+      "version": "1.0.1",
+      "dependencies": [
+        "flutter",
+        "meta",
+        "path_parsing",
         "vector_math"
       ]
     },
@@ -138,6 +149,14 @@
         "stream_channel",
         "string_scanner",
         "term_glyph"
+      ]
+    },
+    {
+      "name": "path_parsing",
+      "version": "1.1.0",
+      "dependencies": [
+        "meta",
+        "vector_math"
       ]
     },
     {

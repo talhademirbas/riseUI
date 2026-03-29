@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-29T13:20:17.272698Z",
+  "generated": "2026-03-29T13:30:35.942953Z",
   "components": [
     {
       "id": "accordion",
@@ -600,33 +600,33 @@
     {
       "id": "spinner",
       "title": "Spinner",
-      "description": "Loading indicator with HeroUI-aligned sizes (sm–xl), semantic colors including current (inherits icon/text color), and continuous rotation — see [Spinner](https://heroui.com/docs/react/components/spinner), [spinner.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/spinner/spinner.tsx), and [spinner.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/spinner.css).",
+      "description": "Vector spinner from HeroUI v3 [spinner.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/spinner/spinner.tsx) SVG paths + gradients, sizes `sm`–`xl` and colors from [spinner.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/spinner.css), with Storybook layouts from [spinner.stories.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/spinner/spinner.stories.tsx).",
       "variants": [
         {
           "slug": "usage",
           "sectionTitle": "Usage",
-          "subtitle": "Default spinner (md, current color).",
+          "subtitle": "Default — `current` color via IconTheme (`spinner--current`, md size).",
           "minHeight": 100.0,
           "embed": "spinner-usage"
         },
         {
           "slug": "colors",
           "sectionTitle": "Colors",
-          "subtitle": "current, accent, success, warning, danger.",
+          "subtitle": "Accent → Current → Success → Warning → Danger (`gap-8`, `text-xs` / muted labels).",
           "minHeight": 140.0,
           "embed": "spinner-colors"
         },
         {
           "slug": "sizes",
           "sectionTitle": "Sizes",
-          "subtitle": "sm, md, lg, xl — match HeroUI size tokens.",
-          "minHeight": 120.0,
+          "subtitle": "sm, md, lg, xl with Small … Extra Large labels (Hero `Sizes` story).",
+          "minHeight": 140.0,
           "embed": "spinner-sizes"
         },
         {
           "slug": "loading-flag",
           "sectionTitle": "Loading flag",
-          "subtitle": "isLoading: false renders no space (optional).",
+          "subtitle": "isLoading: false → [SizedBox.shrink()] (Flutter-only convenience).",
           "minHeight": 80.0,
           "embed": "spinner-loading-flag"
         }

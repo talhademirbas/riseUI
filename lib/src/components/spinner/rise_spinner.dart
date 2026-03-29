@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:path_drawing/path_drawing.dart';
 
 import '../../theme/rise_theme.dart';
 
-/// Size tokens aligned with HeroUI [spinner.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/spinner.css)
-/// (`size-4` … `size-10`).
+/// Size tokens ([spinner.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/spinner.css)
+/// `spinner--sm` … `spinner--xl` → `size-4` … `size-10`).
 enum RiseSpinnerSize {
   sm,
   md,
@@ -11,23 +12,38 @@ enum RiseSpinnerSize {
   xl,
 }
 
-/// Color tokens aligned with HeroUI [Spinner](https://heroui.com/docs/react/components/spinner)
-/// ([spinner.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/spinner/spinner.tsx)).
+/// Color tokens ([spinner.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/spinner.css)).
 enum RiseSpinnerColor {
-  /// Inherits color from [IconTheme] / [DefaultTextStyle] (`spinner--current`).
+  /// `spinner--current` — inherits from [IconTheme] / [DefaultTextStyle].
   current,
 
-  /// `--accent`
+  /// `spinner--accent`
   accent,
 
+  /// `spinner--success`
   success,
+
+  /// `spinner--warning`
   warning,
 
-  /// `--danger`
+  /// `spinner--danger`
   danger,
 }
 
-/// A loading indicator with HeroUI-style dual-arc artwork and `animate-spin-fast` cadence.
+// HeroUI [SpinnerPrimitive](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/spinner/spinner.tsx)
+// viewBox="0 0 24 24", gradients (def-1 / def-2) approximated with per-path LinearGradient + objectBoundingBox stops.
+const _kSpinnerPath1 =
+    'M8.749.021a1.5 1.5 0 0 1 .497 2.958A7.5 7.5 0 0 0 3 10.375a7.5 7.5 0 0 0 7.5 7.5v3c-5.799 0-10.5-4.7-10.5-10.5C0 5.23 3.726.865 8.749.021';
+const _kSpinnerPath2 =
+    'M15.392 2.673a1.5 1.5 0 0 1 2.119-.115A10.48 10.48 0 0 1 21 10.375c0 5.8-4.701 10.5-10.5 10.5v-3a7.5 7.5 0 0 0 5.007-13.084a1.5 1.5 0 0 1-.115-2.118';
+
+/// `animate-spin-fast` cadence — between default `spin` (1s) and HeroUI fast preset (~0.75s).
+const Duration kRiseSpinnerRotationDuration = Duration(milliseconds: 750);
+
+/// Loading indicator using the same filled paths and gradient stops as HeroUI’s SVG spinner
+/// ([spinner.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/spinner/spinner.tsx)).
+///
+/// Wrapper behavior: `.spinner` (`pointer-events-none`, centered origin, continuous rotation).
 ///
 /// When [isLoading] is false, renders nothing (optional app convenience).
 class RiseSpinner extends StatefulWidget {
@@ -36,7 +52,6 @@ class RiseSpinner extends StatefulWidget {
     this.size = RiseSpinnerSize.md,
     this.color = RiseSpinnerColor.current,
     this.isLoading = true,
-    this.strokeWidth = 2.5,
     this.child,
   });
 
@@ -46,11 +61,7 @@ class RiseSpinner extends StatefulWidget {
 
   final bool isLoading;
 
-  /// Stroke thickness at [RiseSpinnerSize.md] (24px); scales with [size].
-
-  final double strokeWidth;
-
-  /// When non-null, replaces the painted spinner (no rotation applied).
+  /// When non-null, replaces the vector artwork (still rotated; no gradients applied).
   final Widget? child;
 
   static double _dimension(RiseSpinnerSize s) {
@@ -74,7 +85,7 @@ class _RiseSpinnerState extends State<RiseSpinner> with SingleTickerProviderStat
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 720),
+      duration: kRiseSpinnerRotationDuration,
     );
   }
 
@@ -129,17 +140,7 @@ class _RiseSpinnerState extends State<RiseSpinner> with SingleTickerProviderStat
     if (!widget.isLoading) return const SizedBox.shrink();
 
     final d = RiseSpinner._dimension(widget.size);
-    final strokePx = (widget.strokeWidth * d) / 24.0;
     final c = _resolveColor(context);
-
-    if (widget.child != null) {
-      return Semantics(
-        label: 'Loading',
-        child: IgnorePointer(
-          child: SizedBox(width: d, height: d, child: widget.child),
-        ),
-      );
-    }
 
     return Semantics(
       label: 'Loading',
@@ -149,9 +150,10 @@ class _RiseSpinnerState extends State<RiseSpinner> with SingleTickerProviderStat
           height: d,
           child: RotationTransition(
             turns: _controller,
-            child: CustomPaint(
-              painter: _RiseSpinnerPainter(color: c, strokePx: strokePx),
-            ),
+            child: widget.child ??
+                CustomPaint(
+                  painter: _RiseHeroSpinnerPainter(color: c),
+                ),
           ),
         ),
       ),
@@ -159,43 +161,49 @@ class _RiseSpinnerState extends State<RiseSpinner> with SingleTickerProviderStat
   }
 }
 
-/// Dual-arc ring inspired by HeroUI’s SVG fills (thick strokes, two segments).
-class _RiseSpinnerPainter extends CustomPainter {
-  _RiseSpinnerPainter({required this.color, required this.strokePx});
+/// Paints the two Hero spinner arcs with SVG-aligned linear gradients.
+class _RiseHeroSpinnerPainter extends CustomPainter {
+  _RiseHeroSpinnerPainter({required this.color});
 
   final Color color;
-  final double strokePx;
+
+  static final Path _raw1 = parseSvgPathData(_kSpinnerPath1);
+  static final Path _raw2 = parseSvgPathData(_kSpinnerPath2);
+
+  static const double _ox = 1.5;
+  static const double _oy = 1.625;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final cx = size.width / 2;
-    final cy = size.height / 2;
-    final c = Offset(cx, cy);
-    final r = (size.shortestSide / 2) - strokePx / 2;
-    if (r <= 0) return;
-    final rect = Rect.fromCircle(center: c, radius: r);
+    final s = size.shortestSide / 24.0;
+    canvas.save();
+    canvas.translate(size.width / 2 - 12 * s, size.height / 2 - 12 * s);
+    canvas.scale(s);
 
-    final main = Paint()
-      ..color = color
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokePx
-      ..strokeCap = StrokeCap.round;
+    final p1 = Path()..addPath(_raw1, const Offset(_ox, _oy));
+    final b1 = p1.getBounds();
+    final g1 = LinearGradient(
+      begin: Alignment(0, -1 + 2 * 0.05271),
+      end: Alignment(0, -1 + 2 * 0.91793),
+      colors: [color, color.withValues(alpha: 0.55)],
+    ).createShader(b1);
+    canvas.drawPath(p1, Paint()..shader = g1);
 
-    final trail = Paint()
-      ..color = color.withValues(alpha: 0.52)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokePx
-      ..strokeCap = StrokeCap.round;
+    final p2 = Path()..addPath(_raw2, const Offset(_ox, _oy));
+    final b2 = p2.getBounds();
+    final g2 = LinearGradient(
+      begin: Alignment(0, -1 + 2 * 0.1524),
+      end: Alignment(0, -1 + 2 * 0.8715),
+      colors: [
+        color.withValues(alpha: 0),
+        color.withValues(alpha: 0.55),
+      ],
+    ).createShader(b2);
+    canvas.drawPath(p2, Paint()..shader = g2);
 
-    // Angles tuned to approximate Hero’s two filled segments at viewBox 24×24.
-    canvas.drawArc(rect, -2.42, 2.18, false, main);
-    canvas.drawArc(rect, 0.92, 1.22, false, trail);
+    canvas.restore();
   }
 
   @override
-  bool shouldRepaint(covariant _RiseSpinnerPainter old) =>
-      old.color != color || old.strokePx != strokePx;
-
-  @override
-  bool shouldRebuildSemantics(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant _RiseHeroSpinnerPainter old) => old.color != color;
 }

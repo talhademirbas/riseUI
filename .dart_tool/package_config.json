@@ -104,6 +104,18 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "path_drawing",
+      "rootUri": "file:///Users/talhademirbas/.pub-cache/hosted/pub.dev/path_drawing-1.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "path_parsing",
+      "rootUri": "file:///Users/talhademirbas/.pub-cache/hosted/pub.dev/path_parsing-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///Users/talhademirbas/development/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
