@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-28T16:41:21.847733Z",
+  "generated": "2026-03-29T08:20:49.953071Z",
   "components": [
     {
       "id": "accordion",
@@ -789,56 +789,84 @@
     {
       "id": "checkbox",
       "title": "Checkbox",
-      "description": "Selection control with label/description slot, indeterminate, invalid, and variants (primary/secondary) — aligned with HeroUI Checkbox and checkbox.css.",
+      "description": "Selection control with label/description, indeterminate, invalid, primary/secondary variants, sizes, and custom indicators — aligned with HeroUI Checkbox (heroui.com/docs/react/components/checkbox), checkbox.tsx, and checkbox.css in heroui v3.",
       "variants": [
         {
           "slug": "usage",
           "sectionTitle": "Usage",
-          "subtitle": "Basic checkbox with label.",
+          "subtitle": "Default label (HeroUI Default).",
           "minHeight": 90.0,
           "embed": "checkbox-usage"
         },
         {
           "slug": "controlled",
           "sectionTitle": "Controlled",
-          "subtitle": "External state + status text.",
+          "subtitle": "External state + status line.",
           "minHeight": 120.0,
           "embed": "checkbox-controlled"
         },
         {
           "slug": "indeterminate",
           "sectionTitle": "Indeterminate",
-          "subtitle": "Tristate null value (dash).",
+          "subtitle": "Tristate / dash (HeroUI Indeterminate).",
           "minHeight": 120.0,
           "embed": "checkbox-indeterminate"
         },
         {
           "slug": "with-description",
           "sectionTitle": "With description",
-          "subtitle": "Label and helper text block.",
+          "subtitle": "Label + helper (HeroUI WithDescription).",
           "minHeight": 120.0,
           "embed": "checkbox-with-description"
         },
         {
           "slug": "invalid",
           "sectionTitle": "Invalid",
-          "subtitle": "Danger styling for required agreement.",
+          "subtitle": "Danger border + message (HeroUI Invalid).",
           "minHeight": 120.0,
           "embed": "checkbox-invalid"
         },
         {
           "slug": "variants",
           "sectionTitle": "Variants",
-          "subtitle": "primary vs secondary visual style.",
-          "minHeight": 140.0,
+          "subtitle": "Primary vs secondary (HeroUI Variants).",
+          "minHeight": 260.0,
           "embed": "checkbox-variants"
         },
         {
           "slug": "disabled",
           "sectionTitle": "Disabled",
-          "subtitle": "Non-interactive checkbox.",
+          "subtitle": "Non-interactive (HeroUI Disabled).",
           "minHeight": 100.0,
           "embed": "checkbox-disabled"
+        },
+        {
+          "slug": "custom-indicator",
+          "sectionTitle": "Custom indicator",
+          "subtitle": "Custom glyphs when checked (HeroUI WithCustomIndicator).",
+          "minHeight": 200.0,
+          "embed": "checkbox-custom-indicator"
+        },
+        {
+          "slug": "render-props",
+          "sectionTitle": "Render props",
+          "subtitle": "Label + description follow selection (HeroUI RenderProps).",
+          "minHeight": 120.0,
+          "embed": "checkbox-render-props"
+        },
+        {
+          "slug": "sizes",
+          "sectionTitle": "Sizes",
+          "subtitle": "sm · md · lg · xl (HeroUI FullRounded).",
+          "minHeight": 360.0,
+          "embed": "checkbox-sizes"
+        },
+        {
+          "slug": "features",
+          "sectionTitle": "Features",
+          "subtitle": "Notification preferences list (HeroUI FeaturesAndAddOnsExample).",
+          "minHeight": 340.0,
+          "embed": "checkbox-features"
         }
       ]
     },

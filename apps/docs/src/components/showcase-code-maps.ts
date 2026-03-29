@@ -127,9 +127,13 @@ import {
 } from "./doc-code-snippets/tabs";
 import {
   checkboxControlledCode,
+  checkboxCustomIndicatorCode,
   checkboxDisabledCode,
+  checkboxFeaturesCode,
   checkboxIndeterminateCode,
   checkboxInvalidCode,
+  checkboxRenderPropsCode,
+  checkboxSizesCode,
   checkboxUsageCode,
   checkboxVariantsCode,
   checkboxWithDescriptionCode,
@@ -382,6 +386,10 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
     invalid: checkboxInvalidCode,
     variants: checkboxVariantsCode,
     disabled: checkboxDisabledCode,
+    "custom-indicator": checkboxCustomIndicatorCode,
+    "render-props": checkboxRenderPropsCode,
+    sizes: checkboxSizesCode,
+    features: checkboxFeaturesCode,
   },
   description: {
     usage: descriptionUsageCode,

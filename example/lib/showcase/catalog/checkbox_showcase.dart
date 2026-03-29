@@ -12,6 +12,10 @@ final Map<String, Widget Function(BuildContext context)> _checkboxBuilders = {
   'invalid': DocsEmbedCheckbox.invalid,
   'variants': DocsEmbedCheckbox.variants,
   'disabled': DocsEmbedCheckbox.disabled,
+  'custom-indicator': DocsEmbedCheckbox.customIndicator,
+  'render-props': DocsEmbedCheckbox.renderProps,
+  'sizes': DocsEmbedCheckbox.sizes,
+  'features': DocsEmbedCheckbox.features,
 };
 
 final RiseComponentShowcase riseCheckboxShowcase = RiseComponentShowcase(
