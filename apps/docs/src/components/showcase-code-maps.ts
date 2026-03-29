@@ -241,10 +241,13 @@ import {
 import {
   inputOtpControlledCode,
   inputOtpDisabledCode,
+  inputOtpFormExampleCode,
   inputOtpFourDigitsCode,
+  inputOtpOnCompleteCode,
   inputOtpUsageCode,
   inputOtpVariantsCode,
   inputOtpWithPatternCode,
+  inputOtpWithValidationCode,
 } from "./doc-code-snippets/input-otp";
 import {
   textAreaControlledCode,
@@ -515,6 +518,9 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
     "with-pattern": inputOtpWithPatternCode,
     controlled: inputOtpControlledCode,
     variants: inputOtpVariantsCode,
+    "with-validation": inputOtpWithValidationCode,
+    "on-complete": inputOtpOnCompleteCode,
+    "form-example": inputOtpFormExampleCode,
   },
   "text-area": {
     usage: textAreaUsageCode,

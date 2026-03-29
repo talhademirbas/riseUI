@@ -11,6 +11,9 @@ final Map<String, Widget Function(BuildContext context)> _inputOtpBuilders = {
   'with-pattern': DocsEmbedInputOtp.withPattern,
   'controlled': DocsEmbedInputOtp.controlled,
   'variants': DocsEmbedInputOtp.variants,
+  'with-validation': DocsEmbedInputOtp.withValidation,
+  'on-complete': DocsEmbedInputOtp.onComplete,
+  'form-example': DocsEmbedInputOtp.formExample,
 };
 
 final RiseComponentShowcase riseInputOtpShowcase = RiseComponentShowcase(
