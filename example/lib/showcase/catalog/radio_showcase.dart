@@ -8,9 +8,12 @@ final Map<String, Widget Function(BuildContext context)> _radioBuilders = {
   'usage': DocsEmbedRadio.usage,
   'horizontal': DocsEmbedRadio.horizontal,
   'controlled': DocsEmbedRadio.controlled,
+  'uncontrolled': DocsEmbedRadio.uncontrolled,
+  'validation': DocsEmbedRadio.validation,
   'disabled': DocsEmbedRadio.disabled,
   'variants': DocsEmbedRadio.variants,
   'invalid': DocsEmbedRadio.invalid,
+  'on-surface': DocsEmbedRadio.onSurface,
 };
 
 final RiseComponentShowcase riseRadioShowcase = RiseComponentShowcase(

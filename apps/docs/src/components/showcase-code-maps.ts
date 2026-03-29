@@ -174,7 +174,10 @@ import {
   radioDisabledCode,
   radioHorizontalCode,
   radioInvalidCode,
+  radioOnSurfaceCode,
+  radioUncontrolledCode,
   radioUsageCode,
+  radioValidationCode,
   radioVariantsCode,
 } from "./doc-code-snippets/radio";
 import {
@@ -450,9 +453,12 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
     usage: radioUsageCode,
     horizontal: radioHorizontalCode,
     controlled: radioControlledCode,
+    uncontrolled: radioUncontrolledCode,
+    validation: radioValidationCode,
     disabled: radioDisabledCode,
     variants: radioVariantsCode,
     invalid: radioInvalidCode,
+    "on-surface": radioOnSurfaceCode,
   },
   "search-field": {
     usage: searchFieldUsageCode,

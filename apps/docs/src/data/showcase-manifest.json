@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-29T09:47:21.350412Z",
+  "generated": "2026-03-29T09:53:44.554126Z",
   "components": [
     {
       "id": "accordion",
@@ -1118,49 +1118,70 @@
     {
       "id": "radio",
       "title": "RadioGroup",
-      "description": "Single-choice selection with orientation, variants, disabled and invalid states — aligned with HeroUI RadioGroup and radio-group.css.",
+      "description": "Single-choice radios matching HeroUI [RadioGroup](https://heroui.com/docs/react/components/radio-group), [radio.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/radio.css), and [radio-group.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/radio-group.css).",
       "variants": [
         {
           "slug": "usage",
           "sectionTitle": "Usage",
-          "subtitle": "Basic vertical radio group.",
-          "minHeight": 200.0,
+          "subtitle": "Plan selection with label, description, and vertical stack (`mt-4`).",
+          "minHeight": 280.0,
           "embed": "radio-usage"
         },
         {
           "slug": "horizontal",
           "sectionTitle": "Horizontal orientation",
-          "subtitle": "Options laid out in a row/wrap.",
-          "minHeight": 140.0,
+          "subtitle": "`flex-row flex-wrap gap-4` for subscription-style rows.",
+          "minHeight": 200.0,
           "embed": "radio-horizontal"
         },
         {
           "slug": "controlled",
           "sectionTitle": "Controlled",
-          "subtitle": "Selection mirrored in UI state.",
-          "minHeight": 210.0,
+          "subtitle": "Selection mirrored in helper text.",
+          "minHeight": 240.0,
           "embed": "radio-controlled"
+        },
+        {
+          "slug": "uncontrolled",
+          "sectionTitle": "Uncontrolled pattern",
+          "subtitle": "Local state with “last chosen” readout (Hero defaultValue + onChange story).",
+          "minHeight": 240.0,
+          "embed": "radio-uncontrolled"
+        },
+        {
+          "slug": "validation",
+          "sectionTitle": "Validation",
+          "subtitle": "Required group, submit, and [RiseFieldError].",
+          "minHeight": 280.0,
+          "embed": "radio-validation"
         },
         {
           "slug": "disabled",
           "sectionTitle": "Disabled",
-          "subtitle": "Whole group disabled.",
-          "minHeight": 180.0,
+          "subtitle": "Whole group non-interactive with description.",
+          "minHeight": 220.0,
           "embed": "radio-disabled"
         },
         {
           "slug": "variants",
           "sectionTitle": "Variants",
-          "subtitle": "primary and secondary styling.",
-          "minHeight": 260.0,
+          "subtitle": "Primary (`shadow-field`) vs secondary (`shadow-none`, surface control fill).",
+          "minHeight": 340.0,
           "embed": "radio-variants"
         },
         {
           "slug": "invalid",
           "sectionTitle": "Invalid",
-          "subtitle": "Danger styles and error message.",
-          "minHeight": 220.0,
+          "subtitle": "Required + danger strokes + error line.",
+          "minHeight": 200.0,
           "embed": "radio-invalid"
+        },
+        {
+          "slug": "on-surface",
+          "sectionTitle": "In surface",
+          "subtitle": "[RiseSurface] + `variant: secondary` for lower emphasis on card shells.",
+          "minHeight": 320.0,
+          "embed": "radio-on-surface"
         }
       ]
     },
