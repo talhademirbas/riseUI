@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-29T13:30:35.942953Z",
+  "generated": "2026-03-29T13:40:24.223370Z",
   "components": [
     {
       "id": "accordion",
@@ -1090,42 +1090,49 @@
     {
       "id": "popover",
       "title": "Popover",
-      "description": "Anchored rich-content overlay with placement, arrow, and interactive content — aligned with @heroui/react Popover, popover.tsx, and popover.css.",
+      "description": "Anchored overlay matching HeroUI v3 [popover.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/popover/popover.tsx) and [popover.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/popover.css): `bg-overlay`, `rounded-3xl`, overlay shadow, dialog `p-4`, curved arrow, and placements.",
       "variants": [
         {
           "slug": "usage",
           "sectionTitle": "Usage",
-          "subtitle": "Basic trigger + dialog content.",
-          "minHeight": 180.0,
+          "subtitle": "Default story — heading + body + close (no arrow).",
+          "minHeight": 200.0,
           "embed": "popover-usage"
         },
         {
           "slug": "with-arrow",
           "sectionTitle": "With arrow",
-          "subtitle": "Popover with directional arrow.",
-          "minHeight": 190.0,
+          "subtitle": "`Popover.Arrow` geometry — `M0 0 Q6 9 12 0`, placement-aware rotation.",
+          "minHeight": 200.0,
           "embed": "popover-with-arrow"
         },
         {
           "slug": "placement",
           "sectionTitle": "Placement",
-          "subtitle": "Top, right, bottom, and left anchors.",
+          "subtitle": "Top, right, bottom, left — each with arrow + anchor.",
           "minHeight": 260.0,
           "embed": "popover-placement"
         },
         {
           "slug": "interactive-content",
           "sectionTitle": "Interactive content",
-          "subtitle": "Focusable content with actions inside the popover.",
-          "minHeight": 220.0,
+          "subtitle": "Rich body + actions (profile-style blocks).",
+          "minHeight": 240.0,
           "embed": "popover-interactive-content"
         },
         {
           "slug": "custom-trigger",
           "sectionTitle": "Custom trigger",
-          "subtitle": "Use any custom widget as trigger.",
+          "subtitle": "`Popover.Trigger`-style custom hit target.",
           "minHeight": 180.0,
           "embed": "popover-custom-trigger"
+        },
+        {
+          "slug": "card-help",
+          "sectionTitle": "Card with helptext",
+          "subtitle": "Storybook `CardWithHelptext` — help icon + `placement: right` help popover.",
+          "minHeight": 320.0,
+          "embed": "popover-card-help"
         }
       ]
     },

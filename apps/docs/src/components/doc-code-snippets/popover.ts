@@ -2,9 +2,17 @@
 
 export const popoverUsageCode = `RisePopover(
   controller: controller,
-  overlay: const Text('Popover content'),
+  overlay: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Text('Popover heading', style: headingStyle),
+      Text('This is the popover content'),
+      TextButton(onPressed: controller.hide, child: const Text('Close')),
+    ],
+  ),
   child: RiseButton(
-    label: 'Click me',
+    label: 'Open popover',
     variant: RiseButtonVariant.outline,
     onPressed: controller.show,
   ),
@@ -13,8 +21,7 @@ export const popoverUsageCode = `RisePopover(
 export const popoverWithArrowCode = `RisePopover(
   controller: controller,
   showArrow: true,
-  offset: const Offset(0, 10),
-  overlay: const Text('Arrow enabled'),
+  overlay: /* … */,
   child: RiseButton(
     label: 'With arrow',
     variant: RiseButtonVariant.outline,
@@ -26,7 +33,7 @@ export const popoverPlacementCode = `RisePopover(
   controller: controller,
   placement: RisePopoverPlacement.right,
   showArrow: true,
-  overlay: const Text('Placement: right'),
+  overlay: /* … */,
   child: RiseButton(
     label: 'Right',
     variant: RiseButtonVariant.outline,
@@ -44,7 +51,18 @@ export const popoverInteractiveContentCode = `RisePopover(
     children: [
       Text('Sarah Johnson'),
       Text('@sarahj'),
-      RiseButton(label: 'Close', onPressed: controller.hide),
+      Row(
+        children: [
+          Expanded(child: RiseButton(label: 'Message', onPressed: () {})),
+          Expanded(
+            child: RiseButton(
+              label: 'Close',
+              variant: RiseButtonVariant.outline,
+              onPressed: controller.hide,
+            ),
+          ),
+        ],
+      ),
     ],
   ),
   child: RiseButton(
@@ -63,5 +81,28 @@ export const popoverCustomTriggerCode = `RisePopover(
       mainAxisSize: MainAxisSize.min,
       children: [Icon(Icons.more_horiz), Text('Open popover')],
     ),
+  ),
+)`;
+
+export const popoverCardHelpCode = `RisePopover(
+  controller: helpController,
+  placement: RisePopoverPlacement.right,
+  showArrow: true,
+  maxWidth: 220,
+  overlay: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Text('Help Information'),
+      Text('Short helptext next to the card title.'),
+      TextButton(onPressed: helpController.hide, child: const Text('Close')),
+    ],
+  ),
+  child: RiseButton(
+    isIconOnly: true,
+    variant: RiseButtonVariant.ghost,
+    size: RiseButtonSize.sm,
+    onPressed: helpController.show,
+    child: const Icon(Icons.info_outline),
   ),
 )`;

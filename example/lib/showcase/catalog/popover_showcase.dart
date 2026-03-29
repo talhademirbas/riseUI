@@ -10,6 +10,7 @@ final Map<String, Widget Function(BuildContext context)> _popoverBuilders = {
   'placement': DocsEmbedPopover.placement,
   'interactive-content': DocsEmbedPopover.interactiveContent,
   'custom-trigger': DocsEmbedPopover.customTrigger,
+  'card-help': DocsEmbedPopover.cardHelp,
 };
 
 final RiseComponentShowcase risePopoverShowcase = RiseComponentShowcase(

@@ -165,6 +165,7 @@ import {
   labelWithInputCode,
 } from "./doc-code-snippets/label";
 import {
+  popoverCardHelpCode,
   popoverCustomTriggerCode,
   popoverInteractiveContentCode,
   popoverPlacementCode,
@@ -452,6 +453,7 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
     placement: popoverPlacementCode,
     "interactive-content": popoverInteractiveContentCode,
     "custom-trigger": popoverCustomTriggerCode,
+    "card-help": popoverCardHelpCode,
   },
   radio: {
     usage: radioUsageCode,
