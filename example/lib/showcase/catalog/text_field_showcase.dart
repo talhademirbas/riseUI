@@ -17,6 +17,7 @@ final Map<String, Widget Function(BuildContext context)> _textFieldBuilders = {
   'full-width': DocsEmbedTextField.fullWidth,
   'in-surface': DocsEmbedTextField.inSurface,
   'variants': DocsEmbedTextField.variants,
+  'invalid': DocsEmbedTextField.invalid,
 };
 
 final RiseComponentShowcase riseTextFieldShowcase = RiseComponentShowcase(

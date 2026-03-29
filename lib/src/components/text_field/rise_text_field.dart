@@ -2,18 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../theme/rise_theme.dart';
+import '../description/rise_description.dart';
+import '../field_error/rise_field_error.dart';
+import '../input/rise_input.dart';
+import '../label/rise_label.dart';
+import '../text_area/rise_text_area.dart';
 
-/// Visual variant for field fill (HeroUI Input / TextArea inside [TextField](https://heroui.com/docs/react/components/text-field)).
+/// Visual variant for the inner control (HeroUI `primary` / `secondary` on [TextFieldRoot](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/textfield/textfield.tsx)).
 enum RiseTextFieldVariant {
   primary,
   secondary,
 }
 
-/// Composition-friendly single- or multi-line field with label, helper, and error
-/// (HeroUI [TextField](https://heroui.com/docs/react/components/text-field) + [textfield.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/textfield.css)).
+/// Form field shell: label, control, description, error — aligned with HeroUI
+/// [TextField](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/textfield/textfield.tsx)
+/// and [textfield.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/textfield.css)
+/// (`flex flex-col gap-1`, hide description when invalid, full-width modifier).
 ///
-/// For a primitive input without label/description, prefer [RiseInput]. For multiline-only
-/// API mirroring HeroUI `TextArea`, prefer [RiseTextArea].
+/// The control is a [RiseInput] or [RiseTextArea] (matching Storybook `Input` / `TextArea` children).
+/// For a bare input without label/description, use [RiseInput] or [RiseTextArea] directly.
+///
+/// Pass a custom [decoration] to use a raw [TextField] (legacy); [expands] also uses that path.
 class RiseTextField extends StatelessWidget {
   const RiseTextField({
     super.key,
@@ -64,6 +73,8 @@ class RiseTextField extends StatelessWidget {
     this.fullWidth = false,
   });
 
+  static const double _kFieldGap = 4;
+
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final InputDecoration? decoration;
@@ -108,7 +119,7 @@ class RiseTextField extends StatelessWidget {
   final Widget? suffixIcon;
   final String? errorText;
 
-  /// Helper under the field (hidden when Material shows [errorText], matching HeroUI invalid + description).
+  /// Description slot ([textfield.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/textfield.css) — hidden when invalid).
   final String? helperText;
 
   final bool isInvalid;
@@ -118,12 +129,26 @@ class RiseTextField extends StatelessWidget {
 
   bool get _hasError => errorText != null || isInvalid;
 
-  String? _resolvedLabelText() {
-    if (labelText == null) return null;
-    return isRequired ? '${labelText!} *' : labelText;
-  }
+  bool get _isMultiline =>
+      expands || (maxLines != null && maxLines! > 1) || (minLines != null && minLines! > 1);
 
-  InputDecoration _resolveDecoration(BuildContext context) {
+  RiseInputVariant get _inputVariant =>
+      variant == RiseTextFieldVariant.primary ? RiseInputVariant.primary : RiseInputVariant.secondary;
+
+  RiseTextAreaVariant get _areaVariant =>
+      variant == RiseTextFieldVariant.primary ? RiseTextAreaVariant.primary : RiseTextAreaVariant.secondary;
+
+  bool get _useLegacyShell =>
+      decoration != null ||
+      expands ||
+      strutStyle != null ||
+      textAlignVertical != null ||
+      keyboardAppearance != null ||
+      buildCounter != null ||
+      scrollPhysics != null ||
+      enableInteractiveSelection != null;
+
+  InputDecoration _legacyDecoration(BuildContext context) {
     if (decoration != null) return decoration!;
     final rise = context.riseTheme;
     final theme = Theme.of(context);
@@ -136,9 +161,10 @@ class RiseTextField extends StatelessWidget {
       borderSide: BorderSide(color: borderColor),
     );
     final hint = hintText ?? placeholder;
+    final resolvedLabel = labelText == null ? null : (isRequired ? '${labelText!} *' : labelText);
     return InputDecoration(
       isDense: true,
-      labelText: _resolvedLabelText(),
+      labelText: resolvedLabel,
       hintText: hint,
       errorText: errorText,
       helperText: helperText,
@@ -169,17 +195,15 @@ class RiseTextField extends StatelessWidget {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildLegacyTextField(BuildContext context) {
     final rise = context.riseTheme;
     final theme = Theme.of(context);
-
     final field = TextField(
       controller: controller,
       focusNode: focusNode,
-      decoration: _resolveDecoration(context),
+      decoration: decoration ?? _legacyDecoration(context),
       keyboardType: keyboardType,
-      textInputAction: textInputAction,
+      textInputAction: textInputAction ?? TextInputAction.newline,
       style: style ?? theme.textTheme.bodyLarge?.copyWith(color: rise.defaultForeground),
       strutStyle: strutStyle,
       textAlign: textAlign ?? TextAlign.start,
@@ -210,10 +234,118 @@ class RiseTextField extends StatelessWidget {
       scrollPhysics: scrollPhysics,
       autofillHints: autofillHints,
     );
-
     if (fullWidth) {
       return SizedBox(width: double.infinity, child: field);
     }
     return field;
+  }
+
+  Widget _buildComposedField(BuildContext context) {
+    final ta = textAlign ?? TextAlign.start;
+
+    if (_isMultiline) {
+      return RiseTextArea(
+        controller: controller,
+        focusNode: focusNode,
+        keyboardType: keyboardType ?? TextInputType.multiline,
+        textInputAction: textInputAction ?? TextInputAction.newline,
+        style: style,
+        rows: minLines,
+        minLines: minLines ?? 3,
+        maxLines: maxLines ?? 8,
+        onChanged: onChanged,
+        enabled: enabled,
+        autofocus: autofocus,
+        readOnly: readOnly,
+        maxLength: maxLength,
+        hintText: hintText,
+        placeholder: placeholder,
+        errorText: null,
+        isInvalid: _hasError,
+        variant: _areaVariant,
+        fullWidth: fullWidth,
+        obscureText: obscureText,
+        textAlign: ta,
+        inputFormatters: inputFormatters,
+      );
+    }
+
+    return RiseInput(
+      controller: controller,
+      focusNode: focusNode,
+      keyboardType: keyboardType ?? TextInputType.text,
+      textInputAction: textInputAction ?? TextInputAction.done,
+      style: style,
+      textAlign: ta,
+      autofocus: autofocus,
+      readOnly: readOnly,
+      showCursor: showCursor,
+      obscureText: obscureText,
+      autocorrect: autocorrect,
+      enableSuggestions: enableSuggestions,
+      maxLength: maxLength,
+      onChanged: onChanged,
+      onEditingComplete: onEditingComplete,
+      onSubmitted: onSubmitted,
+      enabled: enabled,
+      cursorColor: cursorColor,
+      hintText: hintText,
+      placeholder: placeholder,
+      prefixIcon: prefixIcon,
+      suffixIcon: suffixIcon,
+      variant: _inputVariant,
+      fullWidth: fullWidth,
+      isInvalid: _hasError,
+      inputFormatters: inputFormatters,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_useLegacyShell) {
+      return _buildLegacyTextField(context);
+    }
+
+    final children = <Widget>[];
+
+    if (labelText != null) {
+      children.add(
+        RiseLabel.text(
+          labelText!,
+          isRequired: isRequired,
+          isDisabled: !enabled,
+          isInvalid: _hasError,
+        ),
+      );
+      children.add(const SizedBox(height: _kFieldGap));
+    }
+
+    children.add(_buildComposedField(context));
+
+    if (helperText != null && !_hasError) {
+      children.add(const SizedBox(height: _kFieldGap));
+      children.add(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: RiseDescription.text(helperText!),
+        ),
+      );
+    }
+
+    if (errorText != null) {
+      children.add(const SizedBox(height: _kFieldGap));
+      children.add(RiseFieldError.text(errorText!));
+    }
+
+    Widget column = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: children,
+    );
+
+    if (fullWidth) {
+      column = SizedBox(width: double.infinity, child: column);
+    }
+    return column;
   }
 }

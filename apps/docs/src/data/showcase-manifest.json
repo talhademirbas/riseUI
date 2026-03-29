@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-29T12:43:14.184284Z",
+  "generated": "2026-03-29T12:59:02.612312Z",
   "components": [
     {
       "id": "accordion",
@@ -1706,7 +1706,7 @@
     {
       "id": "text-field",
       "title": "TextField",
-      "description": "Label, input, helper, and error in one field — aligned with @heroui/react TextField, textfield.tsx, and textfield.css.",
+      "description": "Label, control, description, and field error — aligned with HeroUI [textfield.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/textfield/textfield.tsx) and [textfield.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/textfield.css) (column `gap-1`, hide description when invalid, full-width modifier).",
       "variants": [
         {
           "slug": "usage",
@@ -1751,6 +1751,13 @@
           "embed": "text-field-error-message"
         },
         {
+          "slug": "invalid",
+          "sectionTitle": "Invalid",
+          "subtitle": "Story `Invalid`: password + address errors (description hidden).",
+          "minHeight": 260.0,
+          "embed": "text-field-invalid"
+        },
+        {
           "slug": "disabled",
           "sectionTitle": "Disabled",
           "subtitle": "Non-editable field with helper text.",
@@ -1781,7 +1788,7 @@
         {
           "slug": "in-surface",
           "sectionTitle": "In surface",
-          "subtitle": "Secondary variant on a surface background.",
+          "subtitle": "Default card (`bg-surface`, same fill token as primary fields) + secondary inputs.",
           "minHeight": 260.0,
           "embed": "text-field-in-surface"
         },

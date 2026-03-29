@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../theme/rise_theme.dart';
 import '../input_group/rise_input_group.dart';
@@ -50,6 +51,7 @@ class RiseInput extends StatefulWidget {
     this.variant = RiseInputVariant.primary,
     this.fullWidth = false,
     this.isInvalid = false,
+    this.inputFormatters,
   });
 
   final TextEditingController? controller;
@@ -84,6 +86,8 @@ class RiseInput extends StatefulWidget {
 
   /// Maps to `data-invalid` / `.input[data-invalid="true"]`.
   final bool isInvalid;
+
+  final List<TextInputFormatter>? inputFormatters;
 
   static const double _kRadius = 14;
 
@@ -308,6 +312,7 @@ class _RiseInputState extends State<RiseInput> {
       enabled: effectiveEnabled,
       cursorColor: widget.cursorColor ?? rise.accent,
       decoration: decoration,
+      inputFormatters: widget.inputFormatters,
     );
 
     if (inGroup) {

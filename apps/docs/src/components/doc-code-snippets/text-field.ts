@@ -1,6 +1,7 @@
 /** Dart snippets — keep in sync with `example/lib/embed/docs_embed_text_field.dart`. */
 
 export const textFieldUsageCode = `const RiseTextField(
+  fullWidth: true,
   keyboardType: TextInputType.emailAddress,
   labelText: 'Email',
   placeholder: 'Enter your email',
@@ -114,8 +115,8 @@ export const textFieldFullWidthCode = `const Column(
   ],
 )`;
 
-export const textFieldInSurfaceCode = `const RiseSurface(
-  variant: RiseSurfaceVariant.secondary,
+export const textFieldInSurfaceCode = `const RiseCard(
+  variant: RiseCardVariant.default_,
   padding: EdgeInsets.all(24),
   child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,7 +146,7 @@ export const textFieldInSurfaceCode = `const RiseSurface(
       ),
     ],
   ),
-)`;
+);`;
 
 export const textFieldVariantsCode = `const Column(
   crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,6 +162,27 @@ export const textFieldVariantsCode = `const Column(
       variant: RiseTextFieldVariant.secondary,
       labelText: 'Secondary',
       placeholder: 'Muted fill — use on surfaces',
+    ),
+  ],
+)`;
+
+export const textFieldInvalidCode = `const Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    RiseTextField(
+      fullWidth: true,
+      labelText: 'Your password',
+      obscureText: true,
+      isInvalid: true,
+      errorText: 'Password must be longer than 8 characters.',
+    ),
+    RiseTextField(
+      fullWidth: true,
+      labelText: 'Delivery address',
+      minLines: 2,
+      maxLines: 4,
+      isInvalid: true,
+      errorText: 'The address is invalid.',
     ),
   ],
 )`;

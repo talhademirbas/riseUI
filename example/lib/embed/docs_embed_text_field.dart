@@ -29,6 +29,7 @@ class DocsEmbedTextField {
   static Widget fullWidth(BuildContext context) => _wrap(const _TextFieldFullWidthEmbed());
   static Widget inSurface(BuildContext context) => _wrap(const _TextFieldInSurfaceEmbed());
   static Widget variants(BuildContext context) => _wrap(const _TextFieldVariantsEmbed());
+  static Widget invalid(BuildContext context) => _wrap(const _TextFieldInvalidEmbed());
 }
 
 class _TextFieldUsageEmbed extends StatelessWidget {
@@ -37,6 +38,7 @@ class _TextFieldUsageEmbed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const RiseTextField(
+      fullWidth: true,
       keyboardType: TextInputType.emailAddress,
       labelText: 'Email',
       placeholder: 'Enter your email',
@@ -50,6 +52,7 @@ class _TextFieldWithDescriptionEmbed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const RiseTextField(
+      fullWidth: true,
       labelText: 'Username',
       placeholder: 'juliam_example',
       helperText: 'Choose a unique username for your account.',
@@ -63,6 +66,7 @@ class _TextFieldRequiredEmbed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const RiseTextField(
+      fullWidth: true,
       isRequired: true,
       labelText: 'Full name',
       helperText: 'This field is required.',
@@ -91,6 +95,7 @@ class _TextFieldValidationEmbedState extends State<_TextFieldValidationEmbed> {
     final text = _controller.text;
     final invalid = text.isNotEmpty && text.length < 20;
     return RiseTextField(
+      fullWidth: true,
       controller: _controller,
       labelText: 'Bio',
       minLines: 2,
@@ -129,6 +134,7 @@ class _TextFieldControlledEmbedState extends State<_TextFieldControlledEmbed> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         RiseTextField(
+          fullWidth: true,
           controller: _name,
           labelText: 'Display name',
           onChanged: (_) => setState(() {}),
@@ -140,6 +146,7 @@ class _TextFieldControlledEmbedState extends State<_TextFieldControlledEmbed> {
         ),
         const SizedBox(height: 16),
         RiseTextField(
+          fullWidth: true,
           controller: _bio,
           labelText: 'Bio',
           minLines: 2,
@@ -163,6 +170,7 @@ class _TextFieldErrorMessageEmbed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const RiseTextField(
+      fullWidth: true,
       keyboardType: TextInputType.emailAddress,
       labelText: 'Email',
       placeholder: 'you@example.com',
@@ -178,6 +186,7 @@ class _TextFieldDisabledEmbed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const RiseTextField(
+      fullWidth: true,
       labelText: 'Account ID',
       hintText: 'acct_01H…',
       helperText: 'This field cannot be edited.',
@@ -192,6 +201,7 @@ class _TextFieldMultilineEmbed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const RiseTextField(
+      fullWidth: true,
       labelText: 'Message',
       placeholder: 'How can we help?',
       helperText: 'Maximum 500 characters.',
@@ -211,12 +221,14 @@ class _TextFieldInputTypesEmbed extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const RiseTextField(
+          fullWidth: true,
           labelText: 'Password',
           obscureText: true,
           placeholder: '••••••••',
         ),
         const SizedBox(height: 12),
         RiseTextField(
+          fullWidth: true,
           labelText: 'Age',
           keyboardType: TextInputType.number,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -224,6 +236,7 @@ class _TextFieldInputTypesEmbed extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         const RiseTextField(
+          fullWidth: true,
           labelText: 'Email',
           keyboardType: TextInputType.emailAddress,
           placeholder: 'name@domain.com',
@@ -264,8 +277,8 @@ class _TextFieldInSurfaceEmbed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const RiseSurface(
-      variant: RiseSurfaceVariant.secondary,
+    return const RiseCard(
+      variant: RiseCardVariant.default_,
       padding: EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -321,6 +334,37 @@ class _TextFieldVariantsEmbed extends StatelessWidget {
           variant: RiseTextFieldVariant.secondary,
           labelText: 'Secondary',
           placeholder: 'Muted fill — use on surfaces',
+        ),
+      ],
+    );
+  }
+}
+
+class _TextFieldInvalidEmbed extends StatelessWidget {
+  const _TextFieldInvalidEmbed();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        RiseTextField(
+          fullWidth: true,
+          labelText: 'Your password',
+          obscureText: true,
+          placeholder: '••••••••',
+          isInvalid: true,
+          errorText: 'Password must be longer than 8 characters.',
+        ),
+        SizedBox(height: 12),
+        RiseTextField(
+          fullWidth: true,
+          labelText: 'Delivery address',
+          minLines: 2,
+          maxLines: 4,
+          placeholder: 'Street, city, zip…',
+          isInvalid: true,
+          errorText: 'The address is invalid.',
         ),
       ],
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../theme/rise_theme.dart';
 
@@ -43,6 +44,9 @@ class RiseTextArea extends StatefulWidget {
     this.isInvalid = false,
     this.variant = RiseTextAreaVariant.primary,
     this.fullWidth = false,
+    this.obscureText = false,
+    this.textAlign = TextAlign.start,
+    this.inputFormatters,
   });
 
   final TextEditingController? controller;
@@ -72,6 +76,12 @@ class RiseTextArea extends StatefulWidget {
   final bool isInvalid;
   final RiseTextAreaVariant variant;
   final bool fullWidth;
+
+  final bool obscureText;
+
+  final TextAlign textAlign;
+
+  final List<TextInputFormatter>? inputFormatters;
 
   /// Minimum block height from [textarea.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/textarea.css) (`min-height: 38px`).
   static const double kMinHeight = 38;
@@ -250,14 +260,17 @@ class _RiseTextAreaState extends State<RiseTextArea> {
       keyboardType: widget.keyboardType,
       textInputAction: widget.textInputAction,
       style: _fieldTextStyle(rise, theme),
+      textAlign: widget.textAlign,
       minLines: effectiveMin,
       maxLines: widget.maxLines,
+      obscureText: widget.obscureText,
       onChanged: widget.onChanged,
       enabled: widget.enabled,
       autofocus: widget.autofocus,
       readOnly: widget.readOnly,
       maxLength: widget.maxLength,
       cursorColor: rise.accent,
+      inputFormatters: widget.inputFormatters,
     );
 
     if (widget.decoration == null) {
