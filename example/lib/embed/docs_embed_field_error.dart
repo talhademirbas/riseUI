@@ -17,6 +17,7 @@ class DocsEmbedFieldError {
   }
 
   static Widget usage(BuildContext context) => _wrap(const _FieldErrorUsageEmbed());
+  static Widget visibility(BuildContext context) => _wrap(const _FieldErrorVisibilityEmbed());
   static Widget basicValidation(BuildContext context) => _wrap(const _FieldErrorBasicValidationEmbed());
   static Widget dynamicMessage(BuildContext context) => _wrap(const _FieldErrorDynamicMessageEmbed());
   static Widget multipleMessages(BuildContext context) => _wrap(const _FieldErrorMultipleMessagesEmbed());
@@ -28,7 +29,42 @@ class _FieldErrorUsageEmbed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const RiseFieldError(
+      visible: true,
       child: Text('Username must be at least 3 characters'),
+    );
+  }
+}
+
+class _FieldErrorVisibilityEmbed extends StatefulWidget {
+  const _FieldErrorVisibilityEmbed();
+
+  @override
+  State<_FieldErrorVisibilityEmbed> createState() => _FieldErrorVisibilityEmbedState();
+}
+
+class _FieldErrorVisibilityEmbedState extends State<_FieldErrorVisibilityEmbed> {
+  var _showError = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Switch(
+              value: _showError,
+              onChanged: (v) => setState(() => _showError = v),
+            ),
+            const Text('Show error'),
+          ],
+        ),
+        const SizedBox(height: 8),
+        RiseFieldError(
+          visible: _showError,
+          child: const Text('This field has a validation error.'),
+        ),
+      ],
     );
   }
 }
@@ -65,10 +101,10 @@ class _FieldErrorBasicValidationEmbedState extends State<_FieldErrorBasicValidat
           ),
         ),
         const SizedBox(height: 6),
-        if (isInvalid)
-          const RiseFieldError(
-            child: Text('Username must be at least 3 characters'),
-          ),
+        RiseFieldError(
+          visible: isInvalid,
+          child: const Text('Username must be at least 3 characters'),
+        ),
       ],
     );
   }
@@ -110,7 +146,10 @@ class _FieldErrorDynamicMessageEmbedState extends State<_FieldErrorDynamicMessag
           ),
         ),
         const SizedBox(height: 6),
-        if (errors.isNotEmpty) RiseFieldError(child: Text(errors.join(', '))),
+        RiseFieldError(
+          visible: errors.isNotEmpty,
+          child: Text(errors.join(', ')),
+        ),
       ],
     );
   }
@@ -153,13 +192,13 @@ class _FieldErrorMultipleMessagesEmbedState extends State<_FieldErrorMultipleMes
           ),
         ),
         const SizedBox(height: 6),
-        if (show)
-          RiseFieldError(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [for (final e in errors) Text('- $e')],
-            ),
+        RiseFieldError(
+          visible: show,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [for (final e in errors) Text('- $e')],
           ),
+        ),
       ],
     );
   }

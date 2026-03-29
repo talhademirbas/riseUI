@@ -6,6 +6,7 @@ import '../rise_showcase_models.dart';
 
 final Map<String, Widget Function(BuildContext context)> _fieldErrorBuilders = {
   'usage': DocsEmbedFieldError.usage,
+  'visibility': DocsEmbedFieldError.visibility,
   'basic-validation': DocsEmbedFieldError.basicValidation,
   'dynamic-message': DocsEmbedFieldError.dynamicMessage,
   'multiple-messages': DocsEmbedFieldError.multipleMessages,

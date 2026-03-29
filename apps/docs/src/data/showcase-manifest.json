@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-29T08:27:01.381268Z",
+  "generated": "2026-03-29T08:37:42.169989Z",
   "components": [
     {
       "id": "accordion",
@@ -916,6 +916,13 @@
           "subtitle": "Simple error line under a field.",
           "minHeight": 90.0,
           "embed": "field-error-usage"
+        },
+        {
+          "slug": "visibility",
+          "sectionTitle": "Visibility",
+          "subtitle": "Toggle data-visible: collapse and expand with motion (Hero field-error.css).",
+          "minHeight": 160.0,
+          "embed": "field-error-visibility"
         },
         {
           "slug": "basic-validation",

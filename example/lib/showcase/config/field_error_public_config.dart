@@ -16,6 +16,12 @@ const List<RiseUsagePublicConfig> kFieldErrorUsagePublicConfigs = [
     minHeight: 90,
   ),
   RiseUsagePublicConfig(
+    slug: 'visibility',
+    sectionTitle: 'Visibility',
+    subtitle: 'Toggle data-visible: collapse and expand with motion (Hero field-error.css).',
+    minHeight: 160,
+  ),
+  RiseUsagePublicConfig(
     slug: 'basic-validation',
     sectionTitle: 'Basic validation',
     subtitle: 'Conditional invalid state with message.',

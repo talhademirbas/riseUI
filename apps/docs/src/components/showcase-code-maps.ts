@@ -149,6 +149,7 @@ import {
   fieldErrorDynamicMessageCode,
   fieldErrorMultipleMessagesCode,
   fieldErrorUsageCode,
+  fieldErrorVisibilityCode,
 } from "./doc-code-snippets/field-error";
 import {
   labelDisabledCode,
@@ -400,6 +401,7 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
   },
   "field-error": {
     usage: fieldErrorUsageCode,
+    visibility: fieldErrorVisibilityCode,
     "basic-validation": fieldErrorBasicValidationCode,
     "dynamic-message": fieldErrorDynamicMessageCode,
     "multiple-messages": fieldErrorMultipleMessagesCode,
