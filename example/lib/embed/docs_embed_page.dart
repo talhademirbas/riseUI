@@ -28,6 +28,7 @@ import '../showcase/catalog/switch_showcase.dart';
 import '../showcase/catalog/tabs_showcase.dart';
 import '../showcase/catalog/text_area_showcase.dart';
 import '../showcase/catalog/text_field_showcase.dart';
+import '../showcase/catalog/toast_showcase.dart';
 import '../showcase/catalog/chip_showcase.dart';
 import '../showcase/catalog/card_showcase.dart';
 import '../showcase/catalog/close_button_showcase.dart';
@@ -172,6 +173,10 @@ class DocsEmbedPage extends StatelessWidget {
     final tabsEmbed = buildTabsDocsEmbed(context, embedId);
     if (tabsEmbed != null) {
       return tabsEmbed;
+    }
+    final toastEmbed = buildToastDocsEmbed(context, embedId);
+    if (toastEmbed != null) {
+      return toastEmbed;
     }
     return Center(
       child: Text(

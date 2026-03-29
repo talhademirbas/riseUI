@@ -128,6 +128,11 @@ import {
   tabsVerticalCode,
 } from "./doc-code-snippets/tabs";
 import {
+  toastHeroStoriesCode,
+  toastLoadingCode,
+  toastPlacementsCode,
+} from "./doc-code-snippets/toast";
+import {
   checkboxControlledCode,
   checkboxCustomIndicatorCode,
   checkboxDisabledCode,
@@ -409,6 +414,11 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
     secondary: tabsSecondaryCode,
     "secondary-vertical": tabsSecondaryVerticalCode,
     scrollable: tabsScrollableCode,
+  },
+  toast: {
+    "hero-stories": toastHeroStoriesCode,
+    placements: toastPlacementsCode,
+    loading: toastLoadingCode,
   },
   checkbox: {
     usage: checkboxUsageCode,

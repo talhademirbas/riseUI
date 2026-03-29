@@ -90,6 +90,7 @@ class RiseUiExampleApp extends StatelessWidget {
       theme: _riseExampleTheme(brightness: Brightness.light),
       darkTheme: _riseExampleTheme(brightness: Brightness.dark),
       themeMode: embedThemeMode ?? ThemeMode.system,
+      builder: (context, child) => RiseToast.wrap(child),
       home: embed != null ? DocsEmbedPage(embedId: embed) : const HomePage(),
     );
   }

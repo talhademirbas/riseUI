@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-29T13:40:24.223370Z",
+  "generated": "2026-03-29T14:24:51.266144Z",
   "components": [
     {
       "id": "accordion",
@@ -1875,6 +1875,34 @@
           "subtitle": "`[data-invalid]` + error text.",
           "minHeight": 200.0,
           "embed": "text-area-invalid"
+        }
+      ]
+    },
+    {
+      "id": "toast",
+      "title": "Toast",
+      "description": "Surface notifications with semantic title + muted description — HeroUI v3 [toast.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/toast/toast.tsx), [toast.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/toast.css), [toast.stories.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/toast/toast.stories.tsx).",
+      "variants": [
+        {
+          "slug": "hero-stories",
+          "sectionTitle": "HeroUI story parity",
+          "subtitle": "Default / Accent (`toast.info`) / Success / Warning / Danger with description, indicator, and action — mirrors Storybook `Template`.",
+          "minHeight": 320.0,
+          "embed": "toast-hero-stories"
+        },
+        {
+          "slug": "placements",
+          "sectionTitle": "Placements",
+          "subtitle": "`RiseToastPlacement`: top · top-start · top-end · bottom · bottom-start · bottom-end (toast-region placements in toast.css).",
+          "minHeight": 200.0,
+          "embed": "toast-placements"
+        },
+        {
+          "slug": "loading",
+          "sectionTitle": "Loading",
+          "subtitle": "`isLoading: true` shows [RiseSpinner] in the indicator slot; `duration: Duration.zero` keeps the toast until dismissed.",
+          "minHeight": 160.0,
+          "embed": "toast-loading"
         }
       ]
     }

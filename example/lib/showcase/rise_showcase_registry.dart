@@ -28,6 +28,7 @@ import 'catalog/switch_showcase.dart';
 import 'catalog/tabs_showcase.dart';
 import 'catalog/text_area_showcase.dart';
 import 'catalog/text_field_showcase.dart';
+import 'catalog/toast_showcase.dart';
 import 'rise_showcase_models.dart';
 
 /// All registered component showcases (extend this list as you add components).
@@ -62,6 +63,7 @@ final List<RiseComponentShowcase> kRiseComponentShowcases = [
   riseTabsShowcase,
   riseTextFieldShowcase,
   riseTextAreaShowcase,
+  riseToastShowcase,
 ];
 
 final Map<String, RiseComponentShowcase> kRiseShowcasesById = {

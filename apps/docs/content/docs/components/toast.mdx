@@ -1,6 +1,8 @@
 ---
 title: Toast
-description: Transient notification (snackbar) helper.
+description: Surface snackbar stack aligned with HeroUI v3 toast region — shadow card, semantic title, muted description, indicator, action, and close.
 ---
 
-`RiseToast.show` maps `RiseToastVariant` to semantic background colors.
+Wrap your app with `RiseToast.wrap` in `MaterialApp.builder` so overlays paint above routes. Defaults mirror HeroUI [constants.ts](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/toast/constants.ts) (`DEFAULT_TOAST_TIMEOUT` 4000 ms, `DEFAULT_GAP` 12, `DEFAULT_MAX_VISIBLE_TOAST` 3, `DEFAULT_TOAST_WIDTH` 460).
+
+<RiseComponentShowcaseDoc componentId="toast" />

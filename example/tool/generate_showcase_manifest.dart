@@ -31,6 +31,7 @@ import 'package:rise_ui_example/showcase/config/input_group_public_config.dart';
 import 'package:rise_ui_example/showcase/config/input_otp_public_config.dart';
 import 'package:rise_ui_example/showcase/config/text_field_public_config.dart';
 import 'package:rise_ui_example/showcase/config/text_area_public_config.dart';
+import 'package:rise_ui_example/showcase/config/toast_public_config.dart';
 
 /// Writes [apps/docs/src/data/showcase-manifest.json] for the Next.js docs app.
 ///
@@ -74,6 +75,7 @@ void main() {
       _inputOtpManifestMap(),
       _textFieldManifestMap(),
       _textAreaManifestMap(),
+      _toastManifestMap(),
     ],
   };
   outFile.writeAsStringSync(const JsonEncoder.withIndent('  ').convert(payload));
@@ -541,6 +543,22 @@ Map<String, dynamic> _textFieldManifestMap() => {
             'subtitle': c.subtitle,
             'minHeight': c.minHeight,
             'embed': c.embedId(kTextFieldComponentId),
+          },
+      ],
+    };
+
+Map<String, dynamic> _toastManifestMap() => {
+      'id': kToastComponentId,
+      'title': kToastTitle,
+      'description': kToastDescription,
+      'variants': [
+        for (final c in kToastUsagePublicConfigs)
+          {
+            'slug': c.slug,
+            'sectionTitle': c.sectionTitle,
+            'subtitle': c.subtitle,
+            'minHeight': c.minHeight,
+            'embed': c.embedId(kToastComponentId),
           },
       ],
     };
