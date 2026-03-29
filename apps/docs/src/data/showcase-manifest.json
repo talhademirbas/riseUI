@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-29T09:58:26.494670Z",
+  "generated": "2026-03-29T10:38:07.588806Z",
   "components": [
     {
       "id": "accordion",
@@ -1251,55 +1251,90 @@
     {
       "id": "select",
       "title": "Select",
-      "description": "Collapsible option selector with field chrome, validation states, and variants — aligned with HeroUI Select and select.css.",
+      "description": "Field-style trigger, overlay list, sections, and multi-select — aligned with HeroUI [select.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/select/select.tsx), [select.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/select.css), and Storybook `Components/Pickers/Select`.",
       "variants": [
         {
           "slug": "usage",
           "sectionTitle": "Usage",
-          "subtitle": "Basic controlled single select.",
-          "minHeight": 170.0,
+          "subtitle": "Story `Default`: controlled single select, state list.",
+          "minHeight": 180.0,
           "embed": "select-usage"
         },
         {
           "slug": "with-description",
           "sectionTitle": "With description",
-          "subtitle": "Label + helper text.",
-          "minHeight": 190.0,
+          "subtitle": "`WithDescription`: label + helper (select hides description when invalid).",
+          "minHeight": 200.0,
           "embed": "select-with-description"
         },
         {
           "slug": "with-disabled-options",
           "sectionTitle": "With disabled options",
-          "subtitle": "Some options are not selectable.",
-          "minHeight": 170.0,
+          "subtitle": "`WithDisabledOptions`: non-selectable rows.",
+          "minHeight": 180.0,
           "embed": "select-with-disabled-options"
         },
         {
           "slug": "required",
-          "sectionTitle": "Required",
-          "subtitle": "Required indicator + validation.",
-          "minHeight": 210.0,
+          "sectionTitle": "Required form",
+          "subtitle": "`Required`: two fields + submit (mirrors HeroUI form story).",
+          "minHeight": 340.0,
           "embed": "select-required"
         },
         {
           "slug": "full-width",
           "sectionTitle": "Full width",
-          "subtitle": "Stretches to available width.",
-          "minHeight": 170.0,
+          "subtitle": "`FullWidth`: `.select--full-width` / full-width trigger.",
+          "minHeight": 180.0,
           "embed": "select-full-width"
         },
         {
           "slug": "variants",
           "sectionTitle": "Variants",
-          "subtitle": "primary and secondary trigger styles.",
-          "minHeight": 220.0,
+          "subtitle": "`Variants`: primary (`shadow-field`) vs secondary (`shadow-none`).",
+          "minHeight": 240.0,
           "embed": "select-variants"
+        },
+        {
+          "slug": "multiple-select",
+          "sectionTitle": "Multiple select",
+          "subtitle": "`MultipleSelect`: checkmarks, menu stays open (`closeOnActivate: false`).",
+          "minHeight": 200.0,
+          "embed": "select-multiple-select"
+        },
+        {
+          "slug": "with-sections",
+          "sectionTitle": "With sections",
+          "subtitle": "`WithSections`: grouped list headers.",
+          "minHeight": 220.0,
+          "embed": "select-with-sections"
+        },
+        {
+          "slug": "custom-indicator",
+          "sectionTitle": "Custom indicator",
+          "subtitle": "`CustomIndicator`: replace chevron.",
+          "minHeight": 180.0,
+          "embed": "select-custom-indicator"
+        },
+        {
+          "slug": "custom-value",
+          "sectionTitle": "Custom value",
+          "subtitle": "`CustomValue`: `triggerValueBuilder` + avatars in the trigger.",
+          "minHeight": 200.0,
+          "embed": "select-custom-value"
+        },
+        {
+          "slug": "controlled",
+          "sectionTitle": "Controlled",
+          "subtitle": "`Controlled`: external state + summary line.",
+          "minHeight": 220.0,
+          "embed": "select-controlled"
         },
         {
           "slug": "disabled",
           "sectionTitle": "Disabled",
-          "subtitle": "Non-interactive select.",
-          "minHeight": 170.0,
+          "subtitle": "`Disabled`: non-interactive trigger.",
+          "minHeight": 180.0,
           "embed": "select-disabled"
         }
       ]

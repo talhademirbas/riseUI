@@ -11,6 +11,11 @@ final Map<String, Widget Function(BuildContext context)> _selectBuilders = {
   'required': DocsEmbedSelect.required,
   'full-width': DocsEmbedSelect.fullWidth,
   'variants': DocsEmbedSelect.variants,
+  'multiple-select': DocsEmbedSelect.multipleSelect,
+  'with-sections': DocsEmbedSelect.withSections,
+  'custom-indicator': DocsEmbedSelect.customIndicator,
+  'custom-value': DocsEmbedSelect.customValue,
+  'controlled': DocsEmbedSelect.controlled,
   'disabled': DocsEmbedSelect.disabled,
 };
 
