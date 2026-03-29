@@ -22,6 +22,8 @@ import {
   alertSuccessCode,
   alertUsageCode,
   alertWarningCode,
+  alertWithoutCloseCode,
+  alertWithoutDescriptionCode,
   alertWithActionsCode,
 } from "./doc-code-snippets/alert";
 import {
@@ -298,7 +300,9 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
     success: alertSuccessCode,
     warning: alertWarningCode,
     danger: alertDangerCode,
+    "without-description": alertWithoutDescriptionCode,
     "custom-indicator": alertCustomIndicatorCode,
+    "without-close": alertWithoutCloseCode,
     "with-actions": alertWithActionsCode,
   },
   avatar: {

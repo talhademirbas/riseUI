@@ -10,7 +10,9 @@ final Map<String, Widget Function(BuildContext context)> _alertBuilders = {
   'success': DocsEmbedAlert.success,
   'warning': DocsEmbedAlert.warning,
   'danger': DocsEmbedAlert.danger,
+  'without-description': DocsEmbedAlert.withoutDescription,
   'custom-indicator': DocsEmbedAlert.customIndicator,
+  'without-close': DocsEmbedAlert.withoutClose,
   'with-actions': DocsEmbedAlert.withActions,
 };
 

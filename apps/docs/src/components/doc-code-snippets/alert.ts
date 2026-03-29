@@ -2,13 +2,17 @@
 
 export const alertUsageCode = `const RiseAlert(
   title: Text('New features available'),
-  description: Text('Supporting body copy for the alert.'),
+  description: Text(
+    'Check out our latest updates including dark mode support and improved accessibility features.',
+  ),
 )`;
 
 export const alertAccentCode = `RiseAlert(
   status: RiseAlertStatus.accent,
   title: const Text('Update available'),
-  description: const Text('Please refresh to get the latest features.'),
+  description: const Text(
+    'A new version of the application is available. Please refresh to get the latest features and bug fixes.',
+  ),
   actions: [
     RiseButton(
       label: 'Refresh',
@@ -17,23 +21,47 @@ export const alertAccentCode = `RiseAlert(
       onPressed: () {},
     ),
   ],
+  onClose: () {},
 )`;
 
-export const alertSuccessCode = `const RiseAlert(
+export const alertSuccessCode = `RiseAlert(
   status: RiseAlertStatus.success,
-  title: Text('Profile updated successfully'),
+  title: const Text('Payment successful'),
+  description: const Text(
+    'Your payment of \\\$49.99 has been processed. A confirmation email has been sent to your inbox.',
+  ),
+  actions: [
+    RiseButton(
+      label: 'View Receipt',
+      size: RiseButtonSize.sm,
+      variant: RiseButtonVariant.primary,
+      onPressed: () {},
+    ),
+  ],
+  onClose: () {},
 )`;
 
-export const alertWarningCode = `const RiseAlert(
+export const alertWarningCode = `RiseAlert(
   status: RiseAlertStatus.warning,
-  title: Text('Scheduled maintenance'),
-  description: Text('We will be unavailable during this window.'),
+  title: const Text('Storage almost full'),
+  description: const Text(
+    "You're using 90% of your storage quota. Consider upgrading your plan or removing unused files to avoid service interruption.",
+  ),
+  actions: [
+    RiseButton(
+      label: 'Manage Storage',
+      size: RiseButtonSize.sm,
+      variant: RiseButtonVariant.primary,
+      onPressed: () {},
+    ),
+  ],
+  onClose: () {},
 )`;
 
 export const alertDangerCode = `RiseAlert(
   status: RiseAlertStatus.danger,
   title: const Text('Unable to connect to server'),
-  description: const Text('Try again or check your connection.'),
+  description: const Text('Try the steps below, then retry.'),
   actions: [
     RiseButton(
       label: 'Retry',
@@ -42,13 +70,30 @@ export const alertDangerCode = `RiseAlert(
       onPressed: () {},
     ),
   ],
+  onClose: () {},
+)`;
+
+export const alertWithoutDescriptionCode = `RiseAlert(
+  status: RiseAlertStatus.success,
+  title: const Text('Profile updated successfully'),
+  onClose: () {},
 )`;
 
 export const alertCustomIndicatorCode = `RiseAlert(
   status: RiseAlertStatus.accent,
-  leading: const Icon(Icons.auto_awesome_outlined),
-  title: const Text('Custom indicator'),
-  description: const Text('Any widget can replace the default icon.'),
+  leading: const RiseSpinner(
+    size: RiseSpinnerSize.sm,
+    color: RiseSpinnerColor.accent,
+  ),
+  title: const Text('Processing your request'),
+  description: const Text('Please wait while we sync your data.'),
+  onClose: () {},
+)`;
+
+export const alertWithoutCloseCode = `const RiseAlert(
+  status: RiseAlertStatus.warning,
+  title: Text('Scheduled maintenance'),
+  description: Text('Services will be unavailable during this window.'),
 )`;
 
 export const alertWithActionsCode = `RiseAlert(
@@ -69,4 +114,5 @@ export const alertWithActionsCode = `RiseAlert(
       onPressed: () {},
     ),
   ],
+  onClose: () {},
 )`;

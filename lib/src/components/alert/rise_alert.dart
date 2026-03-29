@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../theme/rise_theme.dart';
+import '../close_button/rise_close_button.dart';
+import '../surface/rise_surface.dart';
 
-/// Status tone (HeroUI [Alert](https://heroui.com/docs/react/components/alert) /
-/// [alert.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/alert.css)).
+/// Status tone ([alert.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/alert.css)
+/// `.alert--default` / `.alert--accent` / …).
 enum RiseAlertStatus {
   default_,
   accent,
@@ -12,11 +14,15 @@ enum RiseAlertStatus {
   danger,
 }
 
-/// Inline alert with indicator, title, description, and optional actions
-/// (composition similar to [alert.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/alert/alert.tsx)).
+/// Inline alert with indicator, title, description, optional actions, and optional dismiss
+/// ([alert.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/alert/alert.tsx),
+/// [alert.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/alert.css)).
 ///
-/// Uses a neutral surface card with **status-colored title and indicator**, matching HeroUI
-/// `.alert--accent` / `.alert--success` etc.
+/// Visual parity:
+/// - `flex` row, `items-start`, `gap-4` (16px), `rounded-3xl`, `bg-surface`, `px-4` `py-3`, `shadow-surface`
+/// - `.alert__indicator` — `p-1`, icon `size-4` (16px)
+/// - `.alert__title` — `text-sm` / `leading-6` / `font-medium`, status-colored
+/// - `.alert__description` — `text-sm` `text-muted`
 class RiseAlert extends StatelessWidget {
   const RiseAlert({
     super.key,
@@ -26,9 +32,19 @@ class RiseAlert extends StatelessWidget {
     this.leading,
     this.showIndicator = true,
     this.actions,
+    this.onClose,
     this.borderRadius = 24,
     this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
   });
+
+  /// HeroUI `[data-slot="alert-default-icon"]` / `size-4`.
+  static const double iconSize = 16;
+
+  /// `gap-4` between indicator and text block.
+  static const double rowGap = 16;
+
+  /// `gap-1` between title and description (when both exist).
+  static const double titleDescriptionGap = 4;
 
   final Widget title;
 
@@ -42,8 +58,11 @@ class RiseAlert extends StatelessWidget {
   /// When false and [leading] is null, no leading icon is shown.
   final bool showIndicator;
 
-  /// Trailing actions (e.g. buttons) shown under the text block.
+  /// Trailing actions (e.g. buttons) below the text block.
   final List<Widget>? actions;
+
+  /// When non-null, a [RiseCloseButton] is shown (HeroUI stories with `CloseButton`).
+  final VoidCallback? onClose;
 
   final double borderRadius;
 
@@ -75,7 +94,7 @@ class RiseAlert extends StatelessWidget {
           iconColor: rise.success,
         ),
       RiseAlertStatus.warning => _AlertTokens(
-          titleColor: rise.warningForeground,
+          titleColor: rise.warning,
           iconColor: rise.warning,
         ),
       RiseAlertStatus.danger => _AlertTokens(
@@ -88,28 +107,27 @@ class RiseAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rise = context.riseTheme;
-    final theme = Theme.of(context);
     final t = _tokens(context);
 
-    final titleStyle = theme.textTheme.titleSmall?.copyWith(
-          fontWeight: FontWeight.w600,
-          color: t.titleColor,
-          height: 1.35,
-        ) ??
-        TextStyle(fontWeight: FontWeight.w600, color: t.titleColor, height: 1.35);
+    final titleStyle = TextStyle(
+      fontSize: 14,
+      height: 24 / 14,
+      fontWeight: FontWeight.w500,
+      color: t.titleColor,
+    );
 
-    final descStyle = theme.textTheme.bodySmall?.copyWith(
-          color: rise.mutedForeground(0.8),
-          height: 1.45,
-        ) ??
-        TextStyle(color: rise.mutedForeground(0.8), height: 1.45);
+    final descStyle = TextStyle(
+      fontSize: 14,
+      height: 20 / 14,
+      color: rise.mutedForeground(),
+    );
 
     Widget? indicator;
     if (leading != null) {
       indicator = Padding(
         padding: const EdgeInsets.all(4),
         child: IconTheme.merge(
-          data: IconThemeData(color: t.iconColor, size: 22),
+          data: IconThemeData(color: t.iconColor, size: iconSize),
           child: leading!,
         ),
       );
@@ -118,7 +136,7 @@ class RiseAlert extends StatelessWidget {
         padding: const EdgeInsets.all(4),
         child: Icon(
           _defaultIcon(),
-          size: 22,
+          size: iconSize,
           color: t.iconColor,
         ),
       );
@@ -127,23 +145,19 @@ class RiseAlert extends StatelessWidget {
     final actionChildren = actions;
     final hasActions = actionChildren != null && actionChildren.isNotEmpty;
 
-    return Material(
-      color: theme.colorScheme.surface,
-      elevation: 1,
-      shadowColor: Colors.black.withValues(alpha: 0.08),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(borderRadius),
-        side: BorderSide(color: rise.border.withValues(alpha: 0.35)),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Padding(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(borderRadius),
+      child: RiseSurface(
+        variant: RiseSurfaceVariant.default_,
         padding: padding,
+        borderRadius: borderRadius,
+        showShadow: true,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (indicator != null) ...[
               indicator,
-              const SizedBox(width: 16),
+              const SizedBox(width: rowGap),
             ],
             Expanded(
               child: Column(
@@ -155,7 +169,7 @@ class RiseAlert extends StatelessWidget {
                     child: title,
                   ),
                   if (description != null) ...[
-                    const SizedBox(height: 6),
+                    const SizedBox(height: titleDescriptionGap),
                     DefaultTextStyle.merge(
                       style: descStyle,
                       child: description!,
@@ -172,6 +186,10 @@ class RiseAlert extends StatelessWidget {
                 ],
               ),
             ),
+            if (onClose != null) ...[
+              const SizedBox(width: 8),
+              RiseCloseButton(onPressed: onClose!),
+            ],
           ],
         ),
       ),
