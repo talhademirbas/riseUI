@@ -152,10 +152,14 @@ import {
   fieldErrorVisibilityCode,
 } from "./doc-code-snippets/field-error";
 import {
+  labelControlFieldCode,
+  labelCustomIndicatorCode,
   labelDisabledCode,
   labelInvalidCode,
   labelRequiredCode,
+  labelRequiredInvalidCode,
   labelUsageCode,
+  labelWithDescriptionCode,
   labelWithInputCode,
 } from "./doc-code-snippets/label";
 import {
@@ -430,6 +434,10 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
     disabled: labelDisabledCode,
     invalid: labelInvalidCode,
     "with-input": labelWithInputCode,
+    "with-description": labelWithDescriptionCode,
+    "required-invalid": labelRequiredInvalidCode,
+    "custom-indicator": labelCustomIndicatorCode,
+    "control-field": labelControlFieldCode,
   },
   popover: {
     usage: popoverUsageCode,

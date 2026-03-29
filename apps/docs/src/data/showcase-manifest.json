@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-29T09:41:14.808796Z",
+  "generated": "2026-03-29T09:47:21.350412Z",
   "components": [
     {
       "id": "accordion",
@@ -950,42 +950,70 @@
     {
       "id": "label",
       "title": "Label",
-      "description": "Accessible form label with required, disabled, and invalid states — aligned with HeroUI Label and label.css.",
+      "description": "Accessible labels matching HeroUI [label.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/label.css) (`text-sm font-medium`, required asterisk, disabled opacity, invalid danger) and [label.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/label/label.tsx).",
       "variants": [
         {
           "slug": "usage",
           "sectionTitle": "Usage",
-          "subtitle": "Plain text label.",
+          "subtitle": "Default label typography.",
           "minHeight": 100.0,
           "embed": "label-usage"
         },
         {
           "slug": "required",
           "sectionTitle": "Required",
-          "subtitle": "Asterisk indicator (or custom [requiredIndicator]).",
+          "subtitle": "Danger asterisk with spacing (`after:ml-0.5`).",
           "minHeight": 100.0,
           "embed": "label-required"
         },
         {
           "slug": "disabled",
           "sectionTitle": "Disabled",
-          "subtitle": "Muted foreground when `isDisabled`.",
+          "subtitle": "`status-disabled` via [RiseThemeData.disabledOpacity].",
           "minHeight": 100.0,
           "embed": "label-disabled"
         },
         {
           "slug": "invalid",
           "sectionTitle": "Invalid",
-          "subtitle": "Danger color for error context.",
+          "subtitle": "`text-danger` for error context.",
           "minHeight": 100.0,
           "embed": "label-invalid"
         },
         {
           "slug": "with-input",
           "sectionTitle": "With input",
-          "subtitle": "Label stacked above `RiseInput`.",
+          "subtitle": "Stacked above [RiseInput].",
           "minHeight": 160.0,
           "embed": "label-with-input"
+        },
+        {
+          "slug": "with-description",
+          "sectionTitle": "With description",
+          "subtitle": "Label + helper line (common form pattern).",
+          "minHeight": 130.0,
+          "embed": "label-with-description"
+        },
+        {
+          "slug": "required-invalid",
+          "sectionTitle": "Required + invalid",
+          "subtitle": "Combined states.",
+          "minHeight": 100.0,
+          "embed": "label-required-invalid"
+        },
+        {
+          "slug": "custom-indicator",
+          "sectionTitle": "Custom indicator",
+          "subtitle": "Replace the default asterisk.",
+          "minHeight": 100.0,
+          "embed": "label-custom-indicator"
+        },
+        {
+          "slug": "control-field",
+          "sectionTitle": "Control field",
+          "subtitle": "Label + description + control via [RiseControlField].",
+          "minHeight": 200.0,
+          "embed": "label-control-field"
         }
       ]
     },

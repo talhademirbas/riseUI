@@ -21,8 +21,13 @@ class DocsEmbedLabel {
   static Widget disabled(BuildContext context) => _wrap(const _LabelDisabledEmbed());
   static Widget invalid(BuildContext context) => _wrap(const _LabelInvalidEmbed());
   static Widget withInput(BuildContext context) => _wrap(const _LabelWithInputEmbed());
+  static Widget withDescription(BuildContext context) => _wrap(const _LabelWithDescriptionEmbed());
+  static Widget requiredInvalid(BuildContext context) => _wrap(const _LabelRequiredInvalidEmbed());
+  static Widget customIndicator(BuildContext context) => _wrap(const _LabelCustomIndicatorEmbed());
+  static Widget controlField(BuildContext context) => _wrap(const _LabelControlFieldEmbed());
 }
 
+/// Hero-style default: `.label` `text-sm font-medium`.
 class _LabelUsageEmbed extends StatelessWidget {
   const _LabelUsageEmbed();
 
@@ -80,6 +85,85 @@ class _LabelWithInputEmbed extends StatelessWidget {
         const SizedBox(height: 6),
         const RiseInput(hintText: 'jane.doe'),
       ],
+    );
+  }
+}
+
+class _LabelWithDescriptionEmbed extends StatelessWidget {
+  const _LabelWithDescriptionEmbed();
+
+  @override
+  Widget build(BuildContext context) {
+    final rise = context.riseTheme;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        RiseLabel.text('Birthday'),
+        const SizedBox(height: 4),
+        RiseDescription.text(
+          'We use this for age-appropriate defaults.',
+          style: TextStyle(color: rise.mutedForeground(0.8)),
+        ),
+      ],
+    );
+  }
+}
+
+/// `.label--required.label--invalid`: danger text + required asterisk.
+class _LabelRequiredInvalidEmbed extends StatelessWidget {
+  const _LabelRequiredInvalidEmbed();
+
+  @override
+  Widget build(BuildContext context) {
+    return RiseLabel.text(
+      'Legal name',
+      isRequired: true,
+      isInvalid: true,
+    );
+  }
+}
+
+/// Custom `requiredIndicator` instead of default `*`.
+class _LabelCustomIndicatorEmbed extends StatelessWidget {
+  const _LabelCustomIndicatorEmbed();
+
+  @override
+  Widget build(BuildContext context) {
+    final rise = context.riseTheme;
+    return RiseLabel(
+      isRequired: true,
+      requiredIndicator: Padding(
+        padding: const EdgeInsets.only(left: 2),
+        child: Text(
+          '(req)',
+          style: TextStyle(
+            fontSize: 12,
+            height: 20 / 12,
+            fontWeight: FontWeight.w500,
+            color: rise.danger,
+          ),
+        ),
+      ),
+      semanticsLabel: 'Invoice number',
+      child: const Text('Invoice number'),
+    );
+  }
+}
+
+class _LabelControlFieldEmbed extends StatelessWidget {
+  const _LabelControlFieldEmbed();
+
+  @override
+  Widget build(BuildContext context) {
+    return RiseControlField(
+      label: RiseLabel.text(
+        'Company',
+        isRequired: true,
+      ),
+      description: const Text('This appears on invoices.'),
+      control: const RiseInput(
+        hintText: 'Acme Inc.',
+      ),
     );
   }
 }

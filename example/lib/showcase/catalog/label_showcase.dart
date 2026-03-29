@@ -10,6 +10,10 @@ final Map<String, Widget Function(BuildContext context)> _labelBuilders = {
   'disabled': DocsEmbedLabel.disabled,
   'invalid': DocsEmbedLabel.invalid,
   'with-input': DocsEmbedLabel.withInput,
+  'with-description': DocsEmbedLabel.withDescription,
+  'required-invalid': DocsEmbedLabel.requiredInvalid,
+  'custom-indicator': DocsEmbedLabel.customIndicator,
+  'control-field': DocsEmbedLabel.controlField,
 };
 
 final RiseComponentShowcase riseLabelShowcase = RiseComponentShowcase(
