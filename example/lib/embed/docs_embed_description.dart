@@ -3,6 +3,12 @@ import 'package:rise_ui/rise_ui.dart';
 
 import 'docs_embed_accordion.dart' show kDocsEmbedMaxWidth;
 
+/// Description demos for docs iframe (`?embed=description-*`).
+///
+/// Parity: HeroUI v3
+/// [description.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/description/description.tsx)
+/// and [description.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/description.css)
+/// (`text-xs text-muted text-wrap`).
 class DocsEmbedDescription {
   DocsEmbedDescription._();
 
@@ -17,8 +23,12 @@ class DocsEmbedDescription {
   }
 
   static Widget usage(BuildContext context) => _wrap(const _DescriptionUsageEmbed());
+
   static Widget withFormField(BuildContext context) => _wrap(const _DescriptionWithFormFieldEmbed());
+
   static Widget withTextField(BuildContext context) => _wrap(const _DescriptionWithTextFieldEmbed());
+
+  static Widget longWrap(BuildContext context) => _wrap(const _DescriptionLongWrapEmbed());
 }
 
 class _DescriptionUsageEmbed extends StatelessWidget {
@@ -27,7 +37,9 @@ class _DescriptionUsageEmbed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const RiseDescription(
-      child: Text('Choose a username you will use across the product.'),
+      child: Text(
+        'This text uses the default description style: 12px, muted color, and wraps naturally within the layout.',
+      ),
     );
   }
 }
@@ -61,6 +73,21 @@ class _DescriptionWithTextFieldEmbed extends StatelessWidget {
       labelText: 'Bio',
       placeholder: 'Tell us about yourself',
       helperText: 'A short paragraph is enough.',
+    );
+  }
+}
+
+/// Narrow width to demonstrate `wrap-break-word` / soft wrap (Hero `text-wrap`).
+class _DescriptionLongWrapEmbed extends StatelessWidget {
+  const _DescriptionLongWrapEmbed();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 220,
+      child: RiseDescription.text(
+        'https://example.com/very/long/path/that/should/wrap/within/the/container/without/overflow/',
+      ),
     );
   }
 }

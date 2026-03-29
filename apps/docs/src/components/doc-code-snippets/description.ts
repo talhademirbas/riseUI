@@ -1,7 +1,7 @@
 /** Dart snippets — keep in sync with `example/lib/embed/docs_embed_description.dart`. */
 
 export const descriptionUsageCode = `const RiseDescription(
-  child: Text('Choose a username you will use across the product.'),
+  child: Text('Helper text under a label or field.'),
 )`;
 
 export const descriptionWithFormFieldCode = `Column(
@@ -21,4 +21,11 @@ export const descriptionWithTextFieldCode = `const RiseTextField(
   labelText: 'Bio',
   placeholder: 'Tell us about yourself',
   helperText: 'A short paragraph is enough.',
+)`;
+
+export const descriptionLongWrapCode = `SizedBox(
+  width: 220,
+  child: RiseDescription.text(
+    'https://example.com/very/long/path/that/wraps/',
+  ),
 )`;

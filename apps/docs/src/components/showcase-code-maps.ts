@@ -139,6 +139,7 @@ import {
   checkboxWithDescriptionCode,
 } from "./doc-code-snippets/checkbox";
 import {
+  descriptionLongWrapCode,
   descriptionUsageCode,
   descriptionWithFormFieldCode,
   descriptionWithTextFieldCode,
@@ -395,6 +396,7 @@ export const showcaseCodeByComponent: Record<string, Record<string, string>> = {
     usage: descriptionUsageCode,
     "with-form-field": descriptionWithFormFieldCode,
     "with-text-field": descriptionWithTextFieldCode,
+    "long-wrap": descriptionLongWrapCode,
   },
   "field-error": {
     usage: fieldErrorUsageCode,

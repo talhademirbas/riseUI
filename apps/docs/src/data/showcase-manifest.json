@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated": "2026-03-29T08:20:49.953071Z",
+  "generated": "2026-03-29T08:27:01.381268Z",
   "components": [
     {
       "id": "accordion",
@@ -873,12 +873,12 @@
     {
       "id": "description",
       "title": "Description",
-      "description": "Supplementary helper text for form fields — aligned with HeroUI Description and description.css.",
+      "description": "Supplementary helper text (`text-xs`, muted, wrapping) — aligned with HeroUI Description (heroui.com/docs/native/components/description) and description.css in heroui v3.",
       "variants": [
         {
           "slug": "usage",
           "sectionTitle": "Usage",
-          "subtitle": "Muted helper copy.",
+          "subtitle": "Standalone helper copy (Hero `.description`).",
           "minHeight": 100.0,
           "embed": "description-usage"
         },
@@ -892,9 +892,16 @@
         {
           "slug": "with-text-field",
           "sectionTitle": "With text field",
-          "subtitle": "`RiseTextField` uses `helperText` for the same role.",
+          "subtitle": "`RiseTextField` `helperText` for the same role.",
           "minHeight": 140.0,
           "embed": "description-with-text-field"
+        },
+        {
+          "slug": "long-wrap",
+          "sectionTitle": "Long text wrap",
+          "subtitle": "Narrow width + long string (`text-wrap` / break-words).",
+          "minHeight": 100.0,
+          "embed": "description-long-wrap"
         }
       ]
     },

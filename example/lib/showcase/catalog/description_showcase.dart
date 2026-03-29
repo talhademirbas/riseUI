@@ -8,6 +8,7 @@ final Map<String, Widget Function(BuildContext context)> _descriptionBuilders = 
   'usage': DocsEmbedDescription.usage,
   'with-form-field': DocsEmbedDescription.withFormField,
   'with-text-field': DocsEmbedDescription.withTextField,
+  'long-wrap': DocsEmbedDescription.longWrap,
 };
 
 final RiseComponentShowcase riseDescriptionShowcase = RiseComponentShowcase(
