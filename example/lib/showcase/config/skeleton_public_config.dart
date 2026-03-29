@@ -5,23 +5,25 @@ const String kSkeletonComponentId = 'skeleton';
 const String kSkeletonTitle = 'Skeleton';
 
 const String kSkeletonDescription =
-    'Loading placeholders with shimmer (default), pulse, or static fill; optional synchronized '
-    'shimmer host — aligned with HeroUI [Skeleton](https://heroui.com/docs/react/components/skeleton), '
-    '[skeleton.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/skeleton/skeleton.tsx), '
-    'and [skeleton.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/skeleton.css).';
+    'Loading placeholders matching HeroUI v3 '
+    '[Skeleton](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/skeleton/skeleton.tsx), '
+    '[skeleton.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/skeleton.css), '
+    'and Storybook '
+    '[skeleton.stories.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/skeleton/skeleton.stories.tsx) '
+    '(Default / Grid / SingleShimmer templates).';
 
 const List<RiseUsagePublicConfig> kSkeletonUsagePublicConfigs = [
   RiseUsagePublicConfig(
     slug: 'usage',
     sectionTitle: 'Usage',
-    subtitle: 'Panel with stacked placeholder blocks (default shimmer).',
-    minHeight: 200,
+    subtitle: 'Default story — 200px surface card, hero block + three `h-3` lines (`rounded-lg`).',
+    minHeight: 240,
   ),
   RiseUsagePublicConfig(
     slug: 'text-content',
     sectionTitle: 'Text content',
-    subtitle: 'Multiple lines via RiseSkeletonGroup.',
-    minHeight: 160,
+    subtitle: 'Stacked lines with `space-y-3`-style spacing.',
+    minHeight: 140,
   ),
   RiseUsagePublicConfig(
     slug: 'user-profile',
@@ -38,19 +40,19 @@ const List<RiseUsagePublicConfig> kSkeletonUsagePublicConfigs = [
   RiseUsagePublicConfig(
     slug: 'animation-types',
     sectionTitle: 'Animation types',
-    subtitle: 'Shimmer, pulse, and none side by side.',
+    subtitle: 'Shimmer, pulse (`animate-pulse`), and none — `h-24` blocks.',
     minHeight: 200,
   ),
   RiseUsagePublicConfig(
     slug: 'grid',
     sectionTitle: 'Grid',
-    subtitle: 'Dense grid of small blocks.',
-    minHeight: 220,
+    subtitle: 'Storybook `Grid` — 450× row, three `h-24` `rounded-xl` cells, `gap-4`.',
+    minHeight: 140,
   ),
   RiseUsagePublicConfig(
     slug: 'synchronized-shimmer',
     sectionTitle: 'Synchronized shimmer',
-    subtitle: 'RiseSkeletonSyncShimmer — one phase shared across children.',
-    minHeight: 120,
+    subtitle: 'Storybook `SingleShimmer` geometry — [RiseSkeletonSyncShimmer] shares one sweep phase.',
+    minHeight: 140,
   ),
 ];

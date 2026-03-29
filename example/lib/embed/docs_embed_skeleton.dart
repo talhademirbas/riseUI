@@ -4,6 +4,10 @@ import 'package:rise_ui/rise_ui.dart';
 import 'docs_embed_accordion.dart' show kDocsEmbedMaxWidth;
 
 /// Skeleton demos for docs iframe (`?embed=skeleton-*`).
+///
+/// Layouts mirror HeroUI v3 Storybook
+/// [skeleton.stories.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/skeleton/skeleton.stories.tsx)
+/// (`Template`, `GridTemplate`, `SingleShimmerTemplate`).
 class DocsEmbedSkeleton {
   DocsEmbedSkeleton._();
 
@@ -33,22 +37,41 @@ class DocsEmbedSkeleton {
       _wrap(const _SkeletonSyncShimmerEmbed());
 }
 
+/// Hero `Template`: `w-[200px] space-y-5 rounded-3xl p-4 shadow-surface` + block + `space-y-3` lines.
 class _SkeletonUsageEmbed extends StatelessWidget {
   const _SkeletonUsageEmbed();
 
+  static const double _cardW = 200;
+  static const double _pad = 16;
+  static const double _inner = _cardW - _pad * 2;
+
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 1,
-      borderRadius: BorderRadius.circular(12),
-      color: context.riseTheme.background,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: RiseSkeletonGroup(
-          children: [
-            const RiseSkeleton(height: 16),
-            RiseSkeleton(width: MediaQuery.sizeOf(context).width * 0.35, height: 12),
-          ],
+    return SizedBox(
+      width: _cardW,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: RiseSurface(
+          variant: RiseSurfaceVariant.default_,
+          padding: const EdgeInsets.all(_pad),
+          borderRadius: 24,
+          showShadow: true,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const RiseSkeleton(height: 96, borderRadius: 12),
+              const SizedBox(height: 20),
+              RiseSkeletonGroup(
+                spacing: 12,
+                children: [
+                  RiseSkeleton(height: 12, borderRadius: 8, width: _inner * 0.6),
+                  RiseSkeleton(height: 12, borderRadius: 8, width: _inner * 0.8),
+                  RiseSkeleton(height: 12, borderRadius: 8, width: _inner * 0.4),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -63,9 +86,13 @@ class _SkeletonTextContentEmbed extends StatelessWidget {
     return RiseSkeletonGroup(
       spacing: 12,
       children: [
-        const RiseSkeleton(height: 14),
-        const RiseSkeleton(height: 14),
-        RiseSkeleton(width: MediaQuery.sizeOf(context).width * 0.45, height: 12),
+        const RiseSkeleton(height: 12, borderRadius: 8),
+        const RiseSkeleton(height: 12, borderRadius: 8),
+        RiseSkeleton(
+          width: MediaQuery.sizeOf(context).width * 0.45,
+          height: 12,
+          borderRadius: 8,
+        ),
       ],
     );
   }
@@ -85,8 +112,12 @@ class _SkeletonUserProfileEmbed extends StatelessWidget {
           child: RiseSkeletonGroup(
             spacing: 8,
             children: [
-              const RiseSkeleton(height: 14),
-              RiseSkeleton(width: MediaQuery.sizeOf(context).width * 0.28, height: 12),
+              const RiseSkeleton(height: 12, borderRadius: 8),
+              RiseSkeleton(
+                width: MediaQuery.sizeOf(context).width * 0.28,
+                height: 12,
+                borderRadius: 8,
+              ),
             ],
           ),
         ),
@@ -101,7 +132,7 @@ class _SkeletonListItemsEmbed extends StatelessWidget {
   static Widget _row() {
     return Row(
       children: [
-        const Expanded(child: RiseSkeleton(height: 12)),
+        const Expanded(child: RiseSkeleton(height: 12, borderRadius: 8)),
         const SizedBox(width: 10),
         RiseSkeleton(width: 52, height: 12, borderRadius: 6),
       ],
@@ -134,7 +165,7 @@ class _SkeletonAnimationTypesEmbed extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            RiseSkeleton(height: 56, animationType: a),
+            RiseSkeleton(height: 96, borderRadius: 12, animationType: a),
             const SizedBox(height: 8),
             Text(caption, style: labelStyle, textAlign: TextAlign.center),
           ],
@@ -155,62 +186,67 @@ class _SkeletonAnimationTypesEmbed extends StatelessWidget {
   }
 }
 
+/// Hero `GridTemplate`: `w-[450px] grid-cols-3 gap-4` + `h-24 rounded-xl` per cell.
 class _SkeletonGridEmbed extends StatelessWidget {
   const _SkeletonGridEmbed();
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 3,
-      mainAxisSpacing: 12,
-      crossAxisSpacing: 12,
-      childAspectRatio: 2.2,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      children: const [
-        RiseSkeleton(height: 32),
-        RiseSkeleton(height: 32),
-        RiseSkeleton(height: 32),
-        RiseSkeleton(height: 32),
-        RiseSkeleton(height: 32),
-        RiseSkeleton(height: 32),
-        RiseSkeleton(height: 32),
-        RiseSkeleton(height: 32),
-        RiseSkeleton(height: 32),
-      ],
+    return SizedBox(
+      width: 450,
+      child: Row(
+        children: const [
+          Expanded(child: RiseSkeleton(height: 96, borderRadius: 12)),
+          SizedBox(width: 16),
+          Expanded(child: RiseSkeleton(height: 96, borderRadius: 12)),
+          SizedBox(width: 16),
+          Expanded(child: RiseSkeleton(height: 96, borderRadius: 12)),
+        ],
+      ),
     );
   }
 }
 
+/// Hero `SingleShimmerTemplate`: parent `skeleton--shimmer` + synchronized sweep
+/// ([RiseSkeletonSyncShimmer]) + `h-24 rounded-xl` row (same geometry as [Grid]).
 class _SkeletonSyncShimmerEmbed extends StatelessWidget {
   const _SkeletonSyncShimmerEmbed();
 
   @override
   Widget build(BuildContext context) {
-    return RiseSkeletonSyncShimmer(
-      child: Row(
-        children: [
-          Expanded(
-            child: RiseSkeleton(
-              height: 40,
-              animationType: RiseSkeletonAnimation.shimmer,
-            ),
+    return SizedBox(
+      width: 450,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: RiseSkeletonSyncShimmer(
+          child: Row(
+            children: const [
+              Expanded(
+                child: RiseSkeleton(
+                  height: 96,
+                  borderRadius: 12,
+                  animationType: RiseSkeletonAnimation.shimmer,
+                ),
+              ),
+              SizedBox(width: 16),
+              Expanded(
+                child: RiseSkeleton(
+                  height: 96,
+                  borderRadius: 12,
+                  animationType: RiseSkeletonAnimation.shimmer,
+                ),
+              ),
+              SizedBox(width: 16),
+              Expanded(
+                child: RiseSkeleton(
+                  height: 96,
+                  borderRadius: 12,
+                  animationType: RiseSkeletonAnimation.shimmer,
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: RiseSkeleton(
-              height: 40,
-              animationType: RiseSkeletonAnimation.shimmer,
-            ),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: RiseSkeleton(
-              height: 40,
-              animationType: RiseSkeletonAnimation.shimmer,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

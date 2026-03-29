@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../../theme/rise_theme.dart';
 
-/// Loading animation presets (HeroUI [Skeleton](https://heroui.com/docs/react/components/skeleton) /
-/// [skeleton.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/skeleton.css)).
+/// Loading animation presets ([skeleton.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/skeleton.css)
+/// `.skeleton--shimmer` / `.skeleton--pulse` / `.skeleton--none`).
 enum RiseSkeletonAnimation {
-  /// Moving highlight gradient (default in HeroUI).
+  /// `::after` moving gradient (`from-transparent via-surface-tertiary to-transparent`).
   shimmer,
 
-  /// Opacity pulse (`animate-pulse` feel).
+  /// `animate-pulse` — opacity breathing on the base fill.
   pulse,
 
-  /// Static block (`skeleton--none`).
+  /// Static block (`.skeleton--none`).
   none,
 }
 
@@ -40,9 +40,12 @@ class _RiseSkeletonShimmerScope extends InheritedWidget {
 }
 
 /// Runs a single shared shimmer phase for descendant [RiseSkeleton]s using
-/// [RiseSkeletonAnimation.shimmer] (HeroUI “single shimmer” / parent `skeleton--shimmer`).
+/// [RiseSkeletonAnimation.shimmer] — matches the synchronized sweep when multiple
+/// skeletons sit under one host (HeroUI [skeleton.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/skeleton.css)
+/// `.skeleton--shimmer:has(.skeleton)` / parent `::before` story
+/// [SingleShimmer](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/skeleton/skeleton.stories.tsx)).
 ///
-/// Place [RiseSkeleton] children with [RiseSkeletonAnimation.shimmer]; they will use this
+/// Place [RiseSkeleton] children with [RiseSkeletonAnimation.shimmer]; they share this
 /// controller instead of starting independent loops.
 class RiseSkeletonSyncShimmer extends StatefulWidget {
   const RiseSkeletonSyncShimmer({super.key, required this.child});
@@ -81,13 +84,17 @@ class _RiseSkeletonSyncShimmerState extends State<RiseSkeletonSyncShimmer>
   }
 }
 
-/// Placeholder block for loading states ([skeleton.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/skeleton/skeleton.tsx)).
+/// Placeholder block for loading states
+/// ([skeleton.tsx](https://github.com/heroui-inc/heroui/blob/v3/packages/react/src/components/skeleton/skeleton.tsx)).
+///
+/// Base styles match `.skeleton`: `pointer-events-none`, `overflow-hidden`, `rounded-sm`,
+/// `bg-surface-tertiary/70` ([skeleton.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/skeleton.css)).
 class RiseSkeleton extends StatefulWidget {
   const RiseSkeleton({
     super.key,
     this.width,
-    this.height = 14,
-    this.borderRadius = 4,
+    this.height = 12,
+    this.borderRadius = 2,
     this.baseColor,
     this.highlightColor,
     this.animationType = RiseSkeletonAnimation.shimmer,
@@ -95,13 +102,16 @@ class RiseSkeleton extends StatefulWidget {
 
   final double? width;
 
+  /// Default height — Hero stories often use `h-3` (12px) for text lines.
   final double height;
 
-  /// Corner radius (`rounded-sm` ≈ 4 in HeroUI skeleton base).
+  /// Corner radius — default `rounded-sm` (2px); stories use `rounded-lg` / `rounded-xl` via overrides.
   final double borderRadius;
 
+  /// Overrides `bg-surface-tertiary/70` when set.
   final Color? baseColor;
 
+  /// Middle band of the shimmer gradient; defaults to a mix toward [RiseThemeData.surfaceTertiary].
   final Color? highlightColor;
 
   final RiseSkeletonAnimation animationType;
@@ -118,12 +128,13 @@ class _RiseSkeletonState extends State<RiseSkeleton> with SingleTickerProviderSt
 
   Color _base(BuildContext context) {
     final rise = context.riseTheme;
-    return widget.baseColor ?? rise.muted.withValues(alpha: 0.7);
+    return widget.baseColor ?? rise.surfaceTertiary.withValues(alpha: 0.7);
   }
 
-  Color _highlight(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    return widget.highlightColor ?? cs.surface;
+  Color _shimmerMidColor(BuildContext context) {
+    final rise = context.riseTheme;
+    final base = _base(context);
+    return widget.highlightColor ?? Color.lerp(base, rise.surfaceTertiary, 0.85)!;
   }
 
   @override
@@ -132,7 +143,7 @@ class _RiseSkeletonState extends State<RiseSkeleton> with SingleTickerProviderSt
     if (widget.animationType == RiseSkeletonAnimation.pulse) {
       _pulse = AnimationController(
         vsync: this,
-        duration: const Duration(milliseconds: 1400),
+        duration: const Duration(milliseconds: 2000),
       )..repeat(reverse: true);
     }
   }
@@ -174,7 +185,7 @@ class _RiseSkeletonState extends State<RiseSkeleton> with SingleTickerProviderSt
 
   Widget _shimmer(BuildContext context, AnimationController controller) {
     final base = _base(context);
-    final hi = _highlight(context);
+    final mid = _shimmerMidColor(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(widget.borderRadius),
       child: AnimatedBuilder(
@@ -190,7 +201,7 @@ class _RiseSkeletonState extends State<RiseSkeleton> with SingleTickerProviderSt
                 end: Alignment(start + 1.2, 0.5),
                 colors: [
                   base,
-                  Color.lerp(base, hi, 0.5)!,
+                  mid,
                   base,
                 ],
                 stops: const [0.32, 0.5, 0.68],
@@ -226,8 +237,10 @@ class _RiseSkeletonState extends State<RiseSkeleton> with SingleTickerProviderSt
         RiseSkeletonAnimation.pulse => AnimatedBuilder(
             animation: _pulse!,
             builder: (context, _) {
-              final o = 0.42 + 0.58 * Curves.easeInOut.transform(_pulse!.value);
-              return _fill(context, color: _base(context).withValues(alpha: o));
+              final curve = Curves.easeInOut.transform(_pulse!.value);
+              final base = _base(context);
+              final a = base.a * (0.5 + 0.5 * curve);
+              return _fill(context, color: base.withValues(alpha: a));
             },
           ),
         RiseSkeletonAnimation.shimmer => _shimmerBody(context),
