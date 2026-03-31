@@ -18,6 +18,13 @@ const double kRiseToastDefaultWidth = 460;
 /// HeroUI view-transition toasts: `toast-slide-*-in` / `out` use **350ms** in [toast.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/toast.css).
 const Duration kRiseToastEnterExitDuration = Duration(milliseconds: 350);
 
+/// Duration for stack-position reflow (translate/scale when index changes).
+const Duration _kStackReflowDuration = Duration(milliseconds: 220);
+
+/// Reserved height for the stack SizedBox so the container never collapses between
+/// add/remove transitions. Generous enough for a toast with a description.
+const double _kStackReservedHeight = 200.0;
+
 /// HeroUI toast region placement (`bottom`, `top`, `*-start` / `*-end`).
 enum RiseToastPlacement {
   top,
@@ -78,6 +85,13 @@ class RiseToastEntry {
   final RiseToastAction? action;
 }
 
+class _PendingToast {
+  const _PendingToast({required this.entry, required this.duration});
+
+  final RiseToastEntry entry;
+  final Duration duration;
+}
+
 /// Holds queued toasts. Typically driven via [RiseToast.show].
 final class RiseToastController extends ChangeNotifier {
   RiseToastController({
@@ -95,6 +109,13 @@ final class RiseToastController extends ChangeNotifier {
   final List<RiseToastEntry> _entries = [];
   final Map<String, Timer> _timers = {};
   final Map<String, void Function()> _exitAnimations = {};
+  final Map<RiseToastPlacement, _PendingToast> _pendingByPlacement = {};
+  final Map<RiseToastPlacement, bool> _dismissInFlightByPlacement = {
+    for (final p in RiseToastPlacement.values) p: false,
+  };
+  final Map<RiseToastPlacement, int> _placementCounts = {
+    for (final p in RiseToastPlacement.values) p: 0,
+  };
   int _seq = 0;
 
   List<RiseToastEntry> get entries => List.unmodifiable(_entries);
@@ -111,8 +132,51 @@ final class RiseToastController extends ChangeNotifier {
 
   /// Removes the toast after the exit animation completes (pair with [registerExitAnimation]).
   void finishDismiss(String id) {
+    // Guard: if already removed (e.g. called twice), do nothing.
+    final placement = _placementForId(id);
+    if (placement == null) return;
     unregisterExitAnimation(id);
     _hardRemove(id);
+    _dismissInFlightByPlacement[placement] = false;
+    _advancePlacementFlow(placement);
+  }
+
+  int _countForPlacement(RiseToastPlacement placement) => _placementCounts[placement] ?? 0;
+
+  String? _oldestIdForPlacement(RiseToastPlacement placement) {
+    final i = _entries.indexWhere((entry) => entry.placement == placement);
+    return i >= 0 ? _entries[i].id : null;
+  }
+
+  static void _cancelTimer(Timer timer) => timer.cancel();
+
+  RiseToastPlacement? _placementForId(String id) {
+    final i = _entries.indexWhere((e) => e.id == id);
+    return i >= 0 ? _entries[i].placement : null;
+  }
+
+  void _insertEntry(RiseToastEntry entry, Duration duration) {
+    _entries.add(entry);
+    _placementCounts[entry.placement] = _countForPlacement(entry.placement) + 1;
+    if (duration > Duration.zero) {
+      _timers[entry.id] = Timer(duration, () => dismiss(entry.id));
+    }
+    notifyListeners();
+  }
+
+  void _advancePlacementFlow(RiseToastPlacement placement) {
+    if (_dismissInFlightByPlacement[placement] == true) return;
+    if (_countForPlacement(placement) < maxVisible) {
+      final pending = _pendingByPlacement.remove(placement);
+      if (pending != null) {
+        _insertEntry(pending.entry, pending.duration);
+      }
+      return;
+    }
+    final oldestId = _oldestIdForPlacement(placement);
+    if (oldestId == null) return;
+    _dismissInFlightByPlacement[placement] = true;
+    dismiss(oldestId, animated: true);
   }
 
   String show({
@@ -128,10 +192,6 @@ final class RiseToastController extends ChangeNotifier {
   }) {
     final id = '${_seq++}';
     final d = duration ?? kRiseToastDefaultTimeout;
-    while (_entries.where((e) => e.placement == placement).length >= maxVisible) {
-      final first = _entries.firstWhere((e) => e.placement == placement);
-      dismiss(first.id);
-    }
     final entry = RiseToastEntry(
       id: id,
       title: title,
@@ -144,10 +204,12 @@ final class RiseToastController extends ChangeNotifier {
       isLoading: isLoading,
       action: action,
     );
-    _entries.add(entry);
-    notifyListeners();
-    if (d > Duration.zero) {
-      _timers[id] = Timer(d, () => dismiss(id));
+    if (_countForPlacement(placement) >= maxVisible) {
+      // Keep only the latest request as pending for this placement.
+      _pendingByPlacement[placement] = _PendingToast(entry: entry, duration: d);
+      _advancePlacementFlow(placement);
+    } else {
+      _insertEntry(entry, d);
     }
     return id;
   }
@@ -163,25 +225,33 @@ final class RiseToastController extends ChangeNotifier {
         return;
       }
     }
-    _hardRemove(id);
+    // No exit animation registered — go through finishDismiss so the
+    // in-flight flag is always reset and the placement flow always advances.
+    finishDismiss(id);
   }
 
-  void _hardRemove(String id) {
+  void _hardRemove(String id, {bool notify = true}) {
     final i = _entries.indexWhere((e) => e.id == id);
     if (i < 0) return;
+    final placement = _entries[i].placement;
     _exitAnimations.remove(id);
     _timers.remove(id)?.cancel();
     _entries.removeAt(i);
-    notifyListeners();
+    final prevCount = _countForPlacement(placement);
+    _placementCounts[placement] = prevCount > 0 ? prevCount - 1 : 0;
+    if (notify) {
+      notifyListeners();
+    }
   }
 
   void clear() {
-    for (final t in _timers.values) {
-      t.cancel();
-    }
+    _timers.values.forEach(_cancelTimer);
     _timers.clear();
     _exitAnimations.clear();
+    _pendingByPlacement.clear();
+    _dismissInFlightByPlacement.updateAll((_, _) => false);
     _entries.clear();
+    _placementCounts.updateAll((_, _) => 0);
     notifyListeners();
   }
 }
@@ -340,19 +410,24 @@ class _RiseToastHost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: _riseToastController,
-      builder: (context, _) {
-        return Stack(
-          fit: StackFit.expand,
-          clipBehavior: Clip.none,
-          children: [
-            child,
-            if (_riseToastController.entries.isNotEmpty)
-              _RiseGlobalToastOverlay(controller: _riseToastController),
-          ],
-        );
-      },
+    // child is intentionally outside ListenableBuilder so the app tree
+    // never rebuilds when toasts change.
+    return Stack(
+      fit: StackFit.expand,
+      clipBehavior: Clip.none,
+      children: [
+        child,
+        ListenableBuilder(
+          listenable: _riseToastController,
+          child: const SizedBox.shrink(),
+          builder: (context, _) {
+            if (_riseToastController.entries.isEmpty) {
+              return const SizedBox.shrink();
+            }
+            return _RiseGlobalToastOverlay(controller: _riseToastController);
+          },
+        ),
+      ],
     );
   }
 }
@@ -377,7 +452,7 @@ class _RiseGlobalToastOverlay extends StatelessWidget {
   }
 }
 
-class _RisePlacementColumn extends StatefulWidget {
+class _RisePlacementColumn extends StatelessWidget {
   const _RisePlacementColumn({
     required this.placement,
     required this.controller,
@@ -386,21 +461,18 @@ class _RisePlacementColumn extends StatefulWidget {
   final RiseToastPlacement placement;
   final RiseToastController controller;
 
-  static Alignment _alignmentFor(RiseToastPlacement p) {
-    return switch (p) {
-      RiseToastPlacement.top => Alignment.topCenter,
-      RiseToastPlacement.topStart => Alignment.topLeft,
-      RiseToastPlacement.topEnd => Alignment.topRight,
-      RiseToastPlacement.bottom => Alignment.bottomCenter,
-      RiseToastPlacement.bottomStart => Alignment.bottomLeft,
-      RiseToastPlacement.bottomEnd => Alignment.bottomRight,
-    };
-  }
+  static Alignment _alignmentFor(RiseToastPlacement p) => switch (p) {
+        RiseToastPlacement.top => Alignment.topCenter,
+        RiseToastPlacement.topStart => Alignment.topLeft,
+        RiseToastPlacement.topEnd => Alignment.topRight,
+        RiseToastPlacement.bottom => Alignment.bottomCenter,
+        RiseToastPlacement.bottomStart => Alignment.bottomLeft,
+        RiseToastPlacement.bottomEnd => Alignment.bottomRight,
+      };
 
   static EdgeInsets _paddingFor(RiseToastPlacement p, MediaQueryData mq) {
     const e = 16.0;
     final safe = mq.padding;
-    final view = mq.viewInsets;
     return switch (p) {
       RiseToastPlacement.top ||
       RiseToastPlacement.topStart ||
@@ -409,89 +481,65 @@ class _RisePlacementColumn extends StatefulWidget {
       RiseToastPlacement.bottom ||
       RiseToastPlacement.bottomStart ||
       RiseToastPlacement.bottomEnd =>
-        EdgeInsets.fromLTRB(e, 0, e, safe.bottom + e + view.bottom),
+        EdgeInsets.fromLTRB(e, 0, e, safe.bottom + e),
     };
   }
 
-  static bool _isBottom(RiseToastPlacement p) {
-    return p == RiseToastPlacement.bottom ||
-        p == RiseToastPlacement.bottomStart ||
-        p == RiseToastPlacement.bottomEnd;
-  }
-
-  @override
-  State<_RisePlacementColumn> createState() => _RisePlacementColumnState();
-}
-
-class _RisePlacementColumnState extends State<_RisePlacementColumn> {
-  final GlobalKey _frontMeasureKey = GlobalKey();
-  double? _frontHeight;
-
-  RiseToastController get _controller => widget.controller;
+  static bool _isBottom(RiseToastPlacement p) =>
+      p == RiseToastPlacement.bottom ||
+      p == RiseToastPlacement.bottomStart ||
+      p == RiseToastPlacement.bottomEnd;
 
   @override
   Widget build(BuildContext context) {
-    final items = _controller.entries.where((e) => e.placement == widget.placement).toList();
+    final items = controller.entries.where((e) => e.placement == placement).toList();
     if (items.isEmpty) return const SizedBox.shrink();
 
     final mq = MediaQuery.of(context);
-    final isBottom = _RisePlacementColumn._isBottom(widget.placement);
-    final ordered = isBottom ? items : items.reversed.toList();
-    final maxW = math.min(_controller.toastWidth, mq.size.width - 32);
-    final gap = _controller.gap;
-    final scaleK = _controller.scaleFactor;
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final ctx = _frontMeasureKey.currentContext;
-      final box = ctx?.findRenderObject() as RenderBox?;
-      final h = box?.size.height;
-      if (!mounted || h == null || !h.isFinite) return;
-      if (_frontHeight == null || (h - _frontHeight!).abs() > 0.5) {
-        setState(() => _frontHeight = h);
-      }
-    });
-
-    final frontH = _frontHeight;
-    final n = ordered.length;
-    final idxFront = n - 1;
-    final stackViewportH = (frontH ?? 132) + (n > 1 ? (n - 1) * gap * 2 : 0);
+    final isBottom = _isBottom(placement);
+    // Newest first: ordered[0] is front.
+    final ordered = items.reversed.toList();
+    final maxW = math.min(controller.toastWidth, mq.size.width - 32);
+    final gap = controller.gap;
+    final scaleK = controller.scaleFactor;
+    final edgeAlign = isBottom ? Alignment.bottomCenter : Alignment.topCenter;
 
     return Align(
-      alignment: _RisePlacementColumn._alignmentFor(widget.placement),
+      alignment: _alignmentFor(placement),
       child: Padding(
-        padding: _RisePlacementColumn._paddingFor(widget.placement, mq),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: maxW),
-          child: SizedBox(
-            width: maxW,
-            height: stackViewportH,
-            child: Stack(
-              clipBehavior: Clip.none,
-              alignment: isBottom ? Alignment.bottomCenter : Alignment.topCenter,
-              children: [
-                for (var k = 0; k < n; k++)
-                  Align(
-                    alignment: isBottom ? Alignment.bottomCenter : Alignment.topCenter,
-                    child: _RiseToastAnimatedShell(
-                      key: ValueKey<String>(ordered[k].id),
-                      entryId: ordered[k].id,
-                      controller: _controller,
-                      isPlacementBottom: isBottom,
-                      idxFromFront: idxFront - k,
-                      translateY: (isBottom ? -1.0 : 1.0) * gap * (idxFront - k),
-                      scale: 1.0 - scaleK * (idxFront - k),
-                      clipToFrontHeight:
-                          (idxFront - k) > 0 && frontH != null && frontH > 0 ? frontH : null,
-                      measureFrontKey: k == idxFront ? _frontMeasureKey : null,
-                      maxWidth: maxW,
-                      card: _RiseToastCard(
+        padding: _paddingFor(placement, mq),
+        child: SizedBox(
+          width: maxW,
+          // Reserved height keeps the container stable regardless of
+          // how many toasts are currently visible or animating.
+          height: _kStackReservedHeight,
+          child: Stack(
+            clipBehavior: Clip.none,
+            alignment: edgeAlign,
+            children: [
+              // Paint oldest (highest k) first so newest renders on top.
+              // The key lives on Align (the direct Stack child) so Flutter
+              // matches by identity, not position, when the list shrinks/grows.
+              for (var k = ordered.length - 1; k >= 0; k--)
+                Align(
+                  key: ValueKey<String>(ordered[k].id),
+                  alignment: edgeAlign,
+                  child: _RiseToastAnimatedShell(
+                    entryId: ordered[k].id,
+                    controller: controller,
+                    isPlacementBottom: isBottom,
+                    idxFromFront: k,
+                    translateY: (isBottom ? -1.0 : 1.0) * gap * k,
+                    scale: 1.0 - scaleK * k,
+                    card: RepaintBoundary(
+                      child: _RiseToastCard(
                         entry: ordered[k],
-                        onDismiss: () => _controller.dismiss(ordered[k].id),
+                        onDismiss: () => controller.dismiss(ordered[k].id),
                       ),
                     ),
                   ),
-              ],
-            ),
+                ),
+            ],
           ),
         ),
       ),
@@ -499,19 +547,19 @@ class _RisePlacementColumnState extends State<_RisePlacementColumn> {
   }
 }
 
-/// Enter / exit: HeroUI [toast.css] `toast-slide-*` (**350ms**) + opacity.
+/// Per-toast shell:
+/// - Enter/exit: 350ms slide+fade ([toast.css] `toast-slide-*`).
+/// - Stack reflow (index changes): 220ms translate+scale via [didUpdateWidget].
+///   Owned by state so no TweenAnimationBuilder state loss on rebuilds.
+/// - No clipping — avoids sudden visual change when front/back status changes.
 class _RiseToastAnimatedShell extends StatefulWidget {
   const _RiseToastAnimatedShell({
-    super.key,
     required this.entryId,
     required this.controller,
     required this.isPlacementBottom,
     required this.idxFromFront,
     required this.translateY,
     required this.scale,
-    required this.clipToFrontHeight,
-    required this.measureFrontKey,
-    required this.maxWidth,
     required this.card,
   });
 
@@ -521,9 +569,6 @@ class _RiseToastAnimatedShell extends StatefulWidget {
   final int idxFromFront;
   final double translateY;
   final double scale;
-  final double? clipToFrontHeight;
-  final GlobalKey? measureFrontKey;
-  final double maxWidth;
   final Widget card;
 
   @override
@@ -531,107 +576,114 @@ class _RiseToastAnimatedShell extends StatefulWidget {
 }
 
 class _RiseToastAnimatedShellState extends State<_RiseToastAnimatedShell>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _c;
-  late final CurvedAnimation _curve;
+    with TickerProviderStateMixin {
+  // Enter/exit slide+fade.
+  late final AnimationController _enterExitCtrl;
+  late final CurvedAnimation _enterExitCurve;
+
+  // Stack reflow: animates translateY and scale when idxFromFront changes.
+  late final AnimationController _reflowCtrl;
+  late Animation<double> _translateAnim;
+  late Animation<double> _scaleAnim;
 
   @override
   void initState() {
     super.initState();
-    _c = AnimationController(
+
+    _enterExitCtrl = AnimationController(
       vsync: this,
       duration: kRiseToastEnterExitDuration,
     );
-    _curve = CurvedAnimation(
-      parent: _c,
+    _enterExitCurve = CurvedAnimation(
+      parent: _enterExitCtrl,
       curve: Curves.easeOutCubic,
       reverseCurve: Curves.easeInCubic,
     );
+
+    _reflowCtrl = AnimationController(
+      vsync: this,
+      duration: _kStackReflowDuration,
+    );
+    // On first appearance there is no reflow — positions are already correct.
+    _translateAnim = AlwaysStoppedAnimation<double>(widget.translateY);
+    _scaleAnim = AlwaysStoppedAnimation<double>(widget.scale);
+
     widget.controller.registerExitAnimation(widget.entryId, _playExit);
-    _c.forward();
+    _enterExitCtrl.forward();
+  }
+
+  @override
+  void didUpdateWidget(_RiseToastAnimatedShell oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.translateY != widget.translateY ||
+        oldWidget.scale != widget.scale) {
+      // Capture current animated values as the new start point so the
+      // transition begins from wherever the previous animation left off.
+      final fromTranslate = _translateAnim.value;
+      final fromScale = _scaleAnim.value;
+
+      _reflowCtrl.reset();
+      _translateAnim = Tween<double>(begin: fromTranslate, end: widget.translateY)
+          .animate(CurvedAnimation(parent: _reflowCtrl, curve: Curves.easeOutCubic));
+      _scaleAnim = Tween<double>(begin: fromScale, end: widget.scale)
+          .animate(CurvedAnimation(parent: _reflowCtrl, curve: Curves.easeOutCubic));
+      _reflowCtrl.forward();
+    }
   }
 
   @override
   void dispose() {
     widget.controller.unregisterExitAnimation(widget.entryId);
-    _curve.dispose();
-    _c.dispose();
+    _enterExitCurve.dispose();
+    _enterExitCtrl.dispose();
+    _reflowCtrl.dispose();
     super.dispose();
   }
 
+  bool _exiting = false;
+
   void _playExit() {
-    if (!mounted) return;
-    if (_c.status == AnimationStatus.dismissed || _c.value == 0) {
+    if (!mounted || _exiting) return;
+    _exiting = true;
+    if (_enterExitCtrl.isDismissed) {
       widget.controller.finishDismiss(widget.entryId);
       return;
     }
-    _c.reverse().whenComplete(() {
-      if (mounted) {
-        widget.controller.finishDismiss(widget.entryId);
-      }
+    _enterExitCtrl.reverse().whenComplete(() {
+      if (mounted) widget.controller.finishDismiss(widget.entryId);
     });
-  }
-
-  Widget _stackLayers(Widget toast) {
-    final clipH = widget.clipToFrontHeight;
-    final bottom = widget.isPlacementBottom;
-    final align = bottom ? Alignment.bottomCenter : Alignment.topCenter;
-
-    Widget core = toast;
-    if (clipH != null) {
-      core = SizedBox(
-        height: clipH,
-        child: ClipRect(
-          child: Align(
-            alignment: align,
-            heightFactor: 1,
-            child: OverflowBox(
-              alignment: align,
-              maxHeight: double.infinity,
-              child: toast,
-            ),
-          ),
-        ),
-      );
-    }
-
-    core = Transform.translate(
-      offset: Offset(0, widget.translateY),
-      child: Transform.scale(
-        scale: widget.scale,
-        alignment: align,
-        child: core,
-      ),
-    );
-
-    return IgnorePointer(
-      ignoring: widget.idxFromFront > 0,
-      child: core,
-    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final align = widget.isPlacementBottom ? Alignment.bottomCenter : Alignment.topCenter;
+    final slideDir = widget.isPlacementBottom ? 1.0 : -1.0;
+
     return AnimatedBuilder(
-      animation: _curve,
+      animation: Listenable.merge([_enterExitCurve, _reflowCtrl]),
       builder: (context, child) {
-        final t = _curve.value;
-        final y = widget.isPlacementBottom ? (1.0 - t) : -(1.0 - t);
+        final enterT = _enterExitCurve.value;
+        // Slide from below (bottom) or above (top) on enter/exit.
+        final enterSlideY = slideDir * (1.0 - enterT);
+
         return FractionalTranslation(
-          translation: Offset(0, y),
-          transformHitTests: true,
+          translation: Offset(0, enterSlideY),
           child: Opacity(
-            opacity: t.clamp(0.0, 1.0),
-            child: child,
+            opacity: enterT.clamp(0.0, 1.0),
+            child: Transform.translate(
+              offset: Offset(0, _translateAnim.value),
+              child: Transform.scale(
+                scale: _scaleAnim.value,
+                alignment: align,
+                child: child,
+              ),
+            ),
           ),
         );
       },
-      child: KeyedSubtree(
-        key: widget.measureFrontKey ?? ValueKey<String>('toast-${widget.entryId}'),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: widget.maxWidth),
-          child: _stackLayers(widget.card),
-        ),
+      child: IgnorePointer(
+        ignoring: widget.idxFromFront > 0,
+        child: widget.card,
       ),
     );
   }
