@@ -1,0 +1,23 @@
+# Docs site and JS workspace (not consumed via pub)
+apps/
+
+# Local / CI build outputs
+build/
+.dart_tool/
+
+# Example app build artifacts
+example/build/
+example/.dart_tool/
+
+# Root monorepo tooling — not needed for package users
+package.json
+package-lock.json
+turbo.json
+node_modules/
+scripts/
+
+# Empty workspace placeholder
+packages/
+
+# IDE
+*.iml

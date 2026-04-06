@@ -1,7 +1,13 @@
 name: rise_ui
 description: RiseUI — a minimal, HeroUI-inspired Flutter component library.
 version: 0.1.0
-homepage:
+repository: https://github.com/talhademirbas/riseUI
+issue_tracker: https://github.com/talhademirbas/riseUI/issues
+homepage: https://github.com/talhademirbas/riseUI
+
+topics:
+  - ui
+  - widgets
 
 environment:
   sdk: ^3.10.1
