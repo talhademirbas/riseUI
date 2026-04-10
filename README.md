@@ -62,9 +62,74 @@ class HomePage extends StatelessWidget {
 
 For dark mode, add a `darkTheme` that uses `ThemeData(extensions: const [RiseThemeData.dark], …)` (and optional `ColorScheme.fromSeed` wired to those tokens — see the `example` app’s `_riseExampleTheme`).
 
+## Documentation
+
+Full docs and usage examples are available at:
+
+- https://www.risition.com/riseui/docs
+
 ## What’s included
 
-Components are exported from `package:rise_ui/rise_ui.dart` (see `lib/rise_ui.dart` for the full list), including theme primitives, buttons, form controls, surfaces, overlays (dialog, bottom sheet, popover, menu), and feedback (alert, toast, skeleton, spinner).
+All components are exported from `package:rise_ui/rise_ui.dart`.
+
+### Inputs & form controls
+
+- `RiseInput`
+- `RiseTextField`
+- `RiseTextArea`
+- `RiseSearchField`
+- `RiseInputOtp`
+- `RiseCheckbox`
+- `RiseRadio`
+- `RiseSwitch`
+- `RiseSelect`
+- `RiseSlider`
+- `RiseControlField`
+- `RiseFieldError`
+- `RiseLabel`
+- `RiseDescription`
+- `RiseInputGroup`
+
+### Buttons & actions
+
+- `RiseButton`
+- `RiseButtonGroup`
+- `RiseLinkButton`
+- `RiseCloseButton`
+
+### Layout, navigation & content
+
+- `RiseAccordion`
+- `RiseTabs`
+- `RiseListGroup`
+- `RiseMenu`
+- `RiseTagGroup`
+- `RiseChip`
+- `RiseSeparator`
+- `RiseScrollShadow`
+
+### Surfaces & structure
+
+- `RiseSurface`
+- `RiseCard`
+- `RiseAvatar`
+
+### Overlays
+
+- `RiseDialog`
+- `RiseBottomSheet`
+- `RisePopover`
+
+### Feedback & loading
+
+- `RiseAlert`
+- `RiseToast`
+- `RiseSpinner`
+- `RiseSkeleton`
+
+### Theming
+
+- `RiseThemeData` (light and dark theme extensions)
 
 ## Example app
 
