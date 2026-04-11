@@ -1,72 +1,16 @@
 # RiseUI
 
+[📚 Documentation](https://www.risition.com/riseui/docs) · [🖼️ Widgets](https://www.risition.com/riseui/docs/components/button) · [🤓 API Reference](https://pub.dev/documentation/rise_ui/latest/) · [🗺️ Road Map](https://github.com/talhademirbas/riseUI/issues)
+
 **RiseUI** is a minimal, [HeroUI](https://www.heroui.com/)-inspired Flutter component library: buttons, inputs, dialogs, toasts, and other building blocks with a cohesive theme.
 
-## Install
+## Why Choose RiseUI?
 
-```yaml
-dependencies:
-  rise_ui: ^0.1.0
-```
-
-Or:
-
-```bash
-dart pub add rise_ui
-```
-
-**SDK:** Dart `^3.10.1`, Flutter `>=1.17.0`.
-
-## Quick start
-
-Register **RiseThemeData** as a `ThemeExtension` on your `ThemeData` so widgets can read tokens via `context.riseTheme`:
-
-```dart
-import 'package:flutter/material.dart';
-import 'package:rise_ui/rise_ui.dart';
-
-void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'RiseUI',
-      theme: ThemeData(
-        useMaterial3: true,
-        extensions: const [RiseThemeData.light],
-      ),
-      home: const HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: RiseButton(
-          label: 'Hello',
-          onPressed: () {},
-        ),
-      ),
-    );
-  }
-}
-```
-
-For dark mode, add a `darkTheme` that uses `ThemeData(extensions: const [RiseThemeData.dark], …)` (and optional `ColorScheme.fromSeed` wired to those tokens — see the `example` app’s `_riseExampleTheme`).
-
-## Documentation
-
-Full docs and usage examples are available at:
-
-- https://www.risition.com/riseui/docs
+- **HeroUI-aligned** — familiar variants, spacing, and motion ideas translated to Flutter, not a pixel-perfect web port.
+- **Flutter-first APIs** — composition and `ThemeExtension` patterns that feel natural in Material apps.
+- **One theme system** — `RiseThemeData` (light/dark) shared across every widget; access tokens with `context.riseTheme`.
+- **Documented end-to-end** — live docs with embeds, Dart snippets, and a runnable [`example/`](https://github.com/talhademirbas/riseUI/tree/main/example) app in the repo.
+- **Practical scope** — inputs, overlays, feedback, and layout primitives without pulling in a full design-system framework.
 
 ## What’s included
 
