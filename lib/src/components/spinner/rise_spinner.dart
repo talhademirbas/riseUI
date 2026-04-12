@@ -5,12 +5,7 @@ import '../../theme/rise_theme.dart';
 
 /// Size tokens ([spinner.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/spinner.css)
 /// `spinner--sm` … `spinner--xl` → `size-4` … `size-10`).
-enum RiseSpinnerSize {
-  sm,
-  md,
-  lg,
-  xl,
-}
+enum RiseSpinnerSize { sm, md, lg, xl }
 
 /// Color tokens ([spinner.css](https://github.com/heroui-inc/heroui/blob/v3/packages/styles/components/spinner.css)).
 enum RiseSpinnerColor {
@@ -83,10 +78,7 @@ class _RiseSpinnerState extends State<RiseSpinner> with SingleTickerProviderStat
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: kRiseSpinnerRotationDuration,
-    );
+    _controller = AnimationController(vsync: this, duration: kRiseSpinnerRotationDuration);
   }
 
   @override
@@ -107,7 +99,7 @@ class _RiseSpinnerState extends State<RiseSpinner> with SingleTickerProviderStat
 
   void _syncTicker() {
     if (!mounted || !widget.isLoading) return;
-    if (TickerMode.of(context)) {
+    if (TickerMode.valuesOf(context).enabled) {
       if (!_controller.isAnimating) {
         _controller.repeat();
       }
@@ -150,10 +142,7 @@ class _RiseSpinnerState extends State<RiseSpinner> with SingleTickerProviderStat
           height: d,
           child: RotationTransition(
             turns: _controller,
-            child: widget.child ??
-                CustomPaint(
-                  painter: _RiseHeroSpinnerPainter(color: c),
-                ),
+            child: widget.child ?? CustomPaint(painter: _RiseHeroSpinnerPainter(color: c)),
           ),
         ),
       ),
@@ -194,10 +183,7 @@ class _RiseHeroSpinnerPainter extends CustomPainter {
     final g2 = LinearGradient(
       begin: Alignment(0, -1 + 2 * 0.1524),
       end: Alignment(0, -1 + 2 * 0.8715),
-      colors: [
-        color.withValues(alpha: 0),
-        color.withValues(alpha: 0.55),
-      ],
+      colors: [color.withValues(alpha: 0), color.withValues(alpha: 0.55)],
     ).createShader(b2);
     canvas.drawPath(p2, Paint()..shader = g2);
 
